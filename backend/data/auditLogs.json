@@ -686,5 +686,396 @@
     },
     "prevHash": "7d5f789dba32096129c6d92388b913191e002f21e43db209e54295455bc1d336",
     "hash": "e9a36a6d3df277fa929081b8446894f989ade3c8837898361250b0a9c1a26a88"
+  },
+  {
+    "id": "log-48",
+    "timestamp": "2026-08-17T05:47:42.493Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-8472",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-4869)",
+      "speed": 1,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "e9a36a6d3df277fa929081b8446894f989ade3c8837898361250b0a9c1a26a88",
+    "hash": "d3746ad4ace7fff6beee6818322d740b03b8bb821c3abb32306e650a13143873"
+  },
+  {
+    "id": "log-49",
+    "timestamp": "2026-08-17T05:50:02.480Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-8472",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-4869)",
+      "speed": 1,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "d3746ad4ace7fff6beee6818322d740b03b8bb821c3abb32306e650a13143873",
+    "hash": "b8d53c2425424a1606980871193cd680dd2244bf50450b8e76e3a3b19e6602ea"
+  },
+  {
+    "id": "log-50",
+    "timestamp": "2026-08-17T05:50:13.464Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-8472",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-4869)",
+      "speed": 1,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "b8d53c2425424a1606980871193cd680dd2244bf50450b8e76e3a3b19e6602ea",
+    "hash": "df85164d91d0fbdf2a65cc175de4be4368413ddb457e1dd5a4b590c17ead3d60"
+  },
+  {
+    "id": "log-51",
+    "timestamp": "2026-08-17T05:53:39.046Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-8472",
+    "details": {
+      "mode": "raw"
+    },
+    "prevHash": "df85164d91d0fbdf2a65cc175de4be4368413ddb457e1dd5a4b590c17ead3d60",
+    "hash": "b4bd463e0bc85e0b16d647076dabcc99d9b60a716762a21fbca3f85fae5b4202"
+  },
+  {
+    "id": "log-52",
+    "timestamp": "2026-08-17T05:53:54.306Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-4305",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-3409)"
+    },
+    "prevHash": "b4bd463e0bc85e0b16d647076dabcc99d9b60a716762a21fbca3f85fae5b4202",
+    "hash": "0a96f4e68adeb7e4666e7fa3b64bf51ffa3110084eb41840fbd4ae95b3ce7ca0"
+  },
+  {
+    "id": "log-53",
+    "timestamp": "2026-08-17T05:53:57.527Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-4305",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-3409)",
+      "speed": 1,
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "0a96f4e68adeb7e4666e7fa3b64bf51ffa3110084eb41840fbd4ae95b3ce7ca0",
+    "hash": "c231b488a4ee4352ac063319863c0b4c7c69781b5e26d7cde1be6ffda948319c"
+  },
+  {
+    "id": "log-54",
+    "timestamp": "2026-08-17T05:54:05.734Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-4305",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-3409)",
+      "speed": 0.75,
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "c231b488a4ee4352ac063319863c0b4c7c69781b5e26d7cde1be6ffda948319c",
+    "hash": "8714ebd35cebfd34d6b38f28ce631192b01a11e43f6f7b9e020639ade2d482c7"
+  },
+  {
+    "id": "log-55",
+    "timestamp": "2026-08-17T05:54:10.245Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-4305",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-3409)",
+      "speed": 2,
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "8714ebd35cebfd34d6b38f28ce631192b01a11e43f6f7b9e020639ade2d482c7",
+    "hash": "2663a40d175ce1efc84187c9d2568d212685c5111bc55022d8b52288acbd1f74"
+  },
+  {
+    "id": "log-56",
+    "timestamp": "2026-08-17T05:55:49.352Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "2663a40d175ce1efc84187c9d2568d212685c5111bc55022d8b52288acbd1f74",
+    "hash": "adf1a3a8fdc2e7e6898ce37861f78a789a432505bea7d8cd8435eb1cfcdef398"
+  },
+  {
+    "id": "log-57",
+    "timestamp": "2026-08-17T05:55:52.614Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "adf1a3a8fdc2e7e6898ce37861f78a789a432505bea7d8cd8435eb1cfcdef398",
+    "hash": "3fbde8adc085a59e5e3664d093f6df6ad51f0bd2d6bdf72a9bdc9c4ce69573e3"
+  },
+  {
+    "id": "log-58",
+    "timestamp": "2026-08-17T05:55:53.407Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "3fbde8adc085a59e5e3664d093f6df6ad51f0bd2d6bdf72a9bdc9c4ce69573e3",
+    "hash": "53329f7b4b25e492ac74d49f49b74c7dcb2343100ace6cca0f25e1ae3f4931dc"
+  },
+  {
+    "id": "log-59",
+    "timestamp": "2026-08-17T05:55:54.279Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "53329f7b4b25e492ac74d49f49b74c7dcb2343100ace6cca0f25e1ae3f4931dc",
+    "hash": "afb01c3006d490a2aa005fe740810f7a4e8fb9a02be8524637180c6e27cb69f3"
+  },
+  {
+    "id": "log-60",
+    "timestamp": "2026-08-17T05:55:54.831Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "afb01c3006d490a2aa005fe740810f7a4e8fb9a02be8524637180c6e27cb69f3",
+    "hash": "2642161e9ec482ed6725e321a5c68bd127fe6664ecf9d6921844ebdab0a84a8d"
+  },
+  {
+    "id": "log-61",
+    "timestamp": "2026-08-17T05:55:55.447Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "2642161e9ec482ed6725e321a5c68bd127fe6664ecf9d6921844ebdab0a84a8d",
+    "hash": "1c30e23863f50df1a683f37a79d4debde7df66fc5daf5dc36dc8564b67e9d4d9"
+  },
+  {
+    "id": "log-62",
+    "timestamp": "2026-08-17T05:55:55.975Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "1c30e23863f50df1a683f37a79d4debde7df66fc5daf5dc36dc8564b67e9d4d9",
+    "hash": "39aa5464285b161d18210bd815ee99bd327173620928b4f3b15581e41bb6a6e0"
+  },
+  {
+    "id": "log-63",
+    "timestamp": "2026-08-17T05:55:56.535Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "39aa5464285b161d18210bd815ee99bd327173620928b4f3b15581e41bb6a6e0",
+    "hash": "cb8f63c169de515fdf76597c91cdbacc7716566cac258b9058ffa56553664d5c"
+  },
+  {
+    "id": "log-64",
+    "timestamp": "2026-08-17T05:55:57.054Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "cb8f63c169de515fdf76597c91cdbacc7716566cac258b9058ffa56553664d5c",
+    "hash": "9de0558a2994d885662c9b254c961f99806df7043a63766f1542d9d92ba00f76"
+  },
+  {
+    "id": "log-65",
+    "timestamp": "2026-08-17T05:55:57.631Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "9de0558a2994d885662c9b254c961f99806df7043a63766f1542d9d92ba00f76",
+    "hash": "681b68d2865b86718be0e76d6a97800752fb88bd8b008310a854822747e238fc"
+  },
+  {
+    "id": "log-66",
+    "timestamp": "2026-08-17T05:55:58.199Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "681b68d2865b86718be0e76d6a97800752fb88bd8b008310a854822747e238fc",
+    "hash": "e9d7e1b8eeb522ad88f1853f3f2ac91277e1538b02988b9f7f83438a8f56775d"
+  },
+  {
+    "id": "log-67",
+    "timestamp": "2026-08-17T05:55:58.743Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "e9d7e1b8eeb522ad88f1853f3f2ac91277e1538b02988b9f7f83438a8f56775d",
+    "hash": "faf0d80255da41ee2622e67cf0a32f35808fbc32385b6dc8dded88627a025e11"
+  },
+  {
+    "id": "log-68",
+    "timestamp": "2026-08-17T05:55:59.279Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "faf0d80255da41ee2622e67cf0a32f35808fbc32385b6dc8dded88627a025e11",
+    "hash": "08a53937713ff4159def37352dc25136daddd5209e0aa75e819c23884146ecb8"
+  },
+  {
+    "id": "log-69",
+    "timestamp": "2026-08-17T05:56:03.944Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "08a53937713ff4159def37352dc25136daddd5209e0aa75e819c23884146ecb8",
+    "hash": "46f198a8784ca51c46a88c4c90152043840a5c822b5ca05cfd9c56c67da106fc"
+  },
+  {
+    "id": "log-70",
+    "timestamp": "2026-08-17T05:56:09.736Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "46f198a8784ca51c46a88c4c90152043840a5c822b5ca05cfd9c56c67da106fc",
+    "hash": "9480773e96c75156068766c1e64f0399a71fb1bb5deda6124e079b155d161d4b"
+  },
+  {
+    "id": "log-71",
+    "timestamp": "2026-08-17T05:56:20.842Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-4305",
+    "details": {
+      "status": "OFFICIALLY_APPROVED",
+      "title": "Hello Hello Test (FIR-2026-3409)"
+    },
+    "prevHash": "9480773e96c75156068766c1e64f0399a71fb1bb5deda6124e079b155d161d4b",
+    "hash": "5e404a64454b6519da0162397d33d1308fd32155be233a902674c65ef9a74537"
+  },
+  {
+    "id": "log-72",
+    "timestamp": "2026-08-17T05:56:43.033Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "AUDITOR",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "5e404a64454b6519da0162397d33d1308fd32155be233a902674c65ef9a74537",
+    "hash": "f694b25673acb5292739c85afe2946c439d1735458cc4edf9fa6a01868001dea"
+  },
+  {
+    "id": "log-73",
+    "timestamp": "2026-08-17T05:56:54.003Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "AUDITOR",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-4305",
+    "details": {
+      "mode": "redacted"
+    },
+    "prevHash": "f694b25673acb5292739c85afe2946c439d1735458cc4edf9fa6a01868001dea",
+    "hash": "a9030255e5bf705294c9eb39246cba80df4da46a08fcc7da158bc470da295929"
+  },
+  {
+    "id": "log-74",
+    "timestamp": "2026-08-17T05:56:54.761Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "AUDITOR",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-4305",
+    "details": {
+      "mode": "redacted"
+    },
+    "prevHash": "a9030255e5bf705294c9eb39246cba80df4da46a08fcc7da158bc470da295929",
+    "hash": "48f4d0cbf16159215524b94e669b48d7144fdcd967c91326d167f9ededa328e5"
   }
 ]

@@ -4,7 +4,7 @@ import { fetchApi } from '../api/client';
 export default function AudioPlayer({ meeting, activeRole, showToast }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [totalDuration, setTotalDuration] = useState(30);
+  const [totalDuration, setTotalDuration] = useState(45);
   const [audioVolume, setAudioVolume] = useState(1.0);
   const [playbackSpeed, setPlaybackSpeed] = useState('1.0');
   const [barHeights, setBarHeights] = useState([12, 24, 18, 30, 15, 26, 10, 22, 16, 28, 14, 20, 25, 18, 29, 12]);
@@ -45,8 +45,10 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       audioRef.current = audio;
 
       audio.onloadedmetadata = () => {
-        if (audio.duration && !isNaN(audio.duration) && audio.duration !== Infinity) {
+        if (audio.duration && !isNaN(audio.duration) && audio.duration !== Infinity && audio.duration > 0) {
           setTotalDuration(Math.ceil(audio.duration));
+        } else {
+          estimateDurationFromTranscript();
         }
       };
 
@@ -84,10 +86,22 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   }, [meeting, playbackSpeed]);
 
   const estimateDurationFromTranscript = () => {
-    const text = meeting?.rawTranscript || "";
+    if (meeting?.duration && typeof meeting.duration === 'number' && meeting.duration > 0) {
+      setTotalDuration(Math.ceil(meeting.duration / speedNum));
+      return;
+    }
+
+    const text = meeting?.rawTranscript || meeting?.redactedTranscript || "";
     const words = text.split(/\s+/).filter(Boolean).length;
-    const estimated = Math.max(12, Math.ceil(words / (2.3 * speedNum)));
-    setTotalDuration(estimated);
+    const charLen = text.length;
+
+    // Calculate dynamic duration based on spoken words and character length
+    if (words > 0) {
+      const calculatedSecs = Math.max(24, Math.ceil((words * 0.55 + charLen * 0.08) / speedNum));
+      setTotalDuration(calculatedSecs);
+    } else {
+      setTotalDuration(45);
+    }
   };
 
   // Dynamic Equalizer Animation Loop when playing
@@ -279,7 +293,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
             {/* Audio Details & Equalizer */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', color: 'var(--text-main)', marginBottom: '8px', fontFamily: 'var(--font-mono)' }}>
-                <span style={{ color: 'var(--text-main)', fontWeight: '800', fontSize: '12px' }}>
+                <span style={{ color: 'var(--text-main)', fontWeight: '800', fontSize: '13px' }}>
                   ⏱️ {formatTime(currentTime)} / {formatTime(totalDuration)}
                 </span>
 

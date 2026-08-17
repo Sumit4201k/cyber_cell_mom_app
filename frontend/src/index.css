@@ -233,6 +233,43 @@ input, select, textarea {
   background-color: #14532d;
 }
 
+/* Modal Overlay & Centered Dialog Box */
+.cyber-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.cyber-modal-dialog {
+  width: 600px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--surface-1);
+  border: 1.5px solid var(--border-dark);
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  margin: auto;
+}
+
+.modal-input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.modal-button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
 /* Sharp Boxy Redaction Tag */
 .pii-redacted-tag {
   display: inline-block;
@@ -492,5 +529,26 @@ input, select, textarea {
     flex-direction: column;
     gap: 4px;
     align-items: flex-start;
+  }
+
+  .cyber-modal-overlay {
+    padding: 12px;
+  }
+
+  .cyber-modal-dialog {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .modal-input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-button-group {
+    flex-direction: column;
+  }
+
+  .modal-button-group button {
+    width: 100%;
   }
 }

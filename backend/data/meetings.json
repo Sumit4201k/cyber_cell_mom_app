@@ -1,5 +1,49 @@
 [
   {
+    "id": "mtg-4305",
+    "title": "Hello Hello Test (FIR-2026-3409)",
+    "date": "2026-08-17",
+    "createdBy": "investigator_shinde",
+    "status": "OFFICIALLY_APPROVED",
+    "rawTranscript": "hello hello test  3",
+    "redactedTranscript": "hello hello test  3",
+    "entitiesFound": [
+      {
+        "entity_type": "FIR_ID",
+        "value": "FIR-2026-5450"
+      },
+      {
+        "entity_type": "BADGE_ID",
+        "value": "POL-8842"
+      }
+    ],
+    "agenda": [
+      "Case Investigation: hello hello test  3",
+      "Technical Packet Log Extraction",
+      "Notice Issuance under Section 91 CrPC"
+    ],
+    "decisions": [
+      "Issue urgent Section 91 CrPC notice to nodal officer",
+      "Escalate incident record to Senior Investigating Superintendent"
+    ],
+    "action_items": [
+      {
+        "id": "act-1786946034305-1",
+        "task": "Execute directive: hello hello test  3...",
+        "owner": "investigator_shinde",
+        "deadline": "2026-08-18",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-1786946034305-2",
+        "task": "Submit forensic technical summary to Cyber Cell Commander",
+        "owner": "Cyber Forensic Analyst ISP-1029",
+        "deadline": "2026-08-19",
+        "status": "IN_PROGRESS"
+      }
+    ]
+  },
+  {
     "id": "mtg-8472",
     "title": "Hello Hello Test (FIR-2026-4869)",
     "date": "2026-08-17",

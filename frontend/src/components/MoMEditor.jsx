@@ -68,8 +68,9 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
 
   return (
     <div className="cyber-card">
-      <div className="cyber-card-header">
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+      <div className="cyber-card-header" style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'stretch' }}>
+        {/* Top Row: Full-width Card Title & Edit Title Button */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', width: '100%' }}>
           {isEditingTitle ? (
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
               <input
@@ -87,13 +88,13 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
               </button>
             </div>
           ) : (
-            <div className="cyber-card-title">
-              📝 Minutes of Meeting & Action Items Matrix
+            <div className="cyber-card-title" style={{ fontSize: '13px', width: '100%', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+              <span style={{ whiteSpace: 'nowrap' }}>📝 Minutes of Meeting & Action Items Matrix</span>
               {canEdit && (
                 <button
                   onClick={() => setIsEditingTitle(true)}
                   className="btn-outline"
-                  style={{ fontSize: '10px', padding: '2px 8px', marginLeft: '6px' }}
+                  style={{ fontSize: '10px', padding: '2px 8px' }}
                   title="Click to edit case title (Logs event to SHA-256 audit ledger)"
                 >
                   ✏️ Edit Case Title
@@ -103,7 +104,8 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
+        {/* Bottom Row: Status Badge & Approve Action Button */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', width: '100%', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
           <span className={isApproved ? 'status-pill-approved' : 'status-pill-draft'}>
             {isApproved ? 'OFFICIALLY APPROVED' : 'DRAFT_PENDING_REVIEW'}
           </span>

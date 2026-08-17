@@ -185,8 +185,8 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
   };
 
   return (
-    <div className="cyber-modal-container">
-      <div className="cyber-card cyber-modal-card">
+    <div className="cyber-modal-overlay">
+      <div className="cyber-card cyber-modal-dialog">
         <div className="cyber-card-header">
           <div className="cyber-card-title">
             Ingest Audio Recording & Case Details
@@ -311,7 +311,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
           )}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '14px' }}>
           <button onClick={onClose} className="btn-outline" disabled={isProcessing}>
             Cancel
           </button>

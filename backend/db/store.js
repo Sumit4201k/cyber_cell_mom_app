@@ -18,13 +18,14 @@ const AUDIT_FILE = path.join(DATA_DIR, "auditLogs.json");
 // Cryptographic Ledger Genesis Hash
 const GENESIS_HASH = "GENESIS_HASH_0000000000000000000000000000000000000000000000000000000000000000";
 
-// Initial Seed Meetings with 100% Unique Police Incident Titles
+// Initial Seed Meetings with 100% Unique Police Incident Titles & Dynamic Audio Durations
 const initialMeetings = [
   {
     id: "mtg-101",
     title: "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)",
     date: "2026-08-16",
     createdBy: "Investigating Officer POL-8842",
+    duration: 145,
     status: "DRAFT_PENDING_REVIEW",
     rawTranscript: "Inspector Shinde: Briefing on SIM swapping incident FIR-2026-9941. Target victim lost 4.2 Lakhs via unauthorized porting. Cyber Ticket CY-2026-8812 assigned to Analyst ISP-1029.",
     redactedTranscript: "Inspector Shinde: Briefing on SIM swapping incident [FIR: FIR-2026-9941]. Target victim lost 4.2 Lakhs via unauthorized porting. Cyber Ticket [TICKET: CY-2026-8812] assigned to Analyst [BADGE: ISP-1029].",
@@ -45,6 +46,7 @@ const initialMeetings = [
     title: "Phishing Syndicate & Crypto Wallet Seizure (FIR-2026-8812)",
     date: "2026-08-15",
     createdBy: "Senior Inspector DSP-4021",
+    duration: 112,
     status: "OFFICIALLY_APPROVED",
     rawTranscript: "DSP Deshmukh: Reviewing phishing scam targeting senior citizens. Over 18 Lakhs funneled to USDT crypto wallet. Requesting immediate freeze from Binance compliance.",
     redactedTranscript: "DSP Deshmukh: Reviewing phishing scam targeting senior citizens. Over 18 Lakhs funneled to USDT crypto wallet [CRYPTO_ADDR]. Requesting immediate freeze from Binance compliance.",
@@ -64,6 +66,7 @@ const initialMeetings = [
     title: "Ransomware Server Breach & Data Extraction (CY-2026-7734)",
     date: "2026-08-14",
     createdBy: "Technical Lead CONST-5519",
+    duration: 188,
     status: "DRAFT_PENDING_REVIEW",
     rawTranscript: "Officer Pawar: Incident response meeting regarding LockBit strain detected on hospital servers. Threat actor demanding 2 BTC. Isolated network subnet at 03:00 AM.",
     redactedTranscript: "Officer Pawar: Incident response meeting regarding LockBit strain detected on hospital servers. Threat actor demanding 2 BTC. Isolated network subnet at 03:00 AM.",
@@ -82,6 +85,7 @@ const initialMeetings = [
     title: "Deepfake Extortion & Telegram Channel Analysis (FIR-2026-5521)",
     date: "2026-08-12",
     createdBy: "Investigating Officer POL-8842",
+    duration: 94,
     status: "OFFICIALLY_APPROVED",
     rawTranscript: "Inspector Shinde: Case file FIR-2026-5521 regarding AI deepfake video creation and extortion via Telegram channel. Issued takedown notice under IT Act Section 66E.",
     redactedTranscript: "Inspector Shinde: Case file [FIR: FIR-2026-5521] regarding AI deepfake video creation and extortion via Telegram channel. Issued takedown notice under IT Act Section 66E.",
