@@ -564,5 +564,127 @@
     },
     "prevHash": "ee69285218dcc3766110187d1629c51a85cb4e5000a4c9a0037bf5d13079a2ad",
     "hash": "0d2b4dcd065ee610e833cd003400bd2c107bdb0778c6b545cb316a0138f05b0b"
+  },
+  {
+    "id": "log-40",
+    "timestamp": "2026-08-17T05:16:43.164Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "VERIFY_AUDIT_LEDGER",
+    "resourceId": "ledger-root",
+    "details": {
+      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+    },
+    "prevHash": "0d2b4dcd065ee610e833cd003400bd2c107bdb0778c6b545cb316a0138f05b0b",
+    "hash": "bc24ea70807187dd66d474bea4374a0f8f769f13900b23b1fd1f86195204dcad"
+  },
+  {
+    "id": "log-41",
+    "timestamp": "2026-08-17T05:16:49.229Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-3507",
+    "details": {
+      "title": "Hello Hello Officers Sumit Here (FIR-2026-3549)",
+      "speed": 1,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "bc24ea70807187dd66d474bea4374a0f8f769f13900b23b1fd1f86195204dcad",
+    "hash": "9fda5b2cab678922c4e3b5facf15e0cfa39c9303414c1fd9aebbd5ceaf1d4603"
+  },
+  {
+    "id": "log-42",
+    "timestamp": "2026-08-17T05:16:56.751Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-101",
+    "details": {
+      "title": "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)",
+      "speed": 1,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "9fda5b2cab678922c4e3b5facf15e0cfa39c9303414c1fd9aebbd5ceaf1d4603",
+    "hash": "e28e327f9ca8f423c15e9e0baf72bd442bf14ae0cbcbb12f62c0cf921033c75d"
+  },
+  {
+    "id": "log-43",
+    "timestamp": "2026-08-17T05:17:04.045Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-3507",
+    "details": {
+      "title": "Hello Hello Officers Sumit Here (FIR-2026-3549)",
+      "speed": 1.5,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "e28e327f9ca8f423c15e9e0baf72bd442bf14ae0cbcbb12f62c0cf921033c75d",
+    "hash": "647ce67d6c1a009e270c624026e90d02ed8ab1f25d5adf6f3ee9392b70808562"
+  },
+  {
+    "id": "log-44",
+    "timestamp": "2026-08-17T05:17:20.591Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-3507",
+    "details": {
+      "status": "OFFICIALLY_APPROVED",
+      "title": "Hello Hello Officers Sumit Here (FIR-2026-3549)"
+    },
+    "prevHash": "647ce67d6c1a009e270c624026e90d02ed8ab1f25d5adf6f3ee9392b70808562",
+    "hash": "1c2c6e35ad810eb249e7932c50088449803d3e65c1257e4365a889359e9b68f9"
+  },
+  {
+    "id": "log-45",
+    "timestamp": "2026-08-17T05:18:58.474Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-8472",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-4869)"
+    },
+    "prevHash": "1c2c6e35ad810eb249e7932c50088449803d3e65c1257e4365a889359e9b68f9",
+    "hash": "65341ea1b70985f6da17d2aebe88d935b8ae269b4f25391765479f62a88b1edd"
+  },
+  {
+    "id": "log-46",
+    "timestamp": "2026-08-17T05:19:01.535Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-8472",
+    "details": {
+      "title": "Hello Hello Test (FIR-2026-4869)",
+      "speed": 1.5,
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "65341ea1b70985f6da17d2aebe88d935b8ae269b4f25391765479f62a88b1edd",
+    "hash": "7d5f789dba32096129c6d92388b913191e002f21e43db209e54295455bc1d336"
+  },
+  {
+    "id": "log-47",
+    "timestamp": "2026-08-17T05:26:45.596Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-8472",
+    "details": {
+      "status": "OFFICIALLY_APPROVED",
+      "title": "Hello Hello Test (FIR-2026-4869)"
+    },
+    "prevHash": "7d5f789dba32096129c6d92388b913191e002f21e43db209e54295455bc1d336",
+    "hash": "e9a36a6d3df277fa929081b8446894f989ade3c8837898361250b0a9c1a26a88"
   }
 ]

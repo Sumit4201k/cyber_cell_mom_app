@@ -20,7 +20,7 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
   ];
 
   return (
-    <div style={{
+    <div className="pdf-modal-overlay" style={{
       position: 'fixed',
       top: 0, left: 0, right: 0, bottom: 0,
       backgroundColor: 'rgba(15, 23, 42, 0.65)',
@@ -31,8 +31,64 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
       overflowY: 'auto',
       zIndex: 2000
     }}>
+      {/* Clean Print CSS: Hides background elements and forces 1-Page A4 output */}
+      <style>{`
+        @media print {
+          /* Hide non-printable app UI elements */
+          header, nav, sidebar, footer,
+          .pdf-top-toolbar,
+          .app-header, .sidebar, .main-layout {
+            display: none !important;
+          }
+
+          html, body {
+            background: #ffffff !important;
+            color: #000000 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            height: auto !important;
+            overflow: visible !important;
+          }
+
+          .pdf-modal-overlay {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            background: #ffffff !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: visible !important;
+            display: block !important;
+          }
+
+          #printable-pdf-document {
+            position: relative !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            border: none !important;
+            background: #ffffff !important;
+            display: block !important;
+            visibility: visible !important;
+          }
+
+          #printable-pdf-document * {
+            visibility: visible !important;
+          }
+
+          @page {
+            size: A4 portrait;
+            margin: 8mm 12mm 8mm 12mm;
+          }
+        }
+      `}</style>
+
       {/* Top Action Toolbar (Clean Light Police Operational Theme) */}
-      <div style={{
+      <div className="pdf-top-toolbar" style={{
         width: '100%',
         maxWidth: '850px',
         display: 'flex',
@@ -58,38 +114,38 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
         </div>
       </div>
 
-      {/* Official A4 PDF Document Layout Container */}
+      {/* Official Single-Page Compact A4 PDF Layout Container */}
       <div id="printable-pdf-document" style={{
         width: '100%',
         maxWidth: '850px',
         backgroundColor: '#ffffff',
         color: '#0f172a',
-        padding: '40px 50px',
+        padding: '24px 36px',
         borderRadius: '4px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
         fontFamily: 'Inter, sans-serif',
-        lineHeight: 1.6
+        lineHeight: 1.4
       }}>
         {/* Document Header */}
-        <div style={{ borderBottom: '3px solid #0f172a', paddingBottom: '16px', marginBottom: '24px' }}>
+        <div style={{ borderBottom: '2px solid #0f172a', paddingBottom: '8px', marginBottom: '12px' }}>
           <div style={{
             display: 'inline-block',
             backgroundColor: '#fef2f2',
             color: '#991b1b',
             border: '1px solid #fee2e2',
-            fontSize: '11px',
+            fontSize: '9.5px',
             fontWeight: '800',
-            padding: '4px 10px',
-            borderRadius: '4px',
-            letterSpacing: '0.1em',
-            marginBottom: '8px'
+            padding: '2px 6px',
+            borderRadius: '3px',
+            letterSpacing: '0.08em',
+            marginBottom: '4px'
           }}>
             CONFIDENTIAL — STATE POLICE PROPERTY
           </div>
-          <div style={{ fontSize: '11px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          <div style={{ fontSize: '9.5px', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
             State Cyber Cell — Technical Incident Division
           </div>
-          <h1 style={{ fontSize: '22px', fontWeight: '800', color: '#0f172a', margin: '8px 0 0 0' }}>
+          <h1 style={{ fontSize: '16px', fontWeight: '800', color: '#0f172a', margin: '3px 0 0 0' }}>
             {meeting.title || "Minutes of Meeting & Technical Action Item Report"}
           </h1>
         </div>
@@ -98,13 +154,13 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
-          gap: '16px',
+          gap: '10px',
           backgroundColor: '#f8fafc',
-          padding: '16px',
-          borderRadius: '6px',
+          padding: '8px 12px',
+          borderRadius: '4px',
           border: '1px solid #e2e8f0',
-          marginBottom: '24px',
-          fontSize: '12px'
+          marginBottom: '12px',
+          fontSize: '10.5px'
         }}>
           <div>
             <strong>Case Incident ID:</strong> {meeting.id}<br />
@@ -119,23 +175,23 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
         </div>
 
         {/* Topic 1: Attendees List */}
-        <div style={{ marginBottom: '24px' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px', marginBottom: '10px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '4px' }}>
             1. Official Attendees & Clearance Roles
           </h3>
-          <ul style={{ paddingLeft: '20px', fontSize: '12px', color: '#334155' }}>
-            {attendeeList.map((att, i) => <li key={i} style={{ marginBottom: '4px' }}>{att}</li>)}
+          <ul style={{ paddingLeft: '16px', fontSize: '10.5px', color: '#334155', margin: 0 }}>
+            {attendeeList.map((att, i) => <li key={i} style={{ marginBottom: '1px' }}>{att}</li>)}
           </ul>
         </div>
 
         {/* Topic 2: Meeting Agenda Topics */}
-        <div style={{ marginBottom: '24px' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px', marginBottom: '10px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '4px' }}>
             2. Topic Agenda & Discussion Points
           </h3>
-          <ol style={{ paddingLeft: '20px', fontSize: '12px', color: '#334155' }}>
+          <ol style={{ paddingLeft: '16px', fontSize: '10.5px', color: '#334155', margin: 0 }}>
             {agendaList.length > 0 ? (
-              agendaList.map((ag, i) => <li key={i} style={{ marginBottom: '4px' }}>{ag}</li>)
+              agendaList.map((ag, i) => <li key={i} style={{ marginBottom: '1px' }}>{ag}</li>)
             ) : (
               <li>General Cyber Incident & Technical Briefing</li>
             )}
@@ -143,13 +199,13 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
         </div>
 
         {/* Topic 3: Key Decisions Taken */}
-        <div style={{ marginBottom: '24px' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px', marginBottom: '10px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '4px' }}>
             3. Formal Decisions Taken
           </h3>
-          <ul style={{ paddingLeft: '20px', fontSize: '12px', color: '#334155' }}>
+          <ul style={{ paddingLeft: '16px', fontSize: '10.5px', color: '#334155', margin: 0 }}>
             {decisionList.length > 0 ? (
-              decisionList.map((dec, i) => <li key={i} style={{ marginBottom: '4px' }}>{dec}</li>)
+              decisionList.map((dec, i) => <li key={i} style={{ marginBottom: '1px' }}>{dec}</li>)
             ) : (
               <li>Issue Section 91 CrPC notice to bank nodal officer</li>
             )}
@@ -157,32 +213,32 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
         </div>
 
         {/* Topic 4: Action Items Table */}
-        <div style={{ marginBottom: '28px', pageBreakInside: 'avoid' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px', marginBottom: '10px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '4px' }}>
             4. Action Items & Assigned Task Matrix
           </h3>
-          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10.5px' }}>
             <thead>
-              <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '2px solid #cbd5e1' }}>
-                <th style={{ padding: '8px 10px', textAlign: 'left', width: '30px' }}>#</th>
-                <th style={{ padding: '8px 10px', textAlign: 'left' }}>Action Item / Task</th>
-                <th style={{ padding: '8px 10px', textAlign: 'left', width: '200px' }}>Assigned Owner</th>
-                <th style={{ padding: '8px 10px', textAlign: 'left', width: '110px' }}>Target Deadline</th>
+              <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '1.5px solid #cbd5e1' }}>
+                <th style={{ padding: '4px 6px', textAlign: 'left', width: '20px' }}>#</th>
+                <th style={{ padding: '4px 6px', textAlign: 'left' }}>Action Item / Task</th>
+                <th style={{ padding: '4px 6px', textAlign: 'left', width: '170px' }}>Assigned Owner</th>
+                <th style={{ padding: '4px 6px', textAlign: 'left', width: '80px' }}>Target Deadline</th>
               </tr>
             </thead>
             <tbody>
               {actionItems.map((item, idx) => (
                 <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0' }}>
-                  <td style={{ padding: '8px 10px' }}>{idx + 1}</td>
-                  <td style={{ padding: '8px 10px', fontWeight: '600' }}>{item.task || item.title || item.description}</td>
-                  <td style={{ padding: '8px 10px', color: '#0284c7' }}>{item.owner || item.assignedTo || 'Investigating Officer'}</td>
-                  <td style={{ padding: '8px 10px', fontFamily: 'monospace' }}>{item.deadline || item.dueDate || '2026-08-18'}</td>
+                  <td style={{ padding: '4px 6px' }}>{idx + 1}</td>
+                  <td style={{ padding: '4px 6px', fontWeight: '600' }}>{item.task || item.title || item.description}</td>
+                  <td style={{ padding: '4px 6px', color: '#0284c7' }}>{item.owner || item.assignedTo || 'Investigating Officer'}</td>
+                  <td style={{ padding: '4px 6px', fontFamily: 'monospace' }}>{item.deadline || item.dueDate || '2026-08-18'}</td>
                 </tr>
               ))}
 
               {actionItems.length === 0 && (
                 <tr>
-                  <td colSpan="4" style={{ padding: '12px', textAlign: 'center', color: '#64748b', fontStyle: 'italic' }}>
+                  <td colSpan="4" style={{ padding: '6px', textAlign: 'center', color: '#64748b', fontStyle: 'italic' }}>
                     No pending action items assigned for this incident record.
                   </td>
                 </tr>
@@ -192,18 +248,21 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
         </div>
 
         {/* Topic 5: Redacted Transcript Summary */}
-        <div style={{ marginBottom: '28px', pageBreakInside: 'avoid' }}>
-          <h3 style={{ fontSize: '14px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '6px', marginBottom: '10px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '4px' }}>
             5. Presidio Anonymized Transcript Excerpt
           </h3>
           <div style={{
             backgroundColor: '#f8fafc',
             border: '1px solid #e2e8f0',
-            padding: '14px',
+            padding: '6px 10px',
             borderRadius: '4px',
-            fontSize: '11px',
+            fontSize: '10px',
             fontFamily: 'monospace',
-            color: '#334155'
+            color: '#334155',
+            lineHeight: 1.35,
+            maxHeight: '90px',
+            overflow: 'hidden'
           }}>
             {meeting.redactedTranscript || meeting.rawTranscript || "Anonymized transcript record attached."}
           </div>
@@ -211,10 +270,10 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
 
         {/* Cryptographic SHA-256 Sign-off Stamp */}
         <div style={{
-          borderTop: '2px dashed #0f172a',
-          paddingTop: '16px',
-          marginTop: '40px',
-          fontSize: '10px',
+          borderTop: '1.5px dashed #0f172a',
+          paddingTop: '8px',
+          marginTop: '12px',
+          fontSize: '9px',
           color: '#64748b',
           display: 'flex',
           justifyContent: 'space-between',

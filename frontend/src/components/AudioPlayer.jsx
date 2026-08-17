@@ -6,7 +6,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(30);
   const [audioVolume, setAudioVolume] = useState(1.0);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
+  const [playbackSpeed, setPlaybackSpeed] = useState('1.0');
   const [barHeights, setBarHeights] = useState([12, 24, 18, 30, 15, 26, 10, 22, 16, 28, 14, 20, 25, 18, 29, 12]);
   
   const audioRef = useRef(null);
@@ -14,6 +14,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   const synthTimerRef = useRef(null);
 
   const isAuditor = activeRole === 'AUDITOR';
+  const speedNum = parseFloat(playbackSpeed) || 1.0;
 
   // Dynamic Audio Ingestion when meeting changes or speed updates
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
     if (meeting?.audioUrl) {
       const audio = new Audio(meeting.audioUrl);
       audio.volume = audioVolume;
-      audio.playbackRate = playbackSpeed;
+      audio.playbackRate = speedNum;
       audioRef.current = audio;
 
       audio.onloadedmetadata = () => {
@@ -85,7 +86,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   const estimateDurationFromTranscript = () => {
     const text = meeting?.rawTranscript || "";
     const words = text.split(/\s+/).filter(Boolean).length;
-    const estimated = Math.max(12, Math.ceil(words / (2.3 * playbackSpeed)));
+    const estimated = Math.max(12, Math.ceil(words / (2.3 * speedNum)));
     setTotalDuration(estimated);
   };
 
@@ -95,7 +96,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       const animateEqualizer = () => {
         const newHeights = barHeights.map(() => Math.floor(Math.random() * 26) + 6);
         setBarHeights(newHeights);
-        animFrameRef.current = setTimeout(animateEqualizer, 120 / playbackSpeed);
+        animFrameRef.current = setTimeout(animateEqualizer, 120 / speedNum);
       };
       animateEqualizer();
     } else {
@@ -139,13 +140,13 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
           body: JSON.stringify({
             action: 'PLAY_AUDIO_RECORDING',
             resourceId: meeting?.id || 'audio-1',
-            details: { title: meeting?.title, speed: playbackSpeed, audioUrl: meeting?.audioUrl ? 'Real Audio File' : 'Speech Synth Utterance' }
+            details: { title: meeting?.title, speed: speedNum, audioUrl: meeting?.audioUrl ? 'Real Audio File' : 'Speech Synth Utterance' }
           })
         }, activeRole);
       } catch (e) {}
 
       if (audioRef.current) {
-        audioRef.current.playbackRate = playbackSpeed;
+        audioRef.current.playbackRate = speedNum;
         audioRef.current.play().then(() => {
           setIsPlaying(true);
         }).catch(() => {
@@ -162,7 +163,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       window.speechSynthesis.cancel();
       const textToSpeak = meeting?.rawTranscript || "State Cyber Cell meeting recording playback initialized.";
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
-      utterance.rate = playbackSpeed;
+      utterance.rate = speedNum;
       utterance.volume = audioVolume;
       
       utterance.onend = () => {
@@ -184,7 +185,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
           }
           return prev + 1;
         });
-      }, 1000 / playbackSpeed);
+      }, 1000 / speedNum);
     } else {
       setIsPlaying(true);
     }
@@ -199,15 +200,16 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   };
 
   const handleSpeedChange = (e) => {
-    const newSpeed = parseFloat(e.target.value);
-    setPlaybackSpeed(newSpeed);
+    const newSpeedStr = e.target.value;
+    setPlaybackSpeed(newSpeedStr);
+    const newSpeedVal = parseFloat(newSpeedStr);
     if (audioRef.current) {
-      audioRef.current.playbackRate = newSpeed;
+      audioRef.current.playbackRate = newSpeedVal;
     }
     if (window.speechSynthesis && isPlaying) {
       window.speechSynthesis.cancel();
       setIsPlaying(false);
-      if (showToast) showToast('info', 'Speed Changed', `Playback speed set to ${newSpeed}x. Press Play to listen.`);
+      if (showToast) showToast('info', 'Speed Changed', `Playback speed set to ${newSpeedStr}x. Press Play to listen.`);
     }
   };
 
@@ -320,7 +322,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
             paddingTop: '8px'
           }}>
             <span>Source: <strong>{meeting?.audioUrl ? 'Live Audio Recording Track' : 'Speech Synthesis Engine'}</strong></span>
-            <span>Selected Speed: <strong>{playbackSpeed}x (Normal = 1.0x)</strong> | Duration: <strong>{formatTime(totalDuration)}</strong></span>
+            <span>Selected Speed: <strong>{playbackSpeed}x</strong> | Duration: <strong>{formatTime(totalDuration)}</strong></span>
           </div>
         </div>
       ) : (

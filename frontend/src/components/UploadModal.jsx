@@ -34,6 +34,10 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
 
   const startMicrophoneRecording = async () => {
     try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert('Microphone recording requires HTTPS or a modern mobile browser.');
+        return;
+      }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
       mediaRecorderRef.current = new MediaRecorder(stream);
@@ -181,16 +185,8 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(15, 23, 42, 0.6)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000
-    }}>
-      <div className="cyber-card" style={{ width: '600px', backgroundColor: 'var(--surface-1)' }}>
+    <div className="cyber-modal-container">
+      <div className="cyber-card cyber-modal-card">
         <div className="cyber-card-header">
           <div className="cyber-card-title">
             Ingest Audio Recording & Case Details
@@ -200,7 +196,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
 
         <div style={{ padding: '6px 0' }}>
           {/* Metadata Override Fields */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '14px' }}>
+          <div className="modal-input-grid">
             <div>
               <label style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
                 CASE TITLE / FIR # (OPTIONAL)
@@ -230,8 +226,8 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
           {/* File Upload Box */}
           <div style={{
             border: '2px dashed var(--border-dark)',
-            borderRadius: '8px',
-            padding: '18px',
+            borderRadius: '0px',
+            padding: '16px',
             textAlign: 'center',
             backgroundColor: 'var(--surface-2)',
             marginBottom: '14px'
@@ -259,7 +255,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
           </div>
 
           {/* Live Mic Recording Option */}
-          <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
+          <div className="modal-button-group">
             {!isRecording ? (
               <button onClick={startMicrophoneRecording} className="btn-outline" style={{ flex: 1 }}>
                 Record Live via Microphone
@@ -285,16 +281,16 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
               backgroundColor: 'var(--surface-2)',
               border: '1.5px solid var(--border-dark)',
               padding: '12px 16px',
-              borderRadius: '8px',
-              fontSize: '13px',
+              borderRadius: '0px',
+              fontSize: '12px',
               marginBottom: '14px',
               color: 'var(--text-main)',
-              maxHeight: '140px',
+              maxHeight: '120px',
               overflowY: 'auto',
               fontFamily: 'var(--font-mono)',
-              lineHeight: 1.6
+              lineHeight: 1.5
             }}>
-              <div style={{ fontWeight: '700', fontSize: '11px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
+              <div style={{ fontWeight: '700', fontSize: '10px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
                 Live Speech Transcript ({liveTranscript.split(/\s+/).length} words):
               </div>
               "{liveTranscript}"
@@ -308,7 +304,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
                 <span>{statusMessage}</span>
                 <span>{progress}%</span>
               </div>
-              <div style={{ width: '100%', height: '6px', backgroundColor: 'var(--surface-3)', borderRadius: '3px', overflow: 'hidden' }}>
+              <div style={{ width: '100%', height: '6px', backgroundColor: 'var(--surface-3)', borderRadius: '0px', overflow: 'hidden' }}>
                 <div style={{ width: `${progress}%`, height: '100%', backgroundColor: 'var(--state-green)', transition: 'width 0.3s' }}></div>
               </div>
             </div>

@@ -70,6 +70,40 @@ input, select, textarea {
   border-bottom: 2px solid #000;
 }
 
+/* Main Navbar Navigation Header */
+.main-navbar {
+  background-color: var(--surface-1);
+  border-bottom: 1.5px solid var(--border-dark);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.navbar-role-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 /* Layout Containers */
 .app-container {
   max-width: 1440px;
@@ -342,7 +376,67 @@ input, select, textarea {
   gap: 16px;
 }
 
-@media (max-width: 992px) {
+/* Responsive Mobile Layout Adaptations */
+@media (max-width: 868px) {
+  .classification-header {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+
+  .main-navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .navbar-brand {
+    justify-content: flex-start;
+  }
+
+  .navbar-title {
+    font-size: 13.5px !important;
+  }
+
+  .navbar-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .navbar-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .navbar-tabs button {
+    width: 100%;
+    justify-content: center;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+
+  .navbar-role-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+  }
+
+  .role-select-box {
+    width: 100%;
+    max-width: 180px;
+  }
+
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
@@ -352,6 +446,6 @@ input, select, textarea {
   }
 
   .app-container {
-    padding: 14px;
+    padding: 12px;
   }
 }
