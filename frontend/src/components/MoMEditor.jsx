@@ -69,15 +69,15 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
   return (
     <div className="cyber-card">
       <div className="cyber-card-header">
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           {isEditingTitle ? (
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1 }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', width: '100%', flexWrap: 'wrap' }}>
               <input
                 type="text"
                 value={titleText}
                 onChange={(e) => setTitleText(e.target.value)}
                 className="cyber-input"
-                style={{ fontWeight: '700', fontSize: '14px' }}
+                style={{ fontWeight: '700', fontSize: '13px', flex: 1, minWidth: '180px' }}
               />
               <button onClick={handleSaveTitle} className="btn-outline btn-outline-active" style={{ fontSize: '11px' }}>
                 Save Title
@@ -103,7 +103,7 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
           )}
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
           <span className={isApproved ? 'status-pill-approved' : 'status-pill-draft'}>
             {isApproved ? 'OFFICIALLY APPROVED' : 'DRAFT_PENDING_REVIEW'}
           </span>
@@ -120,12 +120,12 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
       </div>
 
       {/* Agenda & Decisions Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '20px' }}>
+      <div className="agenda-decisions-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '20px' }}>
         <div style={{
           backgroundColor: 'var(--surface-2)',
           border: '1px solid var(--border-color)',
-          borderRadius: '8px',
-          padding: '14px'
+          borderRadius: '0px',
+          padding: '12px 14px'
         }}>
           <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px' }}>
             Meeting Agenda Topics
@@ -140,8 +140,8 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
         <div style={{
           backgroundColor: 'var(--surface-2)',
           border: '1px solid var(--border-color)',
-          borderRadius: '8px',
-          padding: '14px'
+          borderRadius: '0px',
+          padding: '12px 14px'
         }}>
           <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px' }}>
             Key Decisions Taken
@@ -156,24 +156,24 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
 
       {/* Editable Action Items Matrix Table */}
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-          <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--text-main)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{ fontWeight: '700', fontSize: '12px', color: 'var(--text-main)' }}>
             Assigned Action Items & Tasks ({actionItems.length})
           </div>
 
           {canEdit && (
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '6px' }}>
               {isEditingTasks ? (
                 <>
-                  <button onClick={handleAddTask} className="btn-outline" style={{ fontSize: '11px' }}>
+                  <button onClick={handleAddTask} className="btn-outline" style={{ fontSize: '10px' }}>
                     + Add Task Row
                   </button>
-                  <button onClick={handleSaveTasks} className="btn-outline btn-outline-active" style={{ fontSize: '11px' }}>
+                  <button onClick={handleSaveTasks} className="btn-outline btn-outline-active" style={{ fontSize: '10px' }}>
                     💾 Save Action Items
                   </button>
                 </>
               ) : (
-                <button onClick={() => setIsEditingTasks(true)} className="btn-outline" style={{ fontSize: '11px' }}>
+                <button onClick={() => setIsEditingTasks(true)} className="btn-outline" style={{ fontSize: '10px' }}>
                   ✏️ Edit Action Items
                 </button>
               )}
@@ -181,13 +181,13 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
           )}
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table className="cyber-table">
+        <div style={{ overflowX: 'auto', width: '100%' }}>
+          <table className="cyber-table" style={{ minWidth: '450px' }}>
             <thead>
               <tr>
-                <th style={{ width: '45%' }}>Action Item / Investigation Task</th>
+                <th style={{ width: '45%' }}>Action Item / Task</th>
                 <th style={{ width: '30%' }}>Assigned Officer (Owner)</th>
-                <th style={{ width: '15%' }}>Target Deadline</th>
+                <th style={{ width: '25%' }}>Target Deadline</th>
                 {isEditingTasks && <th style={{ width: '10%' }}>Action</th>}
               </tr>
             </thead>

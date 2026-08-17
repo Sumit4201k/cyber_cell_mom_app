@@ -216,11 +216,11 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   return (
     <div className="cyber-card" style={{ backgroundColor: 'var(--surface-1)' }}>
       <div className="cyber-card-header" style={{ marginBottom: '12px', paddingBottom: '8px' }}>
-        <div className="cyber-card-title" style={{ fontSize: '14px' }}>
+        <div className="cyber-card-title" style={{ fontSize: '13px' }}>
           🔊 Synchronized Waveform Audio Player ({meeting?.id})
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
           {!isAuditor && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600' }}>SPEED:</span>
@@ -241,7 +241,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
           )}
 
           {isAuditor ? (
-            <span style={{ fontSize: '11px', color: 'var(--text-muted)', backgroundColor: 'var(--surface-3)', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '11px', color: 'var(--text-muted)', backgroundColor: 'var(--surface-3)', padding: '2px 8px', borderRadius: '0px', border: '1px solid var(--border-color)' }}>
               Audio Playback Restricted
             </span>
           ) : (
@@ -255,20 +255,20 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       {!isAuditor ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {/* Main Controls + Dynamic Waveform */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             {/* Play/Pause Button */}
             <button
               onClick={togglePlay}
               className="btn-outline"
               style={{
-                width: '46px',
-                height: '46px',
-                borderRadius: '50%',
+                width: '42px',
+                height: '42px',
                 padding: 0,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '18px',
+                flexShrink: 0,
                 borderColor: isPlaying ? 'var(--state-green)' : 'var(--text-main)',
                 backgroundColor: isPlaying ? 'var(--state-green-bg)' : 'transparent'
               }}
@@ -277,22 +277,22 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
             </button>
 
             {/* Audio Details & Equalizer */}
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', color: 'var(--text-main)', marginBottom: '8px', fontFamily: 'var(--font-mono)' }}>
-                <span style={{ color: 'var(--text-main)', fontWeight: '800', fontSize: '13px' }}>
+                <span style={{ color: 'var(--text-main)', fontWeight: '800', fontSize: '12px' }}>
                   ⏱️ {formatTime(currentTime)} / {formatTime(totalDuration)}
                 </span>
 
                 {/* Dynamic Equalizer Visualizer Bars */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', height: '28px' }}>
-                  {barHeights.map((h, i) => (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', height: '24px' }}>
+                  {barHeights.slice(0, 10).map((h, i) => (
                     <div
                       key={i}
                       style={{
-                        width: '4px',
+                        width: '3px',
                         height: `${h}px`,
                         backgroundColor: isPlaying ? 'var(--state-green)' : 'var(--border-dark)',
-                        borderRadius: '2px',
+                        borderRadius: '0px',
                         transition: 'height 0.1s ease-in-out'
                       }}
                     />
@@ -313,7 +313,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
           </div>
 
           {/* Dynamic Audio File Info Bar */}
-          <div style={{
+          <div className="player-info-footer" style={{
             fontSize: '11px',
             color: 'var(--text-muted)',
             display: 'flex',

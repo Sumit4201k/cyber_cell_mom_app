@@ -31,16 +31,21 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
       overflowY: 'auto',
       zIndex: 2000
     }}>
-      {/* Clean Print CSS: Hides background elements and forces 1-Page A4 output */}
+      {/* Strict Print CSS: Completely hides main web app cards (.cyber-card, .app-container) so ONLY the PDF document prints */}
       <style>{`
         @media print {
-          /* Hide non-printable app UI elements */
-          header, nav, sidebar, footer,
-          .pdf-top-toolbar,
-          .app-header, .sidebar, .main-layout {
+          /* Hide main dashboard, navbar, headers, sidebars, and audio player cards */
+          .app-container,
+          .classification-header,
+          .main-navbar,
+          .metrics-grid,
+          .dashboard-grid,
+          .cyber-card,
+          .pdf-top-toolbar {
             display: none !important;
           }
 
+          /* Force body to render cleanly */
           html, body {
             background: #ffffff !important;
             color: #000000 !important;
@@ -50,6 +55,7 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
             overflow: visible !important;
           }
 
+          /* Only show the PDF modal container */
           .pdf-modal-overlay {
             position: absolute !important;
             top: 0 !important;
@@ -64,6 +70,7 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
           }
 
           #printable-pdf-document {
+            display: block !important;
             position: relative !important;
             width: 100% !important;
             max-width: 100% !important;
@@ -72,8 +79,6 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
             box-shadow: none !important;
             border: none !important;
             background: #ffffff !important;
-            display: block !important;
-            visibility: visible !important;
           }
 
           #printable-pdf-document * {
@@ -115,7 +120,7 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
       </div>
 
       {/* Official Single-Page Compact A4 PDF Layout Container */}
-      <div id="printable-pdf-document" style={{
+      <div id="printable-pdf-document" className="pdf-document-box" style={{
         width: '100%',
         maxWidth: '850px',
         backgroundColor: '#ffffff',

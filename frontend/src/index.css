@@ -448,4 +448,49 @@ input, select, textarea {
   .app-container {
     padding: 12px;
   }
+
+  /* Comprehensive Mobile Card Header Stacking */
+  .cyber-card {
+    padding: 14px;
+  }
+
+  .cyber-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .cyber-card-title {
+    flex-wrap: wrap;
+    font-size: 12px !important;
+    gap: 6px;
+    line-height: 1.4;
+  }
+
+  .card-header-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-header-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .agenda-decisions-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .btn-primary-approve {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .player-info-footer {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
 }

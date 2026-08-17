@@ -1,109 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import UploadModal from './components/UploadModal';
 import AudioPlayer from './components/AudioPlayer';
 import TranscriptViewer from './components/TranscriptViewer';
 import MoMEditor from './components/MoMEditor';
 import AuditLogTable from './components/AuditLogTable';
-import MFAModal from './components/MFAModal';
+import UploadModal from './components/UploadModal';
 import PdfReportModal from './components/PdfReportModal';
+import MFAModal from './components/MFAModal';
 import Toast from './components/Toast';
 import { fetchApi, uploadMeetingAudio } from './api/client';
 
 export default function App() {
-  const [activeRole, setActiveRoleState] = useState(() => {
-    return localStorage.getItem('cyber_activeRole') || 'INVESTIGATOR';
-  });
-  
-  const [activeTab, setActiveTabState] = useState(() => {
-    return localStorage.getItem('cyber_activeTab') || 'dashboard';
-  });
-
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeetingState] = useState(null);
+  const [activeRole, setActiveRole] = useState('INVESTIGATOR');
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [isUploadOpen, setIsUploadOpen] = useState(false);
-  const [isMfaOpen, setIsMfaOpen] = useState(false);
   const [isPdfOpen, setIsPdfOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [toasts, setToasts] = useState([]);
+  const [isMfaOpen, setIsMfaOpen] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [mobileScreen, setMobileScreen] = useState('case_list'); // 'case_list' | 'case_detail'
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
-  // Sidebar card inline editing state
+  // Editing sidebar case title inline state
   const [editingCardId, setEditingCardId] = useState(null);
   const [editingCardTitle, setEditingCardTitle] = useState('');
 
-  // Mobile Page Viewing View State: 'case_list' (Page 1) vs 'case_detail' (Page 2)
-  const [mobileScreen, setMobileScreen] = useState('case_list');
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 820);
+  const isMobile = windowWidth <= 868;
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 820);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const setActiveRole = (role) => {
-    setActiveRoleState(role);
-    localStorage.setItem('cyber_activeRole', role);
-  };
-
-  const setActiveTab = (tab) => {
-    setActiveTabState(tab);
-    localStorage.setItem('cyber_activeTab', tab);
+  const showToast = (type, title, message) => {
+    setToast({ type, title, message });
   };
 
   const setSelectedMeeting = (meeting) => {
     setSelectedMeetingState(meeting);
-    if (meeting?.id) {
-      localStorage.setItem('cyber_selectedMeetingId', meeting.id);
-    }
-    if (isMobile) {
-      setMobileScreen('case_detail');
+    if (meeting) {
+      localStorage.setItem('cyber_selected_meeting_id', meeting.id);
     }
   };
 
-  // Toast helper
-  const showToast = (type, title, message) => {
-    const id = Date.now();
-    setToasts(prev => [...prev, { id, type, title, message }]);
-    setTimeout(() => {
-      removeToast(id);
-    }, 3500);
-  };
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const removeToast = (id) => {
-    setToasts(prev => prev.filter(t => t.id !== id));
-  };
-
-  // Load meetings on role change
   const loadMeetings = async () => {
     try {
-      setLoading(true);
       const data = await fetchApi('/meetings', {}, activeRole);
-      const mtgList = data.meetings || [];
-      setMeetings(mtgList);
+      if (data.meetings) {
+        setMeetings(data.meetings);
+        
+        // Cache meetings in browser localStorage for offline/mobile resiliency
+        try { localStorage.setItem('cyber_meetings_cache', JSON.stringify(data.meetings)); } catch(e){}
 
-      const savedMtgId = localStorage.getItem('cyber_selectedMeetingId');
-      if (savedMtgId) {
-        const savedMtg = mtgList.find(m => m.id === savedMtgId);
-        if (savedMtg) {
-          setSelectedMeetingState(savedMtg);
-          setLoading(false);
-          return;
+        const savedId = localStorage.getItem('cyber_selected_meeting_id');
+        const found = data.meetings.find(m => m.id === savedId);
+        if (found) {
+          setSelectedMeetingState(found);
+        } else if (data.meetings.length > 0 && !selectedMeeting) {
+          setSelectedMeetingState(data.meetings[0]);
         }
       }
-
-      if (mtgList.length > 0 && !selectedMeeting) {
-        setSelectedMeetingState(mtgList[0]);
-      } else if (mtgList.length > 0 && selectedMeeting) {
-        const updated = mtgList.find(m => m.id === selectedMeeting.id);
-        if (updated) setSelectedMeetingState(updated);
-      }
     } catch (err) {
-      console.warn("Failed to fetch meetings:", err.message);
-    } finally {
-      setLoading(false);
+      // Offline fallback: load cached meetings if server fetch fails
+      const stored = localStorage.getItem('cyber_meetings_cache');
+      if (stored) {
+        try {
+          const cached = JSON.parse(stored);
+          setMeetings(cached);
+          if (cached.length > 0 && !selectedMeeting) setSelectedMeetingState(cached[0]);
+        } catch(e){}
+      }
     }
   };
 
@@ -111,7 +79,7 @@ export default function App() {
     loadMeetings();
   }, [activeRole]);
 
-  const handleUploadComplete = async (formData, useDemoSample) => {
+  const handleUploadComplete = async (formData, useDemoSample = false) => {
     const data = await uploadMeetingAudio(formData, activeRole);
     if (data.meeting) {
       setMeetings(prev => [data.meeting, ...prev]);
@@ -154,26 +122,20 @@ export default function App() {
       if (data.meeting) {
         setSelectedMeeting(data.meeting);
         loadMeetings();
-        showToast('success', 'MoM Officially Approved', 'Signed record written to SHA-256 cryptographic audit chain.');
+        showToast('success', 'Record Officially Approved', 'MoM file status updated to OFFICIALLY APPROVED and locked.');
       }
     } catch (err) {
-      showToast('warning', 'Approval Error', err.message);
+      showToast('warning', 'Approval Failed', err.message);
     }
   };
 
-  const handleTitleUpdated = (updatedMeeting) => {
-    setSelectedMeeting(updatedMeeting);
-    setMeetings(prev => prev.map(m => m.id === updatedMeeting.id ? updatedMeeting : m));
-  };
-
-  // Direct Sidebar Card Title Edit
-  const startEditingCardTitle = (e, m) => {
+  const startEditCardTitle = (e, meeting) => {
     e.stopPropagation();
-    setEditingCardId(m.id);
-    setEditingCardTitle(m.title);
+    setEditingCardId(meeting.id);
+    setEditingCardTitle(meeting.title);
   };
 
-  const saveCardTitle = async (e, mId) => {
+  const saveCardTitleEdit = async (e, mId) => {
     e.stopPropagation();
     if (!editingCardTitle.trim()) return;
 
@@ -261,7 +223,7 @@ export default function App() {
                 </p>
               </div>
 
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div className="action-buttons-group" style={{ display: 'flex', gap: '10px' }}>
                 <button onClick={() => setIsPdfOpen(true)} className="btn-outline">
                   Export PDF Summary
                 </button>
@@ -277,25 +239,26 @@ export default function App() {
             {isMobile && mobileScreen === 'case_detail' && (
               <div style={{
                 backgroundColor: 'var(--surface-1)',
-                border: '1px solid var(--border-dark)',
+                border: '1.5px solid var(--border-dark)',
                 padding: '10px 14px',
-                borderRadius: '8px',
+                borderRadius: '0px',
                 marginBottom: '16px',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                flexDirection: 'column',
+                alignItems: 'stretch',
+                gap: '6px'
               }}>
                 <button
                   onClick={() => setMobileScreen('case_list')}
-                  className="btn-outline"
-                  style={{ fontWeight: '700' }}
+                  className="btn-outline btn-outline-active"
+                  style={{ width: '100%', justifyContent: 'center', fontWeight: '700', padding: '8px' }}
                 >
-                  ← Back to Case Incident Files List
+                  ← BACK TO CASE INCIDENT FILES LIST
                 </button>
 
-                <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                  Viewing: {selectedMeeting?.id}
-                </span>
+                <div style={{ textAlign: 'center', fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  Viewing Case File: <strong>{selectedMeeting?.id}</strong>
+                </div>
               </div>
             )}
 
@@ -303,58 +266,59 @@ export default function App() {
             {(!isMobile || mobileScreen === 'case_list') && (
               <div className={!isMobile ? "dashboard-grid" : ""}>
                 
-                {/* Case Incident Files Explorer */}
-                <div className="cyber-card" style={{ padding: '16px' }}>
-                  <h3 style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px', fontWeight: '700', letterSpacing: '0.05em' }}>
+                {/* Left Panel: Incident Master Record List */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{
+                    fontSize: '11px',
+                    fontWeight: '800',
+                    color: 'var(--text-muted)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    paddingBottom: '4px',
+                    fontFamily: 'var(--font-mono)'
+                  }}>
                     Case Incident Files ({meetings.length})
-                  </h3>
+                  </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: isMobile ? 'none' : '640px', overflowY: 'auto' }}>
-                    {meetings.map((m) => (
+                  {meetings.map((m) => {
+                    const isSelected = selectedMeeting?.id === m.id;
+                    const isEditingThis = editingCardId === m.id;
+
+                    return (
                       <div
                         key={m.id}
-                        onClick={() => setSelectedMeeting(m)}
+                        onClick={() => {
+                          setSelectedMeeting(m);
+                          if (isMobile) setMobileScreen('case_detail');
+                        }}
+                        className="cyber-card"
                         style={{
-                          padding: '14px',
-                          borderRadius: '8px',
-                          backgroundColor: selectedMeeting?.id === m.id ? 'var(--surface-3)' : 'var(--surface-1)',
-                          border: selectedMeeting?.id === m.id ? '1.5px solid var(--text-main)' : '1px solid var(--border-color)',
                           cursor: 'pointer',
-                          transition: 'all 0.15s ease'
+                          marginBottom: 0,
+                          backgroundColor: isSelected ? 'var(--surface-1)' : 'var(--surface-1)',
+                          borderLeft: isSelected ? '5px solid var(--text-main)' : '1.5px solid var(--border-dark)'
                         }}
                       >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                          <span style={{ fontSize: '11px', color: 'var(--text-main)', fontFamily: 'var(--font-mono)', fontWeight: '700' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: '700', color: 'var(--text-muted)' }}>
                             {m.id}
                           </span>
-
-                          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                            <span className={m.status === 'OFFICIALLY_APPROVED' ? 'status-pill-approved' : 'status-pill-draft'} style={{ fontSize: '9px' }}>
-                              {m.status === 'OFFICIALLY_APPROVED' ? 'APPROVED' : 'DRAFT'}
-                            </span>
-                            
-                            {activeRole !== 'AUDITOR' && (
-                              <button
-                                onClick={(e) => startEditingCardTitle(e, m)}
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '11px', color: 'var(--text-muted)' }}
-                                title="Edit Title Directly on Sidebar Card"
-                              >
-                                Edit ✏️
-                              </button>
-                            )}
-                          </div>
+                          <span className={m.status === 'OFFICIALLY_APPROVED' ? 'status-pill-approved' : 'status-pill-draft'} style={{ fontSize: '8px' }}>
+                            {m.status === 'OFFICIALLY_APPROVED' ? 'APPROVED' : 'DRAFT'}
+                          </span>
                         </div>
 
-                        {editingCardId === m.id ? (
+                        {/* Inline Title Editor vs Static Title Display */}
+                        {isEditingThis ? (
                           <div style={{ display: 'flex', gap: '6px', margin: '6px 0' }} onClick={(e) => e.stopPropagation()}>
                             <input
                               type="text"
                               value={editingCardTitle}
                               onChange={(e) => setEditingCardTitle(e.target.value)}
                               className="cyber-input"
-                              style={{ fontSize: '12px', padding: '3px 6px' }}
+                              style={{ fontSize: '11px', fontWeight: '700', padding: '3px 6px' }}
                             />
-                            <button onClick={(e) => saveCardTitle(e, m.id)} className="btn-outline btn-outline-active" style={{ fontSize: '10px', padding: '2px 6px' }}>
+                            <button onClick={(e) => saveCardTitleEdit(e, m.id)} className="btn-outline btn-outline-active" style={{ fontSize: '10px', padding: '2px 6px' }}>
                               Save
                             </button>
                             <button onClick={(e) => { e.stopPropagation(); setEditingCardId(null); }} className="btn-outline" style={{ fontSize: '10px', padding: '2px 6px' }}>
@@ -362,35 +326,32 @@ export default function App() {
                             </button>
                           </div>
                         ) : (
-                          <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)', marginBottom: '6px', lineHeight: 1.3 }}>
-                            {m.title}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '6px' }}>
+                            <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)', lineHeight: 1.3, flex: 1 }}>
+                              {m.title}
+                            </div>
+                            {activeRole !== 'AUDITOR' && m.status !== 'OFFICIALLY_APPROVED' && (
+                              <button
+                                onClick={(e) => startEditCardTitle(e, m)}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '11px', padding: '0 2px' }}
+                                title="Edit Title"
+                              >
+                                ✏️
+                              </button>
+                            )}
                           </div>
                         )}
 
-                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px' }}>
                           <span>📅 {m.date}</span>
-                          <span>Officer: {m.createdBy}</span>
+                          <span>👮 {m.createdBy}</span>
                         </div>
-
-                        {isMobile && (
-                          <div style={{ marginTop: '10px', textAlign: 'right' }}>
-                            <span className="btn-outline" style={{ fontSize: '10px', padding: '2px 8px' }}>
-                              Open Case File →
-                            </span>
-                          </div>
-                        )}
                       </div>
-                    ))}
-
-                    {meetings.length === 0 && !loading && (
-                      <div style={{ fontSize: '12px', color: 'var(--text-muted)', textAlign: 'center', padding: '20px 0' }}>
-                        No meeting records ingested yet. Click "Process Meeting Audio" to upload.
-                      </div>
-                    )}
-                  </div>
+                    );
+                  })}
                 </div>
 
-                {/* Right Column: Case Document Reader (Desktop Only) */}
+                {/* Right Panel Desktop Document Workbench */}
                 {!isMobile && (
                   <div>
                     {selectedMeeting ? (
@@ -403,12 +364,15 @@ export default function App() {
                           onSaveActionItems={handleSaveActionItems}
                           onApproveMeeting={handleApproveMeeting}
                           showToast={showToast}
-                          onTitleUpdated={handleTitleUpdated}
+                          onTitleUpdated={(updated) => {
+                            setSelectedMeeting(updated);
+                            loadMeetings();
+                          }}
                         />
                       </>
                     ) : (
-                      <div className="cyber-card" style={{ textAlign: 'center', padding: '60px', color: 'var(--text-muted)' }}>
-                        <h3>Select a Case File or Upload New Audio to Begin</h3>
+                      <div className="cyber-card" style={{ padding: '40px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                        Select a police incident file from the left sidebar to view audio and MoM record.
                       </div>
                     )}
                   </div>
@@ -416,7 +380,7 @@ export default function App() {
               </div>
             )}
 
-            {/* Mobile Case Document Reader (Mobile Page 2) */}
+            {/* Mobile View: Detailed Case Document Workbench Screen */}
             {isMobile && mobileScreen === 'case_detail' && (
               <div>
                 {selectedMeeting ? (
@@ -429,34 +393,31 @@ export default function App() {
                       onSaveActionItems={handleSaveActionItems}
                       onApproveMeeting={handleApproveMeeting}
                       showToast={showToast}
-                      onTitleUpdated={handleTitleUpdated}
+                      onTitleUpdated={(updated) => {
+                        setSelectedMeeting(updated);
+                        loadMeetings();
+                      }}
                     />
                   </>
                 ) : (
-                  <div className="cyber-card" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-                    <h3>Select a Case File to View Document Details</h3>
+                  <div className="cyber-card" style={{ padding: '30px', textAlign: 'center' }}>
+                    No meeting record selected.
                   </div>
                 )}
               </div>
             )}
           </>
         ) : (
+          /* Cryptographic Audit Ledger View */
           <AuditLogTable activeRole={activeRole} showToast={showToast} />
         )}
       </main>
 
-      {/* Modals */}
+      {/* Modals & Dialogs */}
       <UploadModal
         isOpen={isUploadOpen}
         onClose={() => setIsUploadOpen(false)}
         onUploadComplete={handleUploadComplete}
-        activeRole={activeRole}
-        showToast={showToast}
-      />
-
-      <MFAModal
-        isOpen={isMfaOpen}
-        onClose={() => setIsMfaOpen(false)}
         activeRole={activeRole}
         showToast={showToast}
       />
@@ -466,11 +427,15 @@ export default function App() {
         onClose={() => setIsPdfOpen(false)}
         meeting={selectedMeeting}
         activeRole={activeRole}
-        showToast={showToast}
       />
 
-      {/* In-App Toast Container */}
-      <Toast toasts={toasts} removeToast={removeToast} />
+      <MFAModal
+        isOpen={isMfaOpen}
+        onClose={() => setIsMfaOpen(false)}
+        activeRole={activeRole}
+      />
+
+      <Toast toast={toast} onClose={() => setToast(null)} />
     </div>
   );
 }

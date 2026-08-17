@@ -58,11 +58,11 @@ export default function TranscriptViewer({ meeting, activeRole, showToast }) {
         </div>
 
         {/* View Mode Toggle Switch */}
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
           <button
             onClick={() => changeViewMode('redacted')}
             className={`btn-outline ${viewMode === 'redacted' ? 'btn-outline-active' : ''}`}
-            style={{ fontSize: '11px', padding: '4px 10px' }}
+            style={{ fontSize: '10px', padding: '5px 8px', flex: 1, justifyContent: 'center' }}
           >
             Sanitised / Auditor View
           </button>
@@ -71,12 +71,12 @@ export default function TranscriptViewer({ meeting, activeRole, showToast }) {
             <button
               onClick={() => changeViewMode('raw')}
               className={`btn-outline ${viewMode === 'raw' ? 'btn-outline-active' : ''}`}
-              style={{ fontSize: '11px', padding: '4px 10px' }}
+              style={{ fontSize: '10px', padding: '5px 8px', flex: 1, justifyContent: 'center' }}
             >
               Raw Officer View (Unredacted)
             </button>
           ) : (
-            <span style={{ fontSize: '11px', color: 'var(--text-muted)', background: 'var(--surface-3)', padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '10px', color: 'var(--text-muted)', background: 'var(--surface-3)', padding: '4px 8px', borderRadius: '0px', border: '1px solid var(--border-color)', flex: 1, textAlign: 'center' }}>
               Raw View Locked (Auditor)
             </span>
           )}
@@ -88,7 +88,7 @@ export default function TranscriptViewer({ meeting, activeRole, showToast }) {
         backgroundColor: 'var(--surface-2)',
         border: '1px solid var(--border-color)',
         padding: '10px 14px',
-        borderRadius: '6px',
+        borderRadius: '0px',
         marginBottom: '14px',
         fontSize: '12px'
       }}>
@@ -117,17 +117,17 @@ export default function TranscriptViewer({ meeting, activeRole, showToast }) {
         </div>
       </div>
 
-      {/* Transcript Text Box: Generous 1.7 line height for reading carefully */}
+      {/* Transcript Text Box */}
       <div style={{
         backgroundColor: 'var(--surface-1)',
         border: '1px solid var(--border-color)',
-        borderRadius: '6px',
-        padding: '18px',
+        borderRadius: '0px',
+        padding: '14px',
         fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
+        fontSize: '12px',
         color: 'var(--text-main)',
-        lineHeight: 1.7,
-        maxHeight: '280px',
+        lineHeight: 1.6,
+        maxHeight: '260px',
         overflowY: 'auto'
       }}>
         {viewMode === 'raw' && !isAuditor ? rawText : redactedText}
