@@ -1,0 +1,41 @@
+{
+  "title": "State Cyber Cell - Emergency Incident Review (Case FIR-2026-9941)",
+  "date": "2026-08-16",
+  "attendees": [
+    "Investigating Officer POL-8842",
+    "Cyber Forensic Analyst ISP-1029",
+    "Technical Lead CONST-4412"
+  ],
+  "agenda": [
+    "Review of Phishing SIM-Swapping Attack under Case FIR-2026-9941",
+    "Analysis of Compromised Financial Accounts and Ticket CY-2026-8812",
+    "Immediate Action Plan for Account Freezing and ISP Log Subpoena"
+  ],
+  "decisions": [
+    "Freeze beneficiary accounts at State Bank immediately under section 91 CrPC",
+    "Issue urgent notice to Telecom Provider for CDR and IP logs related to Ticket CY-2026-8812",
+    "Escalate case status to High Priority Cyber Financial Fraud"
+  ],
+  "action_items": [
+    {
+      "id": "act-1",
+      "task": "Issue formal 91 CrPC notice to bank nodal officer for freezing accounts",
+      "owner": "Investigating Officer POL-8842",
+      "deadline": "2026-08-17"
+    },
+    {
+      "id": "act-2",
+      "task": "Extract memory dump and packet capture logs from compromised terminal",
+      "owner": "Cyber Forensic Analyst ISP-1029",
+      "deadline": "2026-08-18"
+    },
+    {
+      "id": "act-3",
+      "task": "Submit daily progress summary to Cyber Cell Superintendent",
+      "owner": "Technical Lead CONST-4412",
+      "deadline": "2026-08-19"
+    }
+  ],
+  "raw_transcript": "Meeting started at 10:00 AM. Inspector POL-8842 presented progress on Case FIR-2026-9941 involving SIM-swapping. Constable Sharma confirmed contact number +91 9876543210 was used in transaction. Ticket CY-2026-8812 assigned to ISP-1029 for network packet analysis. Decision taken to freeze accounts immediately.",
+  "redacted_transcript": "Meeting started at 10:00 AM. Inspector <BADGE_ID> presented progress on Case <FIR_ID> involving SIM-swapping. Constable <PERSON> confirmed contact number <PHONE_NUMBER> was used in transaction. Ticket <CYBER_TICKET> assigned to <BADGE_ID> for network packet analysis. Decision taken to freeze accounts immediately."
+}

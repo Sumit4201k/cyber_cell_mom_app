@@ -1,0 +1,568 @@
+[
+  {
+    "id": "log-1",
+    "timestamp": "2026-08-16T15:25:54.550Z",
+    "userId": "SYSTEM_INIT",
+    "username": "SYSTEM_INIT",
+    "role": "ADMIN",
+    "action": "SYSTEM_BOOTSTRAP",
+    "resourceId": "genesis",
+    "details": {
+      "message": "State Cyber Cell Cryptographic Audit Ledger Bootstrapped"
+    },
+    "prevHash": "GENESIS_HASH_0000000000000000000000000000000000000000000000000000000000000000",
+    "hash": "706b42e9f01d55126db034c1444ae46c7212f433eba1fa3699779c2ac9e65e6d"
+  },
+  {
+    "id": "log-2",
+    "timestamp": "2026-08-16T15:26:11.091Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-1090",
+    "details": {
+      "title": "Bank Phishing & OTP Fraud Investigation (FIR-2026-7788)"
+    },
+    "prevHash": "706b42e9f01d55126db034c1444ae46c7212f433eba1fa3699779c2ac9e65e6d",
+    "hash": "771d89a659f4a731e39e27257fcb70fe60717cb1c121a6c26694fb7c1dd900f2"
+  },
+  {
+    "id": "log-3",
+    "timestamp": "2026-08-16T15:26:22.294Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-2293",
+    "details": {
+      "title": "Ransomware Server Breach Response (CY-2026-9931)"
+    },
+    "prevHash": "771d89a659f4a731e39e27257fcb70fe60717cb1c121a6c26694fb7c1dd900f2",
+    "hash": "bae9d8b444a6792911c7a3bcce58142131a9f61ba82ea5aaab58c942ac234b4b"
+  },
+  {
+    "id": "log-4",
+    "timestamp": "2026-08-16T15:31:56.482Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-6481",
+    "details": {
+      "title": "Crypto Wallet Seizure & Blockchain Tracing (FIR-2026-5048)"
+    },
+    "prevHash": "bae9d8b444a6792911c7a3bcce58142131a9f61ba82ea5aaab58c942ac234b4b",
+    "hash": "f05a1b42eb1bb1ca737ee62645a0bd1f60feb1d5565ee209e6021f2cc72c1b74"
+  },
+  {
+    "id": "log-5",
+    "timestamp": "2026-08-16T15:48:25.720Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-5718",
+    "details": {
+      "title": "Reviewing Blackmail Attempt Via Fake Profile Targeting Victim (FIR 2026)"
+    },
+    "prevHash": "f05a1b42eb1bb1ca737ee62645a0bd1f60feb1d5565ee209e6021f2cc72c1b74",
+    "hash": "ce0ed38fb1e26dda4ac2b3da9bd59de5f6835b8b18bfe1121a66e5589a843544"
+  },
+  {
+    "id": "log-6",
+    "timestamp": "2026-08-16T15:51:18.939Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-8938",
+    "details": {
+      "title": "Deepfake Video Extortion Analysis (FIR-2026-3601)"
+    },
+    "prevHash": "ce0ed38fb1e26dda4ac2b3da9bd59de5f6835b8b18bfe1121a66e5589a843544",
+    "hash": "f729534300b2f50a511568d06c86f05c59018103fe28f3857d937d2c6fa29047"
+  },
+  {
+    "id": "log-7",
+    "timestamp": "2026-08-16T15:52:24.653Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-4652",
+    "details": {
+      "title": "Ransomware Server Breach Response (FIR-2026-6015)"
+    },
+    "prevHash": "f729534300b2f50a511568d06c86f05c59018103fe28f3857d937d2c6fa29047",
+    "hash": "77c90ba855aaf00929854a314b58ca5cdcbad656306dfecd78810a6c330a1733"
+  },
+  {
+    "id": "log-8",
+    "timestamp": "2026-08-16T15:53:51.357Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-4652",
+    "details": {
+      "entity": "FIR-2026-1444",
+      "unmasked": true
+    },
+    "prevHash": "77c90ba855aaf00929854a314b58ca5cdcbad656306dfecd78810a6c330a1733",
+    "hash": "99bb1c05664e4c775de810ef4bd7189b10191b572f312c1c5714bdbb05969b73"
+  },
+  {
+    "id": "log-9",
+    "timestamp": "2026-08-16T15:53:53.770Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-4652",
+    "details": {
+      "entity": "POL-8842",
+      "unmasked": true
+    },
+    "prevHash": "99bb1c05664e4c775de810ef4bd7189b10191b572f312c1c5714bdbb05969b73",
+    "hash": "c4ae90ad04b054cb7b793b58401e6659a2fa0f8fefe211571751e7a1407ffcce"
+  },
+  {
+    "id": "log-10",
+    "timestamp": "2026-08-16T15:53:55.370Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-4652",
+    "details": {
+      "entity": "POL-8842",
+      "unmasked": false
+    },
+    "prevHash": "c4ae90ad04b054cb7b793b58401e6659a2fa0f8fefe211571751e7a1407ffcce",
+    "hash": "41d39427242f8f89fbe33051bb8bd4c60e1806c2a18e9d669ef2d2e5370ba658"
+  },
+  {
+    "id": "log-11",
+    "timestamp": "2026-08-16T15:53:56.170Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-4652",
+    "details": {
+      "entity": "FIR-2026-1444",
+      "unmasked": false
+    },
+    "prevHash": "41d39427242f8f89fbe33051bb8bd4c60e1806c2a18e9d669ef2d2e5370ba658",
+    "hash": "9d10560e1c1fd42661db071c1cccd17d719169c880b64f55bb2c19efc848c344"
+  },
+  {
+    "id": "log-12",
+    "timestamp": "2026-08-16T15:53:57.851Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-8938",
+    "details": {
+      "entity": "FIR-2026-6964",
+      "unmasked": true
+    },
+    "prevHash": "9d10560e1c1fd42661db071c1cccd17d719169c880b64f55bb2c19efc848c344",
+    "hash": "afd0ddce00bbce45e141754d71c55754359c9aec5aa90249e3f403a8b47e3903"
+  },
+  {
+    "id": "log-13",
+    "timestamp": "2026-08-16T15:53:58.492Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-8938",
+    "details": {
+      "entity": "POL-8842",
+      "unmasked": true
+    },
+    "prevHash": "afd0ddce00bbce45e141754d71c55754359c9aec5aa90249e3f403a8b47e3903",
+    "hash": "31c13e5a878196677525cc089131897e6bff657950a5c0114b285f732115b889"
+  },
+  {
+    "id": "log-14",
+    "timestamp": "2026-08-16T15:53:58.834Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-8938",
+    "details": {
+      "entity": "POL-8842",
+      "unmasked": false
+    },
+    "prevHash": "31c13e5a878196677525cc089131897e6bff657950a5c0114b285f732115b889",
+    "hash": "db33fcc71771eba2cd33e1d2071152d891078889080e3a90a7f4ea589b144bdb"
+  },
+  {
+    "id": "log-15",
+    "timestamp": "2026-08-16T15:53:59.370Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-8938",
+    "details": {
+      "entity": "FIR-2026-6964",
+      "unmasked": false
+    },
+    "prevHash": "db33fcc71771eba2cd33e1d2071152d891078889080e3a90a7f4ea589b144bdb",
+    "hash": "0751ce4ef55df663e7c57f52764c95e8b5cdfb886e07867e73035fbd37cbef1d"
+  },
+  {
+    "id": "log-16",
+    "timestamp": "2026-08-16T15:57:00.716Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-0713",
+    "details": {
+      "title": "Extortion Via Instagram Fake Profile Targeting College Student (FIR-2026-9931)"
+    },
+    "prevHash": "0751ce4ef55df663e7c57f52764c95e8b5cdfb886e07867e73035fbd37cbef1d",
+    "hash": "06450b96ae612c1c8c2b44e7fd744ba10dfedd196f25d26481a2e26b397e8544"
+  },
+  {
+    "id": "log-17",
+    "timestamp": "2026-08-16T15:58:19.389Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-9388",
+    "details": {
+      "title": "Crypto Wallet Seizure & Blockchain Tracing (FIR-2026-3463)"
+    },
+    "prevHash": "06450b96ae612c1c8c2b44e7fd744ba10dfedd196f25d26481a2e26b397e8544",
+    "hash": "c7a60f89005f46d50cf7cb3842cc53704a836ca82a979fbad49d709efe4e6c7b"
+  },
+  {
+    "id": "log-18",
+    "timestamp": "2026-08-16T15:58:54.043Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-9388",
+    "details": {
+      "title": "Crypto Wallet Seizure & Blockchain Tracing (FIR-2026-3463)",
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "c7a60f89005f46d50cf7cb3842cc53704a836ca82a979fbad49d709efe4e6c7b",
+    "hash": "09b0d6e694102fa57f878c0f8b8e4620d6dd8ec7d7c99cc1abfbdea8020afcff"
+  },
+  {
+    "id": "log-19",
+    "timestamp": "2026-08-16T17:07:08.537Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-101",
+    "details": {
+      "status": "OFFICIALLY_APPROVED",
+      "title": "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)"
+    },
+    "prevHash": "09b0d6e694102fa57f878c0f8b8e4620d6dd8ec7d7c99cc1abfbdea8020afcff",
+    "hash": "04110fe46c03b3f11ab1b98784ccad2beac3a850f43c1f78e3904a4130c5eb8a"
+  },
+  {
+    "id": "log-20",
+    "timestamp": "2026-08-16T17:07:25.175Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "UPDATE_CASE_TITLE",
+    "resourceId": "mtg-101",
+    "details": {
+      "oldTitle": "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)",
+      "newTitle": "abc"
+    },
+    "prevHash": "04110fe46c03b3f11ab1b98784ccad2beac3a850f43c1f78e3904a4130c5eb8a",
+    "hash": "b1db6d8aeefcfe606f02c306a05a8438363863ac53213d2dfb3cae952848db83"
+  },
+  {
+    "id": "log-21",
+    "timestamp": "2026-08-16T17:09:30.666Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-102",
+    "details": {
+      "title": "Phishing Syndicate & Crypto Wallet Seizure (FIR-2026-8812)",
+      "speed": 1,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "b1db6d8aeefcfe606f02c306a05a8438363863ac53213d2dfb3cae952848db83",
+    "hash": "033eb8dc5e201792558884cee69a0f03e8d283fec1c472814307b1fdb29358f4"
+  },
+  {
+    "id": "log-22",
+    "timestamp": "2026-08-16T17:09:48.002Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-102",
+    "details": {
+      "entity": "FIR-2026-8812",
+      "unmasked": true
+    },
+    "prevHash": "033eb8dc5e201792558884cee69a0f03e8d283fec1c472814307b1fdb29358f4",
+    "hash": "49b3224f241f5ad5d15678e5da495a79fb0c232b4da8f5c2cc0f2b4a6e03ba7e"
+  },
+  {
+    "id": "log-23",
+    "timestamp": "2026-08-16T17:09:48.872Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-102",
+    "details": {
+      "entity": "DSP-4021",
+      "unmasked": true
+    },
+    "prevHash": "49b3224f241f5ad5d15678e5da495a79fb0c232b4da8f5c2cc0f2b4a6e03ba7e",
+    "hash": "234ec7d5919c01ab5aef6962ef72e5fb55dcd6e12a964145a0267e66798a7d35"
+  },
+  {
+    "id": "log-24",
+    "timestamp": "2026-08-16T17:09:51.152Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "raw"
+    },
+    "prevHash": "234ec7d5919c01ab5aef6962ef72e5fb55dcd6e12a964145a0267e66798a7d35",
+    "hash": "ad13d40386b2ab04a4f0b316ab7ce95c9fbb297f5804c77aa06e533c76a0d0f1"
+  },
+  {
+    "id": "log-25",
+    "timestamp": "2026-08-16T17:09:55.177Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "redacted"
+    },
+    "prevHash": "ad13d40386b2ab04a4f0b316ab7ce95c9fbb297f5804c77aa06e533c76a0d0f1",
+    "hash": "9449e75ed8635d07785e6952f4fcb90192f7d55fd955f7d3619b79f902803f10"
+  },
+  {
+    "id": "log-26",
+    "timestamp": "2026-08-16T17:09:55.888Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "raw"
+    },
+    "prevHash": "9449e75ed8635d07785e6952f4fcb90192f7d55fd955f7d3619b79f902803f10",
+    "hash": "0891f5c79f60e527a80866406a6cc6adab584242573f0ee1b11033501a0a9f7a"
+  },
+  {
+    "id": "log-27",
+    "timestamp": "2026-08-16T17:09:59.112Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ANALYST",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "redacted"
+    },
+    "prevHash": "0891f5c79f60e527a80866406a6cc6adab584242573f0ee1b11033501a0a9f7a",
+    "hash": "824b2b4d0307c1962107710cd0dddf605ccbca5ed46968e19eb1194f1db70e07"
+  },
+  {
+    "id": "log-28",
+    "timestamp": "2026-08-16T17:09:59.856Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ANALYST",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "raw"
+    },
+    "prevHash": "824b2b4d0307c1962107710cd0dddf605ccbca5ed46968e19eb1194f1db70e07",
+    "hash": "b243097fbd972d73eff8782f948b52fd9470a0e3ffa291c77dc02ee82fd49337"
+  },
+  {
+    "id": "log-29",
+    "timestamp": "2026-08-16T17:10:02.034Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ANALYST",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "redacted"
+    },
+    "prevHash": "b243097fbd972d73eff8782f948b52fd9470a0e3ffa291c77dc02ee82fd49337",
+    "hash": "a442a37906de345f7b27a37d64834499b71ea122be0ff93c5e14754ca09d07aa"
+  },
+  {
+    "id": "log-30",
+    "timestamp": "2026-08-16T17:10:03.232Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ANALYST",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-102",
+    "details": {
+      "mode": "raw"
+    },
+    "prevHash": "a442a37906de345f7b27a37d64834499b71ea122be0ff93c5e14754ca09d07aa",
+    "hash": "c02830d811d5a2f4f472e529e012bb6a69def2592527a019cd93ef04ebd357d2"
+  },
+  {
+    "id": "log-31",
+    "timestamp": "2026-08-16T17:10:50.216Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-0214",
+    "details": {
+      "title": "Ransomware Server Breach Response (FIR-2026-2865)"
+    },
+    "prevHash": "c02830d811d5a2f4f472e529e012bb6a69def2592527a019cd93ef04ebd357d2",
+    "hash": "7d66072fd5beddaa85f94c5d74f6284b496bbfd4418e9e7afe59c59df073e6d6"
+  },
+  {
+    "id": "log-32",
+    "timestamp": "2026-08-16T17:11:28.779Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-0214",
+    "details": {
+      "title": "Ransomware Server Breach Response (FIR-2026-2865)",
+      "speed": 1,
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "7d66072fd5beddaa85f94c5d74f6284b496bbfd4418e9e7afe59c59df073e6d6",
+    "hash": "5c0ab78532b57bd59d34f045da4194dce7fbc5d7b67a5633a7243d5cc90b20b1"
+  },
+  {
+    "id": "log-33",
+    "timestamp": "2026-08-16T17:11:30.777Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-0214",
+    "details": {
+      "title": "Ransomware Server Breach Response (FIR-2026-2865)",
+      "speed": 1,
+      "audioUrl": "Real Audio File"
+    },
+    "prevHash": "5c0ab78532b57bd59d34f045da4194dce7fbc5d7b67a5633a7243d5cc90b20b1",
+    "hash": "8c599631ffc40764048ba9ad7c214e959aee486f228a63a08fe7bb5b7a4eb0da"
+  },
+  {
+    "id": "log-34",
+    "timestamp": "2026-08-16T17:14:01.719Z",
+    "userId": "usr-demo",
+    "username": "demo_user",
+    "role": "INVESTIGATOR",
+    "action": "MFA_VERIFIED",
+    "resourceId": "session",
+    "details": {
+      "codeUsed": "*****"
+    },
+    "prevHash": "8c599631ffc40764048ba9ad7c214e959aee486f228a63a08fe7bb5b7a4eb0da",
+    "hash": "3773fe8d0c447f100905e513186250c6b51d3fd0e2c4242a4586b0272ad5cf1b"
+  },
+  {
+    "id": "log-35",
+    "timestamp": "2026-08-16T17:17:28.761Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-8760",
+    "details": {
+      "title": "Hello Hello This Meeting Is About Cyber Crime (FIR-2026-1223)"
+    },
+    "prevHash": "3773fe8d0c447f100905e513186250c6b51d3fd0e2c4242a4586b0272ad5cf1b",
+    "hash": "dac7e72becc91cef65ab9d0bd641347a694ee03393ac89d77baaa74e8fbe517f"
+  },
+  {
+    "id": "log-36",
+    "timestamp": "2026-08-16T17:19:24.072Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-4069",
+    "details": {
+      "title": "Deepfake & Cyber Extortion Threat (Targeting Student Victim) [FIR-2026-8890]"
+    },
+    "prevHash": "dac7e72becc91cef65ab9d0bd641347a694ee03393ac89d77baaa74e8fbe517f",
+    "hash": "b9ee81c6b5f4e5feea8d6475c300a162d916680f1422c9bd138315c8036ce5fb"
+  },
+  {
+    "id": "log-37",
+    "timestamp": "2026-08-16T17:20:45.706Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-5705",
+    "details": {
+      "title": "Hello Sumit Analysing Cyber Crime (FIR-2026-8175)"
+    },
+    "prevHash": "b9ee81c6b5f4e5feea8d6475c300a162d916680f1422c9bd138315c8036ce5fb",
+    "hash": "06c22288cf8e984dcdedff3b5f8babb6c2e88b483998c269fc611e4640a5cf95"
+  },
+  {
+    "id": "log-38",
+    "timestamp": "2026-08-16T17:27:12.114Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-101",
+    "details": {
+      "status": "OFFICIALLY_APPROVED",
+      "title": "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)"
+    },
+    "prevHash": "06c22288cf8e984dcdedff3b5f8babb6c2e88b483998c269fc611e4640a5cf95",
+    "hash": "ee69285218dcc3766110187d1629c51a85cb4e5000a4c9a0037bf5d13079a2ad"
+  },
+  {
+    "id": "log-39",
+    "timestamp": "2026-08-17T05:03:13.509Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-3507",
+    "details": {
+      "title": "Hello Hello Officers Sumit Here (FIR-2026-3549)"
+    },
+    "prevHash": "ee69285218dcc3766110187d1629c51a85cb4e5000a4c9a0037bf5d13079a2ad",
+    "hash": "0d2b4dcd065ee610e833cd003400bd2c107bdb0778c6b545cb316a0138f05b0b"
+  }
+]
