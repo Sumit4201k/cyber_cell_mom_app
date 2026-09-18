@@ -225,5 +225,32 @@
         "status": "IN_PROGRESS"
       }
     ]
+  },
+  {
+    "id": "mtg-qa-1",
+    "title": "Test Cyber Incident (Case FIR-2026-9941)",
+    "date": "2026-08-16",
+    "status": "OFFICIALLY_APPROVED",
+    "createdBy": "investigator_shinde",
+    "rawTranscript": "Inspector POL-8842 reported FIR-2026-9941 under Ticket CY-2026-8812. Contact Constable Sharma +91 9876543210.",
+    "redactedTranscript": "Inspector <BADGE_ID> reported <FIR_ID> under Ticket <CYBER_TICKET>. Contact Constable <PERSON> <PHONE_NUMBER>.",
+    "entitiesFound": [
+      {
+        "entity_type": "FIR_ID",
+        "value": "FIR-2026-9941"
+      }
+    ],
+    "mom": {
+      "title": "Test Cyber Incident",
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Freeze accounts",
+          "owner": "Cyber Inspector Patil",
+          "deadline": "2026-08-17"
+        }
+      ]
+    },
+    "approvedBy": "investigator_shinde"
   }
 ]

@@ -534,5 +534,275 @@
     },
     "prevHash": "edbedef7435957331439c64a519ffd5de604a31ab4d25a079ded75503d53f10e",
     "hash": "79db02189f2063473f9aa4ffebe1c61320f2b15f4bb8dd956ef90808cab75d5c"
+  },
+  {
+    "id": "log-35",
+    "timestamp": "2026-09-18T11:01:04.895Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-5355",
+    "details": {
+      "title": "SIM-Swapping & Financial Account Compromise [CASE-20260918]",
+      "speed": 2,
+      "audioUrl": "Speech Synth Utterance"
+    },
+    "prevHash": "79db02189f2063473f9aa4ffebe1c61320f2b15f4bb8dd956ef90808cab75d5c",
+    "hash": "a40245f0767563eb55d8e7d4ea810c0d1df69dcce4ec1172cf4805674eeeffb4"
+  },
+  {
+    "id": "log-36",
+    "timestamp": "2026-09-18T11:01:49.909Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "BANK_ACCOUNT",
+      "entityVal": "234567890123",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "a40245f0767563eb55d8e7d4ea810c0d1df69dcce4ec1172cf4805674eeeffb4",
+    "hash": "49e5fa19a5c6008d9e60fddb0f4ffcee9398236d5b75f9c22ecbf1c421bf2acc"
+  },
+  {
+    "id": "log-37",
+    "timestamp": "2026-09-18T11:01:51.145Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "987-654-3210",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "49e5fa19a5c6008d9e60fddb0f4ffcee9398236d5b75f9c22ecbf1c421bf2acc",
+    "hash": "4843f0ddd0ee4ee9b3170dace2171bbd3de9b7cc4b9567d5e2cf3052fe1f3f8d"
+  },
+  {
+    "id": "log-38",
+    "timestamp": "2026-09-18T11:01:52.021Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PERSON",
+      "entityVal": "Verma Badge",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "4843f0ddd0ee4ee9b3170dace2171bbd3de9b7cc4b9567d5e2cf3052fe1f3f8d",
+    "hash": "a0aa2f5bc705ceb4eaf25465d89003a29d8e436f5c5737920f584aa902869597"
+  },
+  {
+    "id": "log-39",
+    "timestamp": "2026-09-18T11:01:52.978Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PERSON",
+      "entityVal": "Sharma",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "a0aa2f5bc705ceb4eaf25465d89003a29d8e436f5c5737920f584aa902869597",
+    "hash": "5d901cc79dfc785bf71aac8c33f4729b8770d630a2458928b58d323c66ba04f2"
+  },
+  {
+    "id": "log-40",
+    "timestamp": "2026-09-18T11:01:53.882Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PERSON",
+      "entityVal": "[MASKED]",
+      "unmasked": false,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "5d901cc79dfc785bf71aac8c33f4729b8770d630a2458928b58d323c66ba04f2",
+    "hash": "59c8e58c53b0e51df07ba740be9da3f8ecfc803d875f39fbced9e32c158f48a5"
+  },
+  {
+    "id": "log-41",
+    "timestamp": "2026-09-18T11:01:54.890Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "[MASKED]",
+      "unmasked": false,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "59c8e58c53b0e51df07ba740be9da3f8ecfc803d875f39fbced9e32c158f48a5",
+    "hash": "745faba2035b0a27447d3ad4be1364811dfee06c9aa2aec30fe7060544807e64"
+  },
+  {
+    "id": "log-42",
+    "timestamp": "2026-09-18T11:01:55.675Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "[MASKED]",
+      "unmasked": false,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "745faba2035b0a27447d3ad4be1364811dfee06c9aa2aec30fe7060544807e64",
+    "hash": "98c85793b71526f10bca06a299b661a9b9d43eee6a5baac1da6991a7e2c31b25"
+  },
+  {
+    "id": "log-43",
+    "timestamp": "2026-09-18T11:01:57.138Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "234567890123",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "98c85793b71526f10bca06a299b661a9b9d43eee6a5baac1da6991a7e2c31b25",
+    "hash": "5aeeb6e3de628190ff40f0403aa77c9eb8c363ca8644ec9a118cd25259a87f0d"
+  },
+  {
+    "id": "log-44",
+    "timestamp": "2026-09-18T11:01:57.690Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "[MASKED]",
+      "unmasked": false,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "5aeeb6e3de628190ff40f0403aa77c9eb8c363ca8644ec9a118cd25259a87f0d",
+    "hash": "251de21bc8d29b67c33e997d22b0d5ac9e629ab0cb40d40e6072698202f73c32"
+  },
+  {
+    "id": "log-45",
+    "timestamp": "2026-09-18T11:01:58.274Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "234567890123",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "251de21bc8d29b67c33e997d22b0d5ac9e629ab0cb40d40e6072698202f73c32",
+    "hash": "e009b834eac41340f3fa4b1ea58cee089a2166faebe3e37c9d8724d103f7c485"
+  },
+  {
+    "id": "log-46",
+    "timestamp": "2026-09-18T11:01:58.698Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-5355",
+    "details": {
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "[MASKED]",
+      "unmasked": false,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "e009b834eac41340f3fa4b1ea58cee089a2166faebe3e37c9d8724d103f7c485",
+    "hash": "0d44be6daf0446e14bf4cc96008d659190ce33d9d20c11dbd939f88bcde0fb82"
+  },
+  {
+    "id": "log-47",
+    "timestamp": "2026-09-18T11:06:12.526Z",
+    "userId": "usr-1",
+    "username": "admin_chief",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-1",
+    "details": {
+      "test": 1
+    },
+    "prevHash": "0d44be6daf0446e14bf4cc96008d659190ce33d9d20c11dbd939f88bcde0fb82",
+    "hash": "6b8b941e95ec6b6cf9eef2d4b1c6a905868a01e10ae6f2785539fcb2a5495140"
+  },
+  {
+    "id": "log-48",
+    "timestamp": "2026-09-18T11:06:12.530Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "ACTION_ITEMS_EDITED",
+    "resourceId": "mtg-1",
+    "details": {
+      "test": 2
+    },
+    "prevHash": "6b8b941e95ec6b6cf9eef2d4b1c6a905868a01e10ae6f2785539fcb2a5495140",
+    "hash": "ccfab6c9909d2cc3dcc1f003cadb92d864ff374f27518abd7e346fe122afebd8"
+  },
+  {
+    "id": "log-49",
+    "timestamp": "2026-09-18T11:06:12.531Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-1",
+    "details": {
+      "test": 3
+    },
+    "prevHash": "ccfab6c9909d2cc3dcc1f003cadb92d864ff374f27518abd7e346fe122afebd8",
+    "hash": "a6f1ecb3b344e1ad5a95a84f0df7db8db545402bc4434f3e418914f404e84434"
+  },
+  {
+    "id": "log-50",
+    "timestamp": "2026-09-18T11:06:12.534Z",
+    "userId": "usr-2",
+    "username": "investigator_shinde",
+    "role": "INVESTIGATOR",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-qa-1",
+    "details": {
+      "status": "OFFICIALLY_APPROVED"
+    },
+    "prevHash": "a6f1ecb3b344e1ad5a95a84f0df7db8db545402bc4434f3e418914f404e84434",
+    "hash": "967c2987a6862e20866c1e8bdf16321277ae2de30646b358bcd61ba95f311e03"
   }
 ]
