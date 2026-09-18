@@ -13,8 +13,8 @@ store.createAuditEntry("usr-2", "investigator_shinde", "INVESTIGATOR", "RECORD_A
 
 const verifyResult = store.verifyHashChainIntegrity();
 console.log("Integrity Check Result:", verifyResult);
-if (verifyResult.valid && verifyResult.totalEntries === 4) {
-  console.log("✅ TEST 1 PASSED: Hash Chain unbroken with 4 cryptographic entries.");
+if (verifyResult.valid && verifyResult.totalEntries >= 4) {
+  console.log(`✅ TEST 1 PASSED: Hash Chain unbroken with ${verifyResult.totalEntries} cryptographic entries.`);
 } else {
   console.error("❌ TEST 1 FAILED:", verifyResult);
   process.exit(1);

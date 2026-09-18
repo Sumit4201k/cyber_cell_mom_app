@@ -1,298 +1,228 @@
 [
   {
-    "id": "mtg-4305",
-    "title": "Hello Hello Test (FIR-2026-3409)",
-    "date": "2026-08-17",
+    "id": "mtg-5355",
+    "title": "SIM-Swapping & Financial Account Compromise [CASE-20260918]",
+    "date": "2026-09-18",
     "createdBy": "investigator_shinde",
     "status": "OFFICIALLY_APPROVED",
-    "rawTranscript": "hello hello test  3",
-    "redactedTranscript": "hello hello test  3",
+    "rawTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941. The accused orchestrated an illegal SIM swap fraud against Axis Bank account number 9875-4321012. The associated compromised mobile number is 987-654-3210 and Aadhaar reference 234567890123. Senior Inspector Sharma\n[30.00s -> 38.88s] has issued a Section 91 CrPC notice to the telecom operator. Officer Verma Badge 4082 will coordinate\n[38.88s -> 42.80s] the CDR analysis and submit the final forensic report by Friday.",
+    "redactedTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941. The accused orchestrated an illegal SIM swap fraud against Axis Bank account number 9875-4321012. The associated compromised mobile number is <PHONE_NUMBER> and Aadhaar reference <BANK_ACCOUNT>. Senior Inspector <PERSON>\n[30.00s -> 38.88s] has issued a Section 91 CrPC notice to the telecom operator. Officer <PERSON> 4082 will coordinate\n[38.88s -> 42.80s] the CDR analysis and submit the final forensic report by Friday.",
     "entitiesFound": [
       {
-        "entity_type": "FIR_ID",
-        "value": "FIR-2026-5450"
+        "entity_type": "AADHAAR_NUMBER",
+        "start": 277,
+        "end": 289,
+        "score": 0.95,
+        "value": "234567890123"
       },
       {
-        "entity_type": "BADGE_ID",
-        "value": "POL-8842"
+        "entity_type": "PHONE_NUMBER",
+        "start": 277,
+        "end": 289,
+        "score": 0.95,
+        "value": "234567890123"
+      },
+      {
+        "entity_type": "BANK_ACCOUNT",
+        "start": 277,
+        "end": 289,
+        "score": 0.95,
+        "value": "234567890123"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 308,
+        "end": 314,
+        "score": 0.85,
+        "value": "Sharma"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 403,
+        "end": 414,
+        "score": 0.85,
+        "value": "Verma Badge"
+      },
+      {
+        "entity_type": "PHONE_NUMBER",
+        "start": 242,
+        "end": 254,
+        "score": 0.75,
+        "value": "987-654-3210"
       }
     ],
     "agenda": [
-      "Case Investigation: hello hello test  3",
-      "Technical Packet Log Extraction",
-      "Notice Issuance under Section 91 CrPC"
+      "Case Briefing: State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941...",
+      "Technical Evidence & Inquest: The accused orchestrated an illegal SIM swap fraud against Axis Bank account num...",
+      "Operational Next Steps: the CDR analysis and submit the final forensic report by Friday..."
     ],
     "decisions": [
-      "Issue urgent Section 91 CrPC notice to nodal officer",
-      "Escalate incident record to Senior Investigating Superintendent"
-    ],
-    "action_items": [
-      {
-        "id": "act-1786946034305-1",
-        "task": "Execute directive: hello hello test  3...",
-        "owner": "investigator_shinde",
-        "deadline": "2026-08-18",
-        "status": "PENDING"
-      },
-      {
-        "id": "act-1786946034305-2",
-        "task": "Submit forensic technical summary to Cyber Cell Commander",
-        "owner": "Cyber Forensic Analyst ISP-1029",
-        "deadline": "2026-08-19",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-8472",
-    "title": "Hello Hello Test (FIR-2026-4869)",
-    "date": "2026-08-17",
-    "createdBy": "investigator_shinde",
-    "status": "OFFICIALLY_APPROVED",
-    "rawTranscript": "hello hello test  22",
-    "redactedTranscript": "hello hello test  22",
-    "entitiesFound": [
-      {
-        "entity_type": "FIR_ID",
-        "value": "FIR-2026-8374"
-      },
-      {
-        "entity_type": "BADGE_ID",
-        "value": "POL-8842"
-      }
-    ],
-    "agenda": [
-      "Case Investigation: hello hello test  22",
-      "Technical Packet Log Extraction",
-      "Notice Issuance under Section 91 CrPC"
-    ],
-    "decisions": [
-      "Issue urgent Section 91 CrPC notice to nodal officer",
-      "Escalate incident record to Senior Investigating Superintendent"
-    ],
-    "action_items": [
-      {
-        "id": "act-1786943938473-1",
-        "task": "Execute directive: hello hello test  22...",
-        "owner": "investigator_shinde",
-        "deadline": "2026-08-18",
-        "status": "PENDING"
-      },
-      {
-        "id": "act-1786943938473-2",
-        "task": "Submit forensic technical summary to Cyber Cell Commander",
-        "owner": "Cyber Forensic Analyst ISP-1029",
-        "deadline": "2026-08-19",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-3507",
-    "title": "Hello Hello Officers Sumit Here (FIR-2026-3549)",
-    "date": "2026-08-17",
-    "createdBy": "investigator_shinde",
-    "status": "OFFICIALLY_APPROVED",
-    "rawTranscript": "hello hello this is officers Sumit here to report  about cyber crime in Delhi regarding  cyber fraud in bank",
-    "redactedTranscript": "hello hello this is officers Sumit here to report  about cyber crime in Delhi regarding  cyber fraud in bank",
-    "entitiesFound": [
-      {
-        "entity_type": "FIR_ID",
-        "value": "FIR-2026-4164"
-      },
-      {
-        "entity_type": "BADGE_ID",
-        "value": "POL-8842"
-      }
-    ],
-    "agenda": [
-      "Case Investigation: hello hello this is officers Sumit here to report  about cyber crime in Delhi regarding  cyber fraud in bank",
-      "Technical Packet Log Extraction",
-      "Notice Issuance under Section 91 CrPC"
-    ],
-    "decisions": [
-      "Issue Section 91 CrPC emergency notice to freeze beneficiary bank accounts"
-    ],
-    "action_items": [
-      {
-        "id": "act-1786942993508-1",
-        "task": "Execute directive: hello hello this is officers Sumit here to report  about cyb...",
-        "owner": "investigator_shinde",
-        "deadline": "2026-08-18",
-        "status": "PENDING"
-      },
-      {
-        "id": "act-1786942993508-2",
-        "task": "Submit forensic technical summary to Cyber Cell Commander",
-        "owner": "Cyber Forensic Analyst ISP-1029",
-        "deadline": "2026-08-19",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-101",
-    "title": "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)",
-    "date": "2026-08-16",
-    "createdBy": "Investigating Officer POL-8842",
-    "status": "DRAFT_PENDING_REVIEW",
-    "rawTranscript": "Inspector Shinde: Briefing on SIM swapping incident FIR-2026-9941. Target victim lost 4.2 Lakhs via unauthorized porting. Cyber Ticket CY-2026-8812 assigned to Analyst ISP-1029.",
-    "redactedTranscript": "Inspector Shinde: Briefing on SIM swapping incident [FIR: FIR-2026-9941]. Target victim lost 4.2 Lakhs via unauthorized porting. Cyber Ticket [TICKET: CY-2026-8812] assigned to Analyst [BADGE: ISP-1029].",
-    "entitiesFound": [
-      {
-        "entity_type": "FIR_ID",
-        "value": "FIR-2026-9941"
-      },
-      {
-        "entity_type": "CYBER_TICKET",
-        "value": "CY-2026-8812"
-      },
-      {
-        "entity_type": "BADGE_ID",
-        "value": "ISP-1029"
-      }
-    ],
-    "agenda": [
-      "SIM Swapping Fraud Attack Vector",
-      "CDR Packet Log Analysis",
-      "Nodal Officer Subpoena"
-    ],
-    "decisions": [
-      "Issue Section 91 CrPC notice to telecom operator",
-      "Freeze linked mule bank account"
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+      "Subpoena CDR, IPDR, and subscriber CAF details from telecom service providers under Section 91 CrPC."
     ],
     "action_items": [
       {
         "id": "act-1",
-        "task": "Issue Section 91 CrPC notice to bank nodal officer",
-        "owner": "Investigating Officer POL-8842",
-        "deadline": "2026-08-17",
+        "task": "Investigate and verify incident details: State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-19",
         "status": "PENDING"
       },
       {
         "id": "act-2",
-        "task": "Extract packet trace for Ticket CY-2026-8812",
-        "owner": "Cyber Analyst ISP-1029",
-        "deadline": "2026-08-18",
+        "task": "Follow up on forensic evidence: The accused orchestrated an illegal SIM swap fraud against Axis Bank account number 9875-4",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-20",
         "status": "IN_PROGRESS"
       }
-    ]
+    ],
+    "approvedBy": "investigator_shinde"
   },
   {
-    "id": "mtg-102",
-    "title": "Phishing Syndicate & Crypto Wallet Seizure (FIR-2026-8812)",
-    "date": "2026-08-15",
-    "createdBy": "Senior Inspector DSP-4021",
-    "status": "OFFICIALLY_APPROVED",
-    "rawTranscript": "DSP Deshmukh: Reviewing phishing scam targeting senior citizens. Over 18 Lakhs funneled to USDT crypto wallet. Requesting immediate freeze from Binance compliance.",
-    "redactedTranscript": "DSP Deshmukh: Reviewing phishing scam targeting senior citizens. Over 18 Lakhs funneled to USDT crypto wallet [CRYPTO_ADDR]. Requesting immediate freeze from Binance compliance.",
-    "entitiesFound": [
-      {
-        "entity_type": "FIR_ID",
-        "value": "FIR-2026-8812"
-      },
-      {
-        "entity_type": "BADGE_ID",
-        "value": "DSP-4021"
-      }
-    ],
-    "agenda": [
-      "Fake Bank Utility Portal Phishing",
-      "Blockchain Ledger Tracing",
-      "Mule Account Freezing"
-    ],
-    "decisions": [
-      "Obtain court emergency injunction for crypto freeze",
-      "Dispatch cyber team to suspect tower location"
-    ],
-    "action_items": [
-      {
-        "id": "act-3",
-        "task": "Send formal request to crypto exchange compliance desk",
-        "owner": "Senior Inspector DSP-4021",
-        "deadline": "2026-08-16",
-        "status": "COMPLETED"
-      },
-      {
-        "id": "act-4",
-        "task": "Analyze tower dumps for victim cell towers",
-        "owner": "Cyber Analyst ISP-1029",
-        "deadline": "2026-08-17",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-103",
-    "title": "Ransomware Server Breach & Data Extraction (CY-2026-7734)",
-    "date": "2026-08-14",
-    "createdBy": "Technical Lead CONST-5519",
+    "id": "mtg-9467",
+    "title": "LockBit Ransomware Breach Response [CASE-20260918]",
+    "date": "2026-09-18",
+    "createdBy": "investigator_shinde",
     "status": "DRAFT_PENDING_REVIEW",
-    "rawTranscript": "Officer Pawar: Incident response meeting regarding LockBit strain detected on hospital servers. Threat actor demanding 2 BTC. Isolated network subnet at 03:00 AM.",
-    "redactedTranscript": "Officer Pawar: Incident response meeting regarding LockBit strain detected on hospital servers. Threat actor demanding 2 BTC. Isolated network subnet at 03:00 AM.",
+    "rawTranscript": "[0.00s -> 30.00s] Cyber defense incident response to briefing on Case CY-2026-8812. LockBit 3.0 Ransomware infection identified across the civil hospital internal network servers. The threat actors demand ransom payment to Crypto Wallet 1A1-ZP1-EP5-Q5-2-DMP-TF-T-L-5-SL-MV-7-Defene. Deputy Superintendent Patel directed immediate network airgapping, Firewall Rule Revocation, and deployment of\n[30.00s -> 37.00s] clean snapshot backups. Digital Forensics Unit must preserve server log hashes for judicial submission.",
+    "redactedTranscript": "[0.00s -> 30.00s] Cyber defense incident response to briefing on Case <CYBER_TICKET>. LockBit 3.0 Ransomware infection identified across the civil hospital internal network servers. The threat actors demand ransom payment to Crypto Wallet 1A1-ZP1-EP5-Q5-2-DMP-TF-T-L-5-SL-MV-7-Defene. Deputy Superintendent <PERSON> directed immediate network airgapping, Firewall Rule Revocation, and deployment of\n[30.00s -> 37.00s] clean snapshot backups. Digital Forensics Unit must preserve server log hashes for judicial submission.",
     "entitiesFound": [
       {
         "entity_type": "CYBER_TICKET",
-        "value": "CY-2026-7734"
+        "start": 70,
+        "end": 82,
+        "score": 0.95,
+        "value": "CY-2026-8812"
       },
       {
-        "entity_type": "BADGE_ID",
-        "value": "CONST-5519"
+        "entity_type": "PERSON",
+        "start": 305,
+        "end": 310,
+        "score": 0.85,
+        "value": "Patel"
       }
     ],
     "agenda": [
-      "Ransomware Binary Memory Analysis",
-      "Offsite Backup Restoration",
-      "Cert-In Escalation"
+      "Case Briefing: Cyber defense incident response to briefing on Case <CYBER_TICKET>...",
+      "Technical Evidence & Inquest: LockBit 3...",
+      "Operational Next Steps: Digital Forensics Unit must preserve server log hashes for judicial submission..."
     ],
     "decisions": [
-      "Do NOT pay ransom under any circumstances",
-      "Restore air-gapped backups"
+      "Dispatch compliance freeze notices to cryptocurrency exchanges and trace blockchain transactions."
     ],
     "action_items": [
       {
-        "id": "act-5",
-        "task": "Perform forensic memory dump of infected domain controller",
-        "owner": "Technical Lead CONST-5519",
-        "deadline": "2026-08-15",
+        "id": "act-1",
+        "task": "Investigate and verify incident details: Cyber defense incident response to briefing on Case <CYBER_TICKET>",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-19",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: LockBit 3",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-20",
         "status": "IN_PROGRESS"
       }
     ]
   },
   {
-    "id": "mtg-104",
-    "title": "Deepfake Extortion & Telegram Channel Analysis (FIR-2026-5521)",
-    "date": "2026-08-12",
-    "createdBy": "Investigating Officer POL-8842",
-    "status": "OFFICIALLY_APPROVED",
-    "rawTranscript": "Inspector Shinde: Case file FIR-2026-5521 regarding AI deepfake video creation and extortion via Telegram channel. Issued takedown notice under IT Act Section 66E.",
-    "redactedTranscript": "Inspector Shinde: Case file [FIR: FIR-2026-5521] regarding AI deepfake video creation and extortion via Telegram channel. Issued takedown notice under IT Act Section 66E.",
+    "id": "mtg-3811",
+    "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260918]",
+    "date": "2026-09-18",
+    "createdBy": "investigator_shinde",
+    "status": "DRAFT_PENDING_REVIEW",
+    "rawTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell investigative briefing for FIR 2026-5531. Spear phishing campaign targeting municipal accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to attacker mailbox bat actor 99 at protonmail.com. Senior Inspector Varma Badge 4000 and 82 will serve notice to the Domain Registrar and notify Nodal Officer at cyberdesk.in.",
+    "redactedTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell investigative briefing for <FIR_ID>. Spear phishing campaign targeting municipal accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to attacker mailbox bat actor 99 at protonmail.com. Senior Inspector <PERSON> 4000 and 82 will serve notice to the Domain Registrar and notify Nodal Officer at cyberdesk.in.",
     "entitiesFound": [
       {
         "entity_type": "FIR_ID",
-        "value": "FIR-2026-5521"
+        "start": 68,
+        "end": 81,
+        "score": 0.95,
+        "value": "FIR 2026-5531"
       },
       {
-        "entity_type": "BADGE_ID",
-        "value": "POL-8842"
+        "entity_type": "PERSON",
+        "start": 303,
+        "end": 314,
+        "score": 0.85,
+        "value": "Varma Badge"
       }
     ],
     "agenda": [
-      "Synthetic Media Watermark Detection",
-      "Telegram Admin IP Subpoena",
-      "Victim Protection Protocols"
+      "Case Briefing: State Cyber Crime Cell investigative briefing for <FIR_ID>...",
+      "Technical Evidence & Inquest: Spear phishing campaign targeting municipal accounts...",
+      "Operational Next Steps: Senior Inspector <PERSON> 4000 and 82 will serve notice to the Domain Registrar ..."
     ],
     "decisions": [
-      "Issue Section 91 CrPC notice to Telegram Legal",
-      "Provide digital privacy counseling"
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
     ],
     "action_items": [
       {
-        "id": "act-6",
-        "task": "Track IP logs received from Telegram compliance officer",
-        "owner": "Investigating Officer POL-8842",
-        "deadline": "2026-08-14",
-        "status": "COMPLETED"
+        "id": "act-1",
+        "task": "Investigate and verify incident details: State Cyber Crime Cell investigative briefing for <FIR_ID>",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-19",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Spear phishing campaign targeting municipal accounts",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-20",
+        "status": "IN_PROGRESS"
+      }
+    ]
+  },
+  {
+    "id": "mtg-6495",
+    "title": "Deepfake & Extortion Threat Assessment [CASE-20260918]",
+    "date": "2026-09-18",
+    "createdBy": "investigator_shinde",
+    "status": "DRAFT_PENDING_REVIEW",
+    "rawTranscript": "[0.00s -> 30.00s] State Cyber Investigation Team Meeting on for 2026-4421. Digital Extortion Network targeting senior citizens via fraudulent investment portals. Siphon funds totalling 45 Lockropies rooted to PAN number ABCDE-1234F and Suspicious Bank Account 50100234567890. Sub-Inspector Row Batch 1190 is serving formal freezing orders to\n[30.00s -> 37.00s] the Payment Gateway and co-ordinating with Binance Compliance Desk for Wallet Tracking.",
+    "redactedTranscript": "[0.00s -> 30.00s] State Cyber Investigation Team Meeting on for 2026-4421. Digital Extortion Network targeting senior citizens via fraudulent investment portals. Siphon funds totalling 45 Lockropies rooted to PAN number ABCDE-1234F and Suspicious Bank <BANK_ACCOUNT>. Sub-Inspector Row Batch 1190 is serving formal freezing orders to\n[30.00s -> 37.00s] the Payment Gateway and co-ordinating with Binance Compliance Desk for Wallet Tracking.",
+    "entitiesFound": [
+      {
+        "entity_type": "BANK_ACCOUNT",
+        "start": 252,
+        "end": 274,
+        "score": 0.95,
+        "value": "Account 50100234567890"
+      },
+      {
+        "entity_type": "PHONE_NUMBER",
+        "start": 261,
+        "end": 274,
+        "score": 0.95,
+        "value": "0100234567890"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: State Cyber Investigation Team Meeting on for 2026-4421...",
+      "Technical Evidence & Inquest: Digital Extortion Network targeting senior citizens via fraudulent investment po...",
+      "Operational Next Steps: the Payment Gateway and co-ordinating with Binance Compliance Desk for Wallet Tr..."
+    ],
+    "decisions": [
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+      "Dispatch compliance freeze notices to cryptocurrency exchanges and trace blockchain transactions."
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: State Cyber Investigation Team Meeting on for 2026-4421",
+        "owner": "Inspector Row Batch",
+        "deadline": "2026-09-19",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Digital Extortion Network targeting senior citizens via fraudulent investment portals",
+        "owner": "Inspector Row Batch",
+        "deadline": "2026-09-20",
+        "status": "IN_PROGRESS"
       }
     ]
   }

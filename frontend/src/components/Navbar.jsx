@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Navbar({ activeRole, setActiveRole, activeTab, setActiveTab, openMfaModal }) {
+export default function Navbar({ activeRole, setActiveRole, activeTab, setActiveTab, openMfaModal, currentUser, onLogout }) {
   return (
     <header>
       <div className="classification-header">
@@ -8,7 +8,7 @@ export default function Navbar({ activeRole, setActiveRole, activeTab, setActive
           <span className="classification-tag">CONFIDENTIAL — STATE POLICE PROPERTY</span> | TECHNICAL DIVISION
         </div>
         <div style={{ color: 'var(--text-muted)' }}>
-          SYSTEM MODE: <strong>AIR-GAPPED LOCALHOST</strong>
+          SYSTEM MODE: <strong>AIR-GAPPED LOCALHOST (2FA SECURED)</strong>
         </div>
       </div>
 
@@ -23,10 +23,12 @@ export default function Navbar({ activeRole, setActiveRole, activeTab, setActive
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '16px',
+            fontSize: '11px',
+            fontWeight: '800',
+            fontFamily: 'var(--font-mono)',
             flexShrink: 0
           }}>
-            🛡️
+            [SEC]
           </div>
           <div>
             <h1 className="navbar-title" style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-main)', margin: 0 }}>
@@ -45,42 +47,55 @@ export default function Navbar({ activeRole, setActiveRole, activeTab, setActive
               onClick={() => setActiveTab('dashboard')}
               className={`btn-outline ${activeTab === 'dashboard' ? 'btn-outline-active' : ''}`}
             >
-              📋 Meetings & MoMs
+              Cases & MoMs
             </button>
             <button
               onClick={() => setActiveTab('audit')}
               className={`btn-outline ${activeTab === 'audit' ? 'btn-outline-active' : ''}`}
             >
-              📜 SHA-256 Audit Ledger
+              SHA-256 Audit Ledger
             </button>
           </div>
 
-          {/* Demo Role Switcher Dropdown */}
+          {/* Role Switcher & User Profile */}
           <div className="navbar-role-section">
             <div style={{ textAlign: 'right' }}>
               <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block', fontWeight: '700', letterSpacing: '0.05em' }}>
-                ROLE SWITCHER
+                {currentUser?.username || 'OFFICER'} ({currentUser?.badgeId || 'POL-8842'})
               </span>
               <select
                 value={activeRole}
                 onChange={(e) => setActiveRole(e.target.value)}
                 className="role-select-box"
               >
-                <option value="ADMIN">ADMIN (Full Access)</option>
-                <option value="INVESTIGATOR">INVESTIGATOR (Full MoM & Audio)</option>
-                <option value="ANALYST">ANALYST (Draft Edits)</option>
-                <option value="AUDITOR">AUDITOR (Redacted Only)</option>
+                <option value="ADMIN">L5: ADMIN (DCP Pawar)</option>
+                <option value="INVESTIGATOR">L4: INVESTIGATOR (Insp. Shinde)</option>
+                <option value="ANALYST">L3: ANALYST (Patil)</option>
+                <option value="FIELD_OFFICER">L2: FIELD OFFICER (SI Rao)</option>
+                <option value="TRAINEE">L1: TRAINEE (Kamble)</option>
+                <option value="AUDITOR">L0: AUDITOR (Deshmukh)</option>
               </select>
             </div>
 
             <button
               onClick={openMfaModal}
               className="btn-outline"
-              title="2FA Security Verification"
+              title="2FA Security Verification Status"
               style={{ whiteSpace: 'nowrap' }}
             >
-              🔑 2FA Security
+              2FA Active
             </button>
+
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                className="btn-outline"
+                style={{ color: '#dc2626', borderColor: '#f87171', whiteSpace: 'nowrap' }}
+                title="Log out of system"
+              >
+                Sign Out
+              </button>
+            )}
           </div>
         </div>
       </nav>

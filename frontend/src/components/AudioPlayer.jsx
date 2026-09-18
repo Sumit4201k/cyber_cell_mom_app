@@ -231,7 +231,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
     <div className="cyber-card" style={{ backgroundColor: 'var(--surface-1)' }}>
       <div className="cyber-card-header" style={{ marginBottom: '12px', paddingBottom: '8px' }}>
         <div className="cyber-card-title" style={{ fontSize: '13px' }}>
-          🔊 Synchronized Waveform Audio Player ({meeting?.id})
+          [AUDIO] Synchronized Waveform Audio Player ({meeting?.id})
         </div>
 
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -260,7 +260,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
             </span>
           ) : (
             <span className={isPlaying ? 'status-pill-approved' : 'status-pill-draft'} style={{ fontSize: '9px' }}>
-              {isPlaying ? `▶️ PLAYING AT ${playbackSpeed}x` : 'IDLE'}
+              {isPlaying ? `PLAYING AT ${playbackSpeed}x` : 'IDLE'}
             </span>
           )}
         </div>
@@ -275,26 +275,28 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
               onClick={togglePlay}
               className="btn-outline"
               style={{
-                width: '42px',
-                height: '42px',
-                padding: 0,
+                width: '60px',
+                height: '36px',
+                padding: '4px 8px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '18px',
+                fontSize: '11px',
+                fontWeight: '800',
+                fontFamily: 'var(--font-mono)',
                 flexShrink: 0,
                 borderColor: isPlaying ? 'var(--state-green)' : 'var(--text-main)',
                 backgroundColor: isPlaying ? 'var(--state-green-bg)' : 'transparent'
               }}
             >
-              {isPlaying ? '⏸️' : '▶️'}
+              {isPlaying ? 'PAUSE' : 'PLAY'}
             </button>
 
             {/* Audio Details & Equalizer */}
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', color: 'var(--text-main)', marginBottom: '8px', fontFamily: 'var(--font-mono)' }}>
-                <span style={{ color: 'var(--text-main)', fontWeight: '800', fontSize: '13px' }}>
-                  ⏱️ {formatTime(currentTime)} / {formatTime(totalDuration)}
+                <span style={{ color: 'var(--text-main)', fontWeight: '800', fontSize: '12px' }}>
+                  TIME: {formatTime(currentTime)} / {formatTime(totalDuration)}
                 </span>
 
                 {/* Dynamic Equalizer Visualizer Bars */}

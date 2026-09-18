@@ -7,10 +7,13 @@ import AuditLogTable from './components/AuditLogTable';
 import UploadModal from './components/UploadModal';
 import PdfReportModal from './components/PdfReportModal';
 import MFAModal from './components/MFAModal';
+import LoginScreen from './components/LoginScreen';
 import Toast from './components/Toast';
 import { fetchApi, uploadMeetingAudio } from './api/client';
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [meetings, setMeetings] = useState([]);
   const [selectedMeeting, setSelectedMeetingState] = useState(null);
   const [activeRole, setActiveRole] = useState('INVESTIGATOR');
@@ -37,6 +40,41 @@ export default function App() {
     if (meeting) {
       localStorage.setItem('cyber_selected_meeting_id', meeting.id);
     }
+  };
+
+  useEffect(() => {
+    // Check existing authenticated session
+    const token = localStorage.getItem('cyber_token');
+    const storedUser = localStorage.getItem('cyber_user');
+    if (token && storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser);
+        setCurrentUser(parsed);
+        setActiveRole(parsed.role || 'INVESTIGATOR');
+        setIsAuthenticated(true);
+      } catch (e) {
+        setIsAuthenticated(false);
+      }
+    }
+  }, []);
+
+  const handleLoginSuccess = (user, role) => {
+    setCurrentUser(user);
+    setActiveRole(role);
+    setIsAuthenticated(true);
+    showToast('success', 'Clearance Verified', `Welcome Officer ${user?.username || 'Officer'}. 2FA Authenticated.`);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('cyber_token');
+    localStorage.removeItem('cyber_user');
+    localStorage.removeItem('cyber_selected_meeting_id');
+    localStorage.removeItem('cyber_meetings_cache');
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    setMeetings([]);
+    setSelectedMeetingState(null);
+    showToast('info', 'Signed Out', 'You have been securely signed out of the police terminal.');
   };
 
   useEffect(() => {
@@ -79,15 +117,20 @@ export default function App() {
     loadMeetings();
   }, [activeRole]);
 
-  const handleUploadComplete = async (formData, useDemoSample = false) => {
-    const data = await uploadMeetingAudio(formData, activeRole);
-    if (data.meeting) {
-      setMeetings(prev => [data.meeting, ...prev]);
-      setSelectedMeeting(data.meeting);
-      showToast('success', 'Meeting Ingested', 'Audio file processed and MoM draft created successfully.');
-      if (isMobile) setMobileScreen('case_detail');
+  const handleUploadComplete = async (formData) => {
+    try {
+      const data = await uploadMeetingAudio(formData, activeRole);
+      if (data.meeting) {
+        setMeetings(prev => [data.meeting, ...prev]);
+        setSelectedMeeting(data.meeting);
+        showToast('success', 'Meeting Ingested', 'Audio file processed and MoM draft created successfully.');
+        if (isMobile) setMobileScreen('case_detail');
+      }
+      return data;
+    } catch (err) {
+      showToast('warning', 'Upload Processing Failed', err.message);
+      throw err;
     }
-    return data;
   };
 
   const handleSaveActionItems = async (updatedItems) => {
@@ -103,6 +146,7 @@ export default function App() {
       );
       if (data.meeting) {
         setSelectedMeeting(data.meeting);
+        setMeetings(prev => prev.map(m => m.id === data.meeting.id ? data.meeting : m));
         loadMeetings();
         showToast('info', 'Action Items Saved', 'Meeting action matrix updated.');
       }
@@ -121,6 +165,7 @@ export default function App() {
       );
       if (data.meeting) {
         setSelectedMeeting(data.meeting);
+        setMeetings(prev => prev.map(m => m.id === data.meeting.id ? data.meeting : m));
         loadMeetings();
         showToast('success', 'Record Officially Approved', 'MoM file status updated to OFFICIALLY APPROVED and locked.');
       }
@@ -165,6 +210,15 @@ export default function App() {
   const pendingCases = meetings.filter(m => m.status !== 'OFFICIALLY_APPROVED').length;
   const approvedCases = meetings.filter(m => m.status === 'OFFICIALLY_APPROVED').length;
 
+  if (!isAuthenticated) {
+    return (
+      <>
+        <LoginScreen onLoginSuccess={handleLoginSuccess} />
+        <Toast toast={toast} onClose={() => setToast(null)} />
+      </>
+    );
+  }
+
   return (
     <div style={{ backgroundColor: 'var(--surface-2)', minHeight: '100vh' }}>
       <Navbar
@@ -173,6 +227,8 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         openMfaModal={() => setIsMfaOpen(true)}
+        currentUser={currentUser}
+        onLogout={handleLogout}
       />
 
       <main className="app-container">
@@ -181,7 +237,7 @@ export default function App() {
             {/* Top Operational Metrics Bar */}
             <div className="metrics-grid">
               <div className="metric-card">
-                <div className="metric-icon">📂</div>
+                <div className="metric-icon" style={{ fontSize: '11px', fontWeight: '800', fontFamily: 'var(--font-mono)' }}>[REC]</div>
                 <div>
                   <div className="metric-value">{totalCases}</div>
                   <div className="metric-label">Total Case Records</div>
@@ -189,7 +245,7 @@ export default function App() {
               </div>
 
               <div className="metric-card">
-                <div className="metric-icon">⏳</div>
+                <div className="metric-icon" style={{ fontSize: '11px', fontWeight: '800', fontFamily: 'var(--font-mono)', color: 'var(--state-amber)' }}>[PEND]</div>
                 <div>
                   <div className="metric-value" style={{ color: 'var(--state-amber)' }}>{pendingCases}</div>
                   <div className="metric-label">Pending Draft Reviews</div>
@@ -197,7 +253,7 @@ export default function App() {
               </div>
 
               <div className="metric-card">
-                <div className="metric-icon">🔒</div>
+                <div className="metric-icon" style={{ fontSize: '11px', fontWeight: '800', fontFamily: 'var(--font-mono)', color: 'var(--state-green)' }}>[SEAL]</div>
                 <div>
                   <div className="metric-value" style={{ color: 'var(--state-green)' }}>{approvedCases}</div>
                   <div className="metric-label">Approved & Signed Records</div>
@@ -322,7 +378,7 @@ export default function App() {
                               Save
                             </button>
                             <button onClick={(e) => { e.stopPropagation(); setEditingCardId(null); }} className="btn-outline" style={{ fontSize: '10px', padding: '2px 6px' }}>
-                              ✕
+                              Cancel
                             </button>
                           </div>
                         ) : (
@@ -330,21 +386,21 @@ export default function App() {
                             <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)', lineHeight: 1.3, flex: 1 }}>
                               {m.title}
                             </div>
-                            {activeRole !== 'AUDITOR' && m.status !== 'OFFICIALLY_APPROVED' && (
+                            {(activeRole === 'ADMIN' || activeRole === 'INVESTIGATOR') && m.status !== 'OFFICIALLY_APPROVED' && (
                               <button
                                 onClick={(e) => startEditCardTitle(e, m)}
-                                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '11px', padding: '0 2px' }}
+                                style={{ background: 'none', border: '1px solid var(--border-color)', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '10px', padding: '1px 5px' }}
                                 title="Edit Title"
                               >
-                                ✏️
+                                Edit
                               </button>
                             )}
                           </div>
                         )}
 
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px' }}>
-                          <span>📅 {m.date}</span>
-                          <span>👮 {m.createdBy}</span>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px', fontFamily: 'var(--font-mono)' }}>
+                          <span>DATE: {m.date}</span>
+                          <span>OFFICER: {m.createdBy}</span>
                         </div>
                       </div>
                     );
@@ -365,6 +421,10 @@ export default function App() {
                           onApproveMeeting={handleApproveMeeting}
                           showToast={showToast}
                           onTitleUpdated={(updated) => {
+                            setSelectedMeeting(updated);
+                            loadMeetings();
+                          }}
+                          onMeetingUpdated={(updated) => {
                             setSelectedMeeting(updated);
                             loadMeetings();
                           }}
@@ -394,6 +454,10 @@ export default function App() {
                       onApproveMeeting={handleApproveMeeting}
                       showToast={showToast}
                       onTitleUpdated={(updated) => {
+                        setSelectedMeeting(updated);
+                        loadMeetings();
+                      }}
+                      onMeetingUpdated={(updated) => {
                         setSelectedMeeting(updated);
                         loadMeetings();
                       }}

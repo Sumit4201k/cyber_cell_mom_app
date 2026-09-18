@@ -50,57 +50,57 @@ export default function AuditLogTable({ activeRole, showToast }) {
     switch (action) {
       case 'SYSTEM_BOOTSTRAP':
         return {
-          title: "⚙️ System Bootstrap",
+          title: "[SYSTEM] Bootstrap Initialized",
           description: `Cryptographic SHA-256 ledger initialised.`
         };
       case 'MEETING_UPLOADED':
         return {
-          title: "📂 Uploaded Audio Recording",
+          title: "[INGEST] Audio Recording Uploaded",
           description: `Officer ${username} ingested new meeting recording.`
         };
       case 'PLAY_AUDIO_RECORDING':
         return {
-          title: "🔊 Played Audio Recording",
+          title: "[AUDIO] Audio Recording Played",
           description: `Officer ${username} played meeting audio recording out loud.`
         };
       case 'TOGGLE_PII_UNMASK':
         return {
-          title: "👁️ Toggled PII Unmasking",
-          description: `Officer ${username} toggled PII unmasking for entity: ${details?.entity || 'PII Tag'}.`
+          title: "[CLEARANCE] PII Unmasking Toggled",
+          description: `Officer ${username} toggled PII unmasking for entity: ${details?.entity || details?.entityType || 'PII Tag'}.`
         };
       case 'TOGGLE_VIEW_MODE':
         return {
-          title: "🔄 Switched View Mode",
+          title: "[VIEW] View Mode Switched",
           description: `Officer ${username} switched view mode to: ${details?.mode || 'transcript'}.`
         };
       case 'UPDATE_ACTION_ITEMS':
         return {
-          title: "✏️ Updated Action Items",
+          title: "[EDIT] Action Items Updated",
           description: `Officer ${username} edited and saved meeting action matrix.`
         };
       case 'RECORD_APPROVED':
         return {
-          title: "🔒 Approved & Locked Record",
+          title: "[SEAL] Record Officially Signed & Locked",
           description: `Officer ${username} officially signed & approved meeting record into police ledger.`
         };
       case 'EXPORT_PDF_REPORT':
         return {
-          title: "📄 Exported PDF Report",
+          title: "[EXPORT] PDF Report Generated",
           description: `Officer ${username} generated official multi-page PDF summary report.`
         };
       case 'MFA_VERIFIED':
         return {
-          title: "🔑 Verified 2FA TOTP",
+          title: "[AUTH] 2FA TOTP Verified",
           description: `User ${username} verified 2FA TOTP security clearance code.`
         };
       case 'VERIFY_AUDIT_LEDGER':
         return {
-          title: "🔍 Verified Audit Ledger Integrity",
+          title: "[AUDIT] Ledger Cryptographic Hash Verified",
           description: `User ${username} initiated real-time cryptographic SHA-256 hash integrity check.`
         };
       default:
         return {
-          title: `📌 User Action: ${action}`,
+          title: `[ACTION] ${action}`,
           description: `User ${username} performed action: ${action}`
         };
     }
@@ -126,13 +126,13 @@ export default function AuditLogTable({ activeRole, showToast }) {
     <div className="cyber-card">
       <div className="cyber-card-header">
         <div className="cyber-card-title">
-          📜 Real-Time Police Audit Trail ({logs.length} Logged Events)
+          [LEDGER] Real-Time Police Audit Trail ({logs.length} Logged Events)
         </div>
 
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           {/* Refresh Logs Button */}
           <button onClick={loadAuditLogs} className="btn-outline" style={{ fontSize: '11px' }}>
-            🔄 Refresh Events
+            Refresh Events
           </button>
 
           {/* Toggle Switch between Human Readable & Cryptographic Ledger */}
@@ -142,14 +142,14 @@ export default function AuditLogTable({ activeRole, showToast }) {
               className={`btn-outline ${viewMode === 'human' ? 'btn-outline-active' : ''}`}
               style={{ fontSize: '11px', padding: '3px 8px' }}
             >
-              📊 Human-Readable View
+              Timeline View
             </button>
             <button
               onClick={() => setViewMode('hash')}
               className={`btn-outline ${viewMode === 'hash' ? 'btn-outline-active' : ''}`}
               style={{ fontSize: '11px', padding: '3px 8px' }}
             >
-              ⛓️ SHA-256 Hash Linkage
+              SHA-256 Hash Linkage
             </button>
           </div>
 
@@ -160,7 +160,7 @@ export default function AuditLogTable({ activeRole, showToast }) {
           )}
 
           <button onClick={verifyIntegrity} className="btn-outline">
-            🔍 Verify Ledger Integrity
+            Verify Ledger Integrity
           </button>
         </div>
       </div>

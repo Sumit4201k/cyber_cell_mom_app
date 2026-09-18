@@ -1,146 +1,165 @@
 import React, { useState, useRef } from 'react';
 
-const DEMO_TRANSCRIPTS = [
-  "Inspector Deshmukh briefing on extortion via Instagram fake profile targeting victim under case FIR 2026 8890.",
-  "Senior Inspector Shinde investigating fake bank customer care portal stealing victim credit card numbers under case FIR 2026 4419.",
-  "Officer Pawar tracking illegal gambling syndicate laundering funds via USDT crypto wallets under case FIR 2026 9912.",
-  "Technical Lead Constable Pawar analyzing LockBit ransomware strain on district hospital servers under ticket CY 2026 9931.",
-  "Inspector Shinde reviewing unauthorized SIM porting and mobile banking fraud under case FIR 2026 3841.",
-  "DSP Deshmukh investigating deepfake video blackmail targeting college student under case FIR 2026 1204.",
-  "Cyber Analyst ISP 1029 analyzing WhatsApp APK malware extracting victim contacts under ticket CY 2026 7712."
-];
-
 export default function UploadModal({ isOpen, onClose, onUploadComplete, activeRole, showToast }) {
   const [file, setFile] = useState(null);
   const [customTitle, setCustomTitle] = useState('');
   const [customOfficer, setCustomOfficer] = useState('');
+  const [manualTranscript, setManualTranscript] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [liveTranscript, setLiveTranscript] = useState('');
   const [progress, setProgress] = useState(0);
   const [statusMessage, setStatusMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
   const mediaStreamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const recognitionRef = useRef(null);
+  const timerIntervalRef = useRef(null);
 
   if (!isOpen) return null;
 
   const handleFileChange = (e) => {
+    setErrorMessage('');
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const selected = e.target.files[0];
+      setFile(selected);
     }
   };
 
   const startMicrophoneRecording = async () => {
+    setErrorMessage('');
     try {
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        alert('Microphone recording requires HTTPS or a modern mobile browser.');
+        setErrorMessage('Microphone recording requires a modern browser with mediaDevices support.');
         return;
       }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaStreamRef.current = stream;
-      mediaRecorderRef.current = new MediaRecorder(stream);
+
+      const options = MediaRecorder.isTypeSupported('audio/webm')
+        ? { mimeType: 'audio/webm' }
+        : MediaRecorder.isTypeSupported('audio/mp4')
+        ? { mimeType: 'audio/mp4' }
+        : {};
+
+      const recorder = new MediaRecorder(stream, options);
+      mediaRecorderRef.current = recorder;
       audioChunksRef.current = [];
       setLiveTranscript('');
+      setRecordingSeconds(0);
 
+      // Start recording timer
+      timerIntervalRef.current = setInterval(() => {
+        setRecordingSeconds((prev) => prev + 1);
+      }, 1000);
+
+      // SpeechRecognition for real-time live preview if supported
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (SpeechRecognition) {
-        const recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = 'en-US';
+        try {
+          const recognition = new SpeechRecognition();
+          recognition.continuous = true;
+          recognition.interimResults = true;
+          recognition.lang = 'en-US';
 
-        recognition.onresult = (event) => {
-          let fullSpeech = '';
-          for (let i = 0; i < event.results.length; i++) {
-            fullSpeech += event.results[i][0].transcript + ' ';
-          }
-          setLiveTranscript(fullSpeech.trim());
-        };
+          recognition.onresult = (event) => {
+            let fullSpeech = '';
+            for (let i = 0; i < event.results.length; i++) {
+              fullSpeech += event.results[i][0].transcript + ' ';
+            }
+            setLiveTranscript(fullSpeech.trim());
+          };
 
-        recognition.start();
-        recognitionRef.current = recognition;
+          recognition.onerror = () => {};
+          recognition.start();
+          recognitionRef.current = recognition;
+        } catch (e) {
+          console.warn('SpeechRecognition initialization error:', e);
+        }
       }
 
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        if (event.data.size > 0) {
+      recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
           audioChunksRef.current.push(event.data);
         }
       };
 
-      mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-        const recordedFile = new File([audioBlob], 'live_recorded_meeting.wav', { type: 'audio/wav' });
+      recorder.onstop = () => {
+        const mimeType = recorder.mimeType || 'audio/webm';
+        const ext = mimeType.includes('mp4') ? '.m4a' : mimeType.includes('wav') ? '.wav' : '.webm';
+        const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+        const recordedFile = new File([audioBlob], `live_recorded_meeting_${Date.now()}${ext}`, { type: mimeType });
         recordedFile.audioUrl = URL.createObjectURL(audioBlob);
-        if (liveTranscript) {
-          recordedFile.customTranscript = liveTranscript;
-        }
         setFile(recordedFile);
 
-        // Hardware Safety: Immediately stop all microphone hardware tracks!
         if (mediaStreamRef.current) {
-          mediaStreamRef.current.getTracks().forEach(track => track.stop());
+          mediaStreamRef.current.getTracks().forEach((track) => track.stop());
           mediaStreamRef.current = null;
         }
       };
 
-      mediaRecorderRef.current.start();
+      recorder.start(250);
       setIsRecording(true);
-      if (showToast) showToast('info', 'Microphone Active', 'Recording live audio stream...');
+      if (showToast) showToast('info', 'Microphone Active', 'Recording live audio stream from microphone...');
     } catch (err) {
-      alert('Microphone access denied or unsupported: ' + err.message);
+      setErrorMessage('Microphone access error: ' + err.message);
     }
   };
 
   const stopMicrophoneRecording = () => {
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       if (recognitionRef.current) {
-        recognitionRef.current.stop();
+        try { recognitionRef.current.stop(); } catch (e) {}
       }
       setIsRecording(false);
 
       if (mediaStreamRef.current) {
-        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+        mediaStreamRef.current.getTracks().forEach((track) => track.stop());
         mediaStreamRef.current = null;
       }
 
-      if (showToast) showToast('success', 'Recording Stopped', 'Microphone stream released.');
+      if (showToast) showToast('success', 'Recording Complete', 'Audio recording captured and ready for processing.');
     }
   };
 
-  const handleProcessAudio = async (useDemoSample = false) => {
-    if (!file && !useDemoSample) {
-      alert('Please select an audio file or click "Load Demonstration Record".');
+  const handleProcessAudio = async () => {
+    setErrorMessage('');
+    if (!file && !manualTranscript.trim()) {
+      setErrorMessage('Please select an audio file, record live via microphone, or enter transcript text.');
       return;
     }
 
-    stopMicrophoneRecording();
+    if (isRecording) {
+      stopMicrophoneRecording();
+    }
 
     setIsProcessing(true);
-    setProgress(15);
-    setStatusMessage('Ingesting Audio Stream...');
+    setProgress(20);
+    setStatusMessage('Preparing and uploading audio stream to backend...');
 
     try {
       const formData = new FormData();
-      let transcriptToPass = file?.customTranscript || liveTranscript;
 
-      if (useDemoSample || (!transcriptToPass && !file)) {
-        // Pick a random realistic police incident transcript for demo processing
-        const randIndex = Math.floor(Math.random() * DEMO_TRANSCRIPTS.length);
-        transcriptToPass = DEMO_TRANSCRIPTS[randIndex];
-      }
-
-      if (file && !useDemoSample) {
-        formData.append('audio', file);
+      if (file) {
+        formData.append('audio', file, file.name);
         if (file.audioUrl) {
           formData.append('audioUrl', file.audioUrl);
         }
       }
 
-      if (transcriptToPass) {
-        formData.append('customTranscript', transcriptToPass);
+      if (manualTranscript.trim()) {
+        formData.append('customTranscript', manualTranscript.trim());
+      } else if (liveTranscript.trim()) {
+        formData.append('customTranscript', liveTranscript.trim());
       }
 
       if (customTitle.trim()) {
@@ -151,37 +170,57 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
         formData.append('createdBy', customOfficer.trim());
       }
 
-      setTimeout(() => { setProgress(45); setStatusMessage('Transcribing & Extracting Case Details...'); }, 600);
-      setTimeout(() => { setProgress(75); setStatusMessage('Executing Presidio PII Anonymization...'); }, 1200);
-      setTimeout(() => { setProgress(90); setStatusMessage('Structuring Minutes of Meeting JSON Schema...'); }, 1800);
+      const p1 = setTimeout(() => {
+        setProgress(50);
+        setStatusMessage('Transcribing audio via offline faster-whisper INT8 CPU engine...');
+      }, 400);
 
-      const response = await onUploadComplete(formData, useDemoSample);
-      
-      if (response?.meeting) {
-        if (file && file.audioUrl) {
-          response.meeting.audioUrl = file.audioUrl;
-        }
-        if (transcriptToPass) {
-          response.meeting.rawTranscript = transcriptToPass;
-          if (!response.meeting.redactedTranscript || response.meeting.redactedTranscript.includes("Inspector Shinde: Initiated emergency")) {
-            response.meeting.redactedTranscript = transcriptToPass;
-          }
-        }
+      const p2 = setTimeout(() => {
+        setProgress(75);
+        setStatusMessage('Anonymizing sensitive PII via Presidio & Indian Cyber patterns...');
+      }, 900);
+
+      const p3 = setTimeout(() => {
+        setProgress(90);
+        setStatusMessage('Synthesizing structured Minutes of Meeting JSON matrix...');
+      }, 1400);
+
+      const response = await onUploadComplete(formData);
+
+      clearTimeout(p1);
+      clearTimeout(p2);
+      clearTimeout(p3);
+
+      if (response?.meeting && file && file.audioUrl) {
+        response.meeting.audioUrl = file.audioUrl;
       }
 
       setProgress(100);
       setStatusMessage('Processing Complete');
+
       setTimeout(() => {
         setIsProcessing(false);
         setFile(null);
         setCustomTitle('');
         setCustomOfficer('');
+        setManualTranscript('');
+        setLiveTranscript('');
         onClose();
       }, 400);
     } catch (err) {
       setIsProcessing(false);
-      alert('Upload processing error: ' + err.message);
+      setProgress(0);
+      setStatusMessage('');
+      const errText = err.message || 'Audio processing failed.';
+      setErrorMessage(errText);
+      if (showToast) showToast('warning', 'Processing Error', errText);
     }
+  };
+
+  const formatSecs = (secs) => {
+    const m = Math.floor(secs / 60).toString().padStart(2, '0');
+    const s = Math.floor(secs % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
   };
 
   return (
@@ -189,9 +228,16 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
       <div className="cyber-card cyber-modal-dialog">
         <div className="cyber-card-header">
           <div className="cyber-card-title">
-            Ingest Audio Recording & Case Details
+            [INGEST] Audio Recording & Case Briefing
           </div>
-          <button onClick={onClose} style={{ background: 'none', color: 'var(--text-muted)', fontSize: '18px' }}>✕</button>
+          <button
+            onClick={onClose}
+            disabled={isProcessing}
+            className="btn-outline"
+            style={{ fontSize: '11px', padding: '2px 8px', cursor: 'pointer' }}
+          >
+            Close
+          </button>
         </div>
 
         <div style={{ padding: '6px 0' }}>
@@ -203,10 +249,11 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
               </label>
               <input
                 type="text"
-                placeholder="Leave blank for automatic extraction"
+                placeholder="Auto-extracted by AI if blank"
                 value={customTitle}
                 onChange={(e) => setCustomTitle(e.target.value)}
                 className="cyber-input"
+                disabled={isProcessing}
               />
             </div>
             <div>
@@ -215,112 +262,155 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
               </label>
               <input
                 type="text"
-                placeholder="e.g. Inspector Shinde"
+                placeholder="e.g. Inspector Deshmukh (POL-8842)"
                 value={customOfficer}
                 onChange={(e) => setCustomOfficer(e.target.value)}
                 className="cyber-input"
+                disabled={isProcessing}
               />
             </div>
           </div>
 
           {/* File Upload Box */}
           <div style={{
-            border: '2px dashed var(--border-dark)',
+            border: file ? '2px solid var(--state-green)' : '2px dashed var(--border-dark)',
             borderRadius: '0px',
             padding: '16px',
             textAlign: 'center',
             backgroundColor: 'var(--surface-2)',
-            marginBottom: '14px'
+            marginBottom: '12px'
           }}>
             <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '10px' }}>
-              Select audio file (`.wav`, `.mp3`, `.m4a`) or record via microphone:
+              Upload real police audio file (<code>.wav</code>, <code>.mp3</code>, <code>.m4a</code>, <code>.webm</code>, <code>.flac</code>):
             </p>
 
             <input
               type="file"
-              accept="audio/*"
+              accept="audio/*,.wav,.mp3,.m4a,.webm,.ogg,.flac"
               onChange={handleFileChange}
               style={{ display: 'none' }}
               id="file-input"
+              disabled={isProcessing || isRecording}
             />
-            <label htmlFor="file-input" className="btn-outline" style={{ cursor: 'pointer', display: 'inline-block' }}>
+            <label
+              htmlFor="file-input"
+              className="btn-outline"
+              style={{ cursor: isProcessing || isRecording ? 'not-allowed' : 'pointer', display: 'inline-block' }}
+            >
               Select Local Audio File
             </label>
 
             {file && (
               <div style={{ marginTop: '10px', color: 'var(--state-green)', fontSize: '12px', fontWeight: '600' }}>
-                Selected File: {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
+                Selected: {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
               </div>
             )}
           </div>
 
           {/* Live Mic Recording Option */}
-          <div className="modal-button-group">
-            {!isRecording ? (
-              <button onClick={startMicrophoneRecording} className="btn-outline" style={{ flex: 1 }}>
-                Record Live via Microphone
-              </button>
-            ) : (
-              <button onClick={stopMicrophoneRecording} className="btn-outline btn-outline-active" style={{ flex: 1, borderColor: 'var(--state-amber)' }}>
-                Stop Recording & Release Mic
-              </button>
-            )}
-
-            <button
-              onClick={() => handleProcessAudio(true)}
-              className="btn-outline"
-              style={{ flex: 1 }}
-            >
-              Load Demonstration Record
-            </button>
+          <div style={{ marginBottom: '12px' }}>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {!isRecording ? (
+                <button
+                  type="button"
+                  onClick={startMicrophoneRecording}
+                  className="btn-outline"
+                  style={{ flex: 1 }}
+                  disabled={isProcessing}
+                >
+                  Start Live Mic Recording
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={stopMicrophoneRecording}
+                  className="btn-outline btn-outline-active"
+                  style={{ flex: 1, borderColor: 'var(--state-amber)', color: 'var(--state-amber)' }}
+                >
+                  Stop Recording ({formatSecs(recordingSeconds)})
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Live Speech-to-Text Transcript Display Box */}
+          {/* Live Speech Recognition Transcript Box if active */}
           {liveTranscript && (
             <div style={{
               backgroundColor: 'var(--surface-2)',
               border: '1.5px solid var(--border-dark)',
-              padding: '12px 16px',
-              borderRadius: '0px',
-              fontSize: '12px',
-              marginBottom: '14px',
+              padding: '10px 14px',
+              fontSize: '11px',
+              marginBottom: '12px',
               color: 'var(--text-main)',
-              maxHeight: '120px',
+              maxHeight: '80px',
               overflowY: 'auto',
-              fontFamily: 'var(--font-mono)',
-              lineHeight: 1.5
+              fontFamily: 'var(--font-mono)'
             }}>
-              <div style={{ fontWeight: '700', fontSize: '10px', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
-                Live Speech Transcript ({liveTranscript.split(/\s+/).length} words):
+              <div style={{ fontWeight: '700', fontSize: '10px', color: 'var(--text-muted)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                Live Microphone Transcription:
               </div>
               "{liveTranscript}"
             </div>
           )}
 
+          {/* Direct Text Transcript Input Option */}
+          <div style={{ marginBottom: '12px' }}>
+            <label style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
+              OR DIRECT BRIEFING TRANSCRIPT (OPTIONAL / TEXT INPUT):
+            </label>
+            <textarea
+              rows={3}
+              placeholder="Paste or type meeting dialogue directly to process PII redaction and MoM extraction without audio file..."
+              value={manualTranscript}
+              onChange={(e) => {
+                setManualTranscript(e.target.value);
+                setErrorMessage('');
+              }}
+              className="cyber-input"
+              style={{ width: '100%', resize: 'vertical', fontSize: '11px', fontFamily: 'var(--font-mono)' }}
+              disabled={isProcessing}
+            />
+          </div>
+
+          {/* Error Message Banner */}
+          {errorMessage && (
+            <div style={{
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              border: '1.5px solid #ef4444',
+              color: '#ef4444',
+              padding: '10px 14px',
+              fontSize: '12px',
+              fontWeight: '600',
+              marginBottom: '12px'
+            }}>
+              [ERROR] {errorMessage}
+            </div>
+          )}
+
           {/* Progress Bar */}
           {isProcessing && (
-            <div style={{ marginTop: '12px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', color: 'var(--text-muted)', marginBottom: '6px' }}>
+            <div style={{ marginTop: '12px', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--text-muted)', marginBottom: '6px' }}>
                 <span>{statusMessage}</span>
                 <span>{progress}%</span>
               </div>
-              <div style={{ width: '100%', height: '6px', backgroundColor: 'var(--surface-3)', borderRadius: '0px', overflow: 'hidden' }}>
+              <div style={{ width: '100%', height: '6px', backgroundColor: 'var(--surface-3)', overflow: 'hidden' }}>
                 <div style={{ width: `${progress}%`, height: '100%', backgroundColor: 'var(--state-green)', transition: 'width 0.3s' }}></div>
               </div>
             </div>
           )}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '14px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
           <button onClick={onClose} className="btn-outline" disabled={isProcessing}>
             Cancel
           </button>
           <button
-            onClick={() => handleProcessAudio(false)}
+            onClick={handleProcessAudio}
             className="btn-outline btn-outline-active"
-            disabled={isProcessing || (!file && !isRecording && !liveTranscript)}
+            disabled={isProcessing || (!file && !manualTranscript.trim() && !isRecording)}
           >
-            Process Audio File
+            {isProcessing ? 'Processing with AI...' : 'Process with AI Engine'}
           </button>
         </div>
       </div>

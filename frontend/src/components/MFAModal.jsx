@@ -32,9 +32,9 @@ export default function MFAModal({ isOpen, onClose, activeRole }) {
       <div className="cyber-card" style={{ width: '400px', backgroundColor: 'var(--surface-1)' }}>
         <div className="cyber-card-header">
           <div className="cyber-card-title">
-            🔑 2FA TOTP Officer Verification
+            [AUTH] 2FA TOTP Officer Verification
           </div>
-          <button onClick={onClose} style={{ background: 'none', color: 'var(--text-muted)', fontSize: '18px' }}>✕</button>
+          <button onClick={onClose} className="btn-outline" style={{ padding: '2px 8px', fontSize: '11px' }}>Close</button>
         </div>
 
         <div style={{ padding: '10px 0', textAlign: 'center' }}>

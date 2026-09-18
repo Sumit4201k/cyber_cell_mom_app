@@ -1,0 +1,288 @@
+{
+  "total_tests": 49,
+  "passed": 49,
+  "failed": 0,
+  "suites": {
+    "1. Frontend Vite Production Build": {
+      "passed": 4,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Frontend package.json exists",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Vite Production Build completed successfully (1.85s)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "dist/index.html generated",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "dist/assets JS & CSS bundles generated",
+          "passed": true,
+          "details": ""
+        }
+      ]
+    },
+    "2. Python ML Service & Audio Pipeline (Port 8000)": {
+      "passed": 10,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "GET /health returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Health status payload valid",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Synthesized valid 16kHz PCM WAV audio (80044 bytes)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "POST /process-meeting (WAV upload) HTTP 200 (8.82s latency)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Response contains status == 'success'",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Response contains non-empty raw_transcript",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Response contains non-empty redacted_transcript",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Response contains entities_found array",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Response contains structured MoM object",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "MoM structure has title, decisions, action_items",
+          "passed": true,
+          "details": ""
+        }
+      ]
+    },
+    "3. Presidio PII Entity Detection & Redaction Accuracy": {
+      "passed": 7,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "Test Case 1: Zero PII leaks in redacted text (100% masked)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Test Case 2: Zero PII leaks in redacted text (100% masked)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Test Case 3: Zero PII leaks in redacted text (100% masked)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Test Case 4: Zero PII leaks in redacted text (100% masked)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Presidio PII Detection Precision >= 95% (Actual: 100.0%)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Presidio PII Detection Recall >= 95% (Actual: 100.0%)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Presidio PII Redaction F1 Score >= 95% (Actual: 100.0%)",
+          "passed": true,
+          "details": ""
+        }
+      ]
+    },
+    "4. Node.js Backend & RBAC Security Clearance (Port 5000)": {
+      "passed": 10,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "GET /api/health returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Backend service name verified",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "GET /api/meetings (INVESTIGATOR) returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Meetings list populated (found 14 records)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Investigator can access rawTranscript",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "GET /api/meetings (AUDITOR) returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Auditor role strictly blocked from unredacted raw PII across all records",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PATCH /api/meetings/mtg-4732/action-items returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "POST /api/meetings/mtg-4732/approve returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Meeting status locked to 'OFFICIALLY_APPROVED'",
+          "passed": true,
+          "details": ""
+        }
+      ]
+    },
+    "5. Cryptographic SHA-256 Audit Ledger & Tamper Resistance": {
+      "passed": 8,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "GET /api/audit-logs (ADMIN) returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Audit ledger contains sequential entries (total: 94)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Genesis block exists with GENESIS_HASH linkage",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Backend cryptographic hash chain check: valid == True",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Local client-side SHA-256 parent hash chaining verified across 100% of blocks",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Audit ledger logs critical state mutations (e.g. RECORD_APPROVED or UPDATE_ACTION_ITEMS)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "GET /api/audit-logs/verify returns HTTP 200",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Ledger integrity verification confirmation valid == True",
+          "passed": true,
+          "details": ""
+        }
+      ]
+    },
+    "6. Single-Page A4 PDF Export Layout & CSS Print Rules": {
+      "passed": 10,
+      "failed": 0,
+      "tests": [
+        {
+          "name": "PdfReportModal.jsx component exists",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "CSS @page declares 'size: A4 portrait' with precise margins (8mm 12mm)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "CSS @media print strictly hides dashboard UI (.cyber-card, .app-container, navbar)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Printable document container '#printable-pdf-document' formatted for A4 containment",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PDF contains Confidential State Police Header",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PDF contains Case Metadata Grid (ID, Officer, Clearance Status)",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PDF contains Attendees List & Topic Agenda",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PDF contains Formal Decisions Taken & Action Item Table",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PDF contains Presidio Anonymized Transcript Excerpt",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "PDF contains Cryptographic SHA-256 Audit Verification Stamp",
+          "passed": true,
+          "details": ""
+        }
+      ]
+    }
+  }
+}

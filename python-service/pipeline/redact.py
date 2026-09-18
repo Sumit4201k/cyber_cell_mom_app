@@ -1,4 +1,25 @@
 import re
+import logging
+
+logger = logging.getLogger("redact")
+
+# Standardized regex patterns for Indian Cyber Cell & Financial PII
+PATTERNS = {
+    "AADHAAR_NUMBER": r"\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b",
+    "PAN_NUMBER": r"\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b",
+    "IFSC_CODE": r"\b[A-Z]{4}0[A-Z0-9]{6}\b",
+    "BANK_ACCOUNT": r"\b(?:account|acc|a/c|a/c\s*no\.?)[\s#:]*(\d{9,18})\b|\b\d{11,18}\b",
+    "PHONE_NUMBER": r"(?:\+91[\-\s]?)?[6789]\d{9}\b|\+?\d{1,3}[\s-]?\d{10}\b",
+    "FIR_ID": r"\bFIR[-\s]?\d{4}[-\s]?\d{4,6}\b|\bFIR\s*\d{4,6}\b",
+    "BADGE_ID": r"\b(?:POL|ISP|DSP|CONST|INSP|SI|ASI|ACP|DCP)[-\s]?\d{4,6}\b",
+    "CYBER_TICKET": r"\b(?:CY|CYBER|NCRB|NCRP)[-\s]?\d{4}[-\s]?\d{4,6}\b|\bCY-\d{4,6}\b",
+    "EMAIL_ADDRESS": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
+}
+
+# Optional Presidio initialization
+HAS_PRESIDIO = False
+analyzer = None
+anonymizer = None
 
 try:
     from presidio_analyzer import AnalyzerEngine, PatternRecognizer, Pattern
@@ -7,41 +28,43 @@ try:
     analyzer = AnalyzerEngine()
     anonymizer = AnonymizerEngine()
 
-    fir_pattern = Pattern(name="fir_pattern", regex=r"\bFIR-\d{4}-\d{4,6}\b", score=1.0)
-    fir_recognizer = PatternRecognizer(supported_entity="FIR_ID", patterns=[fir_pattern], name="fir_recognizer")
-    analyzer.registry.add_recognizer(fir_recognizer)
+    for entity_name, regex_str in PATTERNS.items():
+        pattern = Pattern(name=f"{entity_name.lower()}_pattern", regex=regex_str, score=0.95)
+        recognizer = PatternRecognizer(
+            supported_entity=entity_name,
+            patterns=[pattern],
+            name=f"{entity_name.lower()}_recognizer"
+        )
+        analyzer.registry.add_recognizer(recognizer)
 
-    badge_pattern = Pattern(name="badge_pattern", regex=r"\b(POL|ISP|DSP|CONST)-\d{4,6}\b", score=1.0)
-    badge_recognizer = PatternRecognizer(supported_entity="BADGE_ID", patterns=[badge_pattern], name="badge_recognizer")
-    analyzer.registry.add_recognizer(badge_recognizer)
-
-    ticket_pattern = Pattern(name="ticket_pattern", regex=r"\bCY-\d{4}-\d{4,6}\b", score=1.0)
-    ticket_recognizer = PatternRecognizer(supported_entity="CYBER_TICKET", patterns=[ticket_pattern], name="ticket_recognizer")
-    analyzer.registry.add_recognizer(ticket_recognizer)
-    
     HAS_PRESIDIO = True
-except Exception:
+    logger.info("Presidio Analyzer with Indian Cyber PII recognizers initialized.")
+except Exception as e:
     HAS_PRESIDIO = False
+    logger.info(f"Presidio Analyzer not loaded ({str(e)}). Using high-speed regex PII engine.")
 
 
 def redact_pii(text: str) -> dict:
-    if not text:
-        return {"redacted_text": "", "entities_found": []}
+    """
+    Redacts Personally Identifiable Information (PII) and sensitive police case references.
+    Supported entities: Aadhaar, PAN, IFSC, Bank Account, Phone, FIR ID, Badge ID, Cyber Ticket, Email.
+    """
+    if not text or not isinstance(text, str):
+        return {"redacted_text": "", "entities_found": [], "raw_text": ""}
 
-    if HAS_PRESIDIO:
+    # 1. Presidio path if available
+    if HAS_PRESIDIO and analyzer is not None and anonymizer is not None:
         try:
-            results = analyzer.analyze(
-                text=text,
-                entities=["PERSON", "PHONE_NUMBER", "EMAIL_ADDRESS", "FIR_ID", "BADGE_ID", "CYBER_TICKET"],
-                language="en"
-            )
+            target_entities = list(PATTERNS.keys()) + ["PERSON", "PHONE_NUMBER", "EMAIL_ADDRESS"]
+            results = analyzer.analyze(text=text, entities=target_entities, language="en")
+            
             anonymized_result = anonymizer.anonymize(text=text, analyzer_results=results)
             entities = [
                 {
                     "entity_type": res.entity_type,
                     "start": res.start,
                     "end": res.end,
-                    "score": res.score,
+                    "score": round(float(res.score), 2),
                     "value": text[res.start:res.end]
                 }
                 for res in results
@@ -51,36 +74,42 @@ def redact_pii(text: str) -> dict:
                 "entities_found": entities,
                 "raw_text": text
             }
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning(f"Presidio anonymization error ({str(e)}). Falling back to pure regex engine.")
 
-    # Regex Fallback PII Engine for CPU Execution
+    # 2. Pure-Python Regex PII & Police Classifier Engine (100% offline CPU)
     entities = []
-    redacted = text
+    
+    for entity_type, pattern_str in PATTERNS.items():
+        for match in re.finditer(pattern_str, text, re.IGNORECASE):
+            val = match.group(0)
+            start, end = match.start(), match.end()
+            
+            # Avoid duplicate or overlapping entity ranges
+            if not any(e["start"] <= start < e["end"] or e["start"] < end <= e["end"] for e in entities):
+                entities.append({
+                    "entity_type": entity_type,
+                    "start": start,
+                    "end": end,
+                    "score": 1.0,
+                    "value": val
+                })
 
-    # FIR IDs
-    fir_matches = list(re.finditer(r"\bFIR-\d{4}-\d{4,6}\b", text, re.IGNORECASE))
-    for m in fir_matches:
-        entities.append({"entity_type": "FIR_ID", "start": m.start(), "end": m.end(), "value": m.group(0)})
+    # Sort entities by start position in descending order to replace backwards without index shift
+    entities.sort(key=lambda x: x["start"], reverse=True)
 
-    # Badge IDs
-    badge_matches = list(re.finditer(r"\b(POL|ISP|DSP|CONST)-\d{4,6}\b", text, re.IGNORECASE))
-    for m in badge_matches:
-        entities.append({"entity_type": "BADGE_ID", "start": m.start(), "end": m.end(), "value": m.group(0)})
+    redacted_chars = list(text)
+    for ent in entities:
+        start = ent["start"]
+        end = ent["end"]
+        tag = f"[{ent['entity_type']}]"
+        redacted_chars[start:end] = list(tag)
 
-    # Cyber Tickets
-    ticket_matches = list(re.finditer(r"\bCY-\d{4}-\d{4,6}\b", text, re.IGNORECASE))
-    for m in ticket_matches:
-        entities.append({"entity_type": "CYBER_TICKET", "start": m.start(), "end": m.end(), "value": m.group(0)})
-
-    # Phone numbers
-    phone_matches = list(re.finditer(r"\+?\d{1,3}[\s-]?\d{10}\b", text))
-    for m in phone_matches:
-        entities.append({"entity_type": "PHONE_NUMBER", "start": m.start(), "end": m.end(), "value": m.group(0)})
-        redacted = redacted.replace(m.group(0), "[PHONE_NUMBER]")
+    # Re-sort entities by start position ascending for clean response metadata
+    entities.sort(key=lambda x: x["start"])
 
     return {
-        "redacted_text": redacted,
+        "redacted_text": "".join(redacted_chars),
         "entities_found": entities,
         "raw_text": text
     }

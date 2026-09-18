@@ -1,18 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const { meetings, createAuditEntry, saveMeetingsToFile } = require("../db/store");
+const FormData = require("form-data");
+const fetch = require("node-fetch");
+const { meetings, createAuditEntry, saveMeetingsToFile, ROLE_LEVELS, ENTITY_PERMISSIONS } = require("../db/store");
 const { authenticateToken, authorizeRoles } = require("../middleware/auth");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Smart AI Natural Language Title Classifier & Semantic Extractor Engine
-function extractDynamicTitleFromSpeech(transcript, fallbackId) {
-  const caseIdNum = Math.floor(1000 + Math.random() * 9000);
-  const defaultFir = `FIR-2026-${caseIdNum}`;
-
+// Smart NLP Title Classifier & Semantic Extractor Engine
+function extractDynamicTitleFromSpeech(transcript, defaultId) {
   if (!transcript || typeof transcript !== "string" || transcript.trim().length < 5) {
-    return `State Cyber Cell Case Review (${defaultFir})`;
+    return `Cyber Crime Investigation Record (${defaultId})`;
   }
 
   const cleanText = transcript.trim();
@@ -20,11 +19,10 @@ function extractDynamicTitleFromSpeech(transcript, fallbackId) {
 
   // 1. Spoken FIR or Cyber Ticket Matcher
   const firMatch = cleanText.match(/\bFIR[-\s]?\d{4}[-\s]?\d{4,6}\b/i) || cleanText.match(/\bFIR\s*\d{4,6}\b/i);
-  const ticketMatch = cleanText.match(/\bCY[-\s]?\d{4}[-\s]?\d{4,6}\b/i) || cleanText.match(/\bCYBER[-\s]?\d{4,6}\b/i);
-  let caseRef = firMatch ? firMatch[0].replace(/\s+/g, '-').toUpperCase() : ticketMatch ? ticketMatch[0].replace(/\s+/g, '-').toUpperCase() : defaultFir;
-  if (!caseRef.includes("2026") && !caseRef.includes("FIR")) caseRef = `FIR-2026-${caseRef.replace(/[^0-9]/g, '') || caseIdNum}`;
+  const ticketMatch = cleanText.match(/\b(?:CY|CYBER|NCRB|NCRP)[-\s]?\d{4}[-\s]?\d{4,6}\b/i) || cleanText.match(/\bCY[-\s]?\d{4,6}\b/i);
+  let caseRef = firMatch ? firMatch[0].replace(/\s+/g, '-').toUpperCase() : ticketMatch ? ticketMatch[0].replace(/\s+/g, '-').toUpperCase() : defaultId;
 
-  // 2. Smart Offense Category Classifier (Analyzes whole transcript semantic intent!)
+  // 2. Offense Category Classifier
   let primaryTopic = "";
   if (lower.includes("lockbit") || lower.includes("ransomware")) {
     primaryTopic = "LockBit Ransomware Breach Response";
@@ -33,20 +31,20 @@ function extractDynamicTitleFromSpeech(transcript, fallbackId) {
   } else if (lower.includes("deepfake") || lower.includes("extortion") || lower.includes("blackmail") || lower.includes("video")) {
     primaryTopic = "Deepfake & Cyber Extortion Threat";
   } else if (lower.includes("instagram") || lower.includes("fake profile") || lower.includes("stalking")) {
-    primaryTopic = "Instagram Fake Profile Cyber Extortion";
+    primaryTopic = "Social Media Extortion Investigation";
   } else if (lower.includes("phishing") || lower.includes("fake bank") || lower.includes("customer care")) {
     primaryTopic = "Phishing Syndicate & Portal Fraud";
   } else if (lower.includes("crypto") || lower.includes("usdt") || lower.includes("wallet") || lower.includes("blockchain")) {
     primaryTopic = "Crypto Wallet Seizure & Tracing";
   } else if (lower.includes("whatsapp") || lower.includes("telegram") || lower.includes("apk") || lower.includes("malware")) {
-    primaryTopic = "WhatsApp & Telegram Malware Analysis";
+    primaryTopic = "Mobile Malware & Threat Analysis";
   } else if (lower.includes("utility") || lower.includes("electricity") || lower.includes("bill")) {
     primaryTopic = "Utility Bill Scam & Fraud Analysis";
   } else if (lower.includes("upi") || lower.includes("credit card") || lower.includes("otp")) {
     primaryTopic = "UPI & Financial Fraud Investigation";
   }
 
-  // 3. Smart Target / Entity Extractor
+  // 3. Target / Entity Extractor
   let targetDetail = "";
   if (lower.includes("hospital") || lower.includes("health")) targetDetail = "on Hospital Infrastructure";
   else if (lower.includes("college") || lower.includes("student")) targetDetail = "Targeting Student Victim";
@@ -61,103 +59,135 @@ function extractDynamicTitleFromSpeech(transcript, fallbackId) {
     return `${primaryTopic} (${caseRef})`;
   }
 
-  // 5. Fallback: Smart Keyword Key-Phrase Summarizer (Extracts action verbs and key nouns across transcript)
+  // 5. Keyword Key-Phrase Summarizer
   const importantWords = cleanText
     .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "")
     .split(/\s+/)
     .filter(w => w.length > 3 && !["this", "that", "with", "from", "have", "under", "over", "were", "been", "they", "their", "meeting", "started", "inspector", "constable", "officer", "briefing", "reviewing", "case"].includes(w.toLowerCase()));
 
   const keyWordsStr = importantWords.slice(0, 5).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
-  return `${keyWordsStr || "Cyber Crime Investigation"} (${caseRef})`;
+  return `${keyWordsStr || "Cyber Crime Inquest"} (${caseRef})`;
 }
 
-// AI NLP Full Extraction Generator (Title, Redaction, Agenda, Decisions, Action Items)
-function processTranscriptWithAI(transcript, user) {
+// Regex-based PII Extractor & Redactor for direct text payloads
+function processTranscriptWithRegex(transcript, user) {
   const cleanText = (transcript || "").trim();
+  if (!cleanText) {
+    return {
+      redactedText: "",
+      entities: [],
+      agenda: [],
+      decisions: [],
+      actionItems: []
+    };
+  }
   
-  // Entities Detection & Redaction
   const entities = [];
-  let redactedText = cleanText;
-
+  const aadhaarMatches = listMatches(cleanText, /\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b/g, "AADHAAR_NUMBER");
+  const panMatches = listMatches(cleanText, /\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b/g, "PAN_NUMBER");
+  const ifscMatches = listMatches(cleanText, /\b[A-Z]{4}0[A-Z0-9]{6}\b/g, "IFSC_CODE");
+  const bankMatches = listMatches(cleanText, /\b(?:account|acc|a\/c|a\/c\s*no\.?)[\s#:]*(\d{9,18})\b|\b\d{11,18}\b/gi, "BANK_ACCOUNT");
   const firMatches = listMatches(cleanText, /\bFIR-\d{4}-\d{4,6}\b|\bFIR\s*\d{4,6}\b/gi, "FIR_ID");
-  const badgeMatches = listMatches(cleanText, /\b(POL|ISP|DSP|CONST)-\d{4,6}\b/gi, "BADGE_ID");
-  const ticketMatches = listMatches(cleanText, /\bCY-\d{4}-\d{4,6}\b|\bCYBER-\d{4,6}\b/gi, "CYBER_TICKET");
-  const phoneMatches = listMatches(cleanText, /\+?\d{1,3}[\s-]?\d{10}\b/g, "PHONE_NUMBER");
+  const badgeMatches = listMatches(cleanText, /\b(?:POL|ISP|DSP|CONST|INSP|SI|ASI|ACP|DCP)[-\s]?\d{4,6}\b/gi, "BADGE_ID");
+  const ticketMatches = listMatches(cleanText, /\b(?:CY|CYBER|NCRB|NCRP)[-\s]?\d{4}[-\s]?\d{4,6}\b|\bCY-\d{4,6}\b/gi, "CYBER_TICKET");
+  const phoneMatches = listMatches(cleanText, /(?:\+91[\-\s]?)?[6789]\d{9}\b|\+?\d{1,3}[\s-]?\d{10}\b/g, "PHONE_NUMBER");
+  const emailMatches = listMatches(cleanText, /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/g, "EMAIL_ADDRESS");
 
-  entities.push(...firMatches.entities, ...badgeMatches.entities, ...ticketMatches.entities, ...phoneMatches.entities);
-  
-  for (const pm of phoneMatches.entities) {
-    redactedText = redactedText.replace(pm.value, "[PHONE_NUMBER]");
-  }
-  for (const fm of firMatches.entities) {
-    redactedText = redactedText.replace(fm.value, "[FIR_ID]");
-  }
+  entities.push(
+    ...aadhaarMatches.entities,
+    ...panMatches.entities,
+    ...ifscMatches.entities,
+    ...bankMatches.entities,
+    ...firMatches.entities,
+    ...badgeMatches.entities,
+    ...ticketMatches.entities,
+    ...phoneMatches.entities,
+    ...emailMatches.entities
+  );
 
-  // Extract Agenda directly from spoken sentences
-  const sentences = cleanText.split(/[.!?\n]/).map(s => s.trim()).filter(s => s.length > 10);
+  // Replace tokens backwards to preserve character indices
+  const sorted = [...entities].sort((a, b) => b.start - a.start);
+  const chars = cleanText.split('');
+  for (const ent of sorted) {
+    chars.splice(ent.start, ent.end - ent.start, `[${ent.entity_type}]`);
+  }
+  const redactedText = chars.join('');
+
+  // Clean timestamp prefixes and extract Agenda directly from real sentences
+  const cleanSpeechText = cleanText.replace(/\[\d+(?:\.\d+)?s\s*->\s*\d+(?:\.\d+)?s\]\s*/g, "");
+  const rawSentences = cleanSpeechText.split(/[.!?\n]/).map(s => s.trim()).filter(s => s.length > 3);
+  const sentences = rawSentences.filter(s => !/^(?:hello|hi|test|testing|okay|ok|yes|no|mic\s*check)[\s,.]*$/i.test(s) && s.length > 6);
+  const activeSentences = sentences.length > 0 ? sentences : rawSentences;
+
   let agenda = [];
-  if (sentences.length >= 3) {
+  if (activeSentences.length >= 3) {
     agenda = [
-      `Review of Incident: ${sentences[0]}`,
-      `Technical Evidence Analysis: ${sentences[1]}`,
-      `Legal Action & Notice Issuance: ${sentences[sentences.length - 1]}`
+      `Review of Incident: ${activeSentences[0]}`,
+      `Technical Evidence Analysis: ${activeSentences[1]}`,
+      `Legal Action & Notice Issuance: ${activeSentences[activeSentences.length - 1]}`
     ];
-  } else if (sentences.length === 2) {
+  } else if (activeSentences.length === 2) {
     agenda = [
-      `Incident Investigation: ${sentences[0]}`,
-      `Follow-up Directives: ${sentences[1]}`,
-      "Nodal Officer Subpoena & Legal Compliance"
+      `Incident Investigation: ${activeSentences[0]}`,
+      `Follow-up Directives: ${activeSentences[1]}`
     ];
-  } else if (sentences.length === 1) {
+  } else if (activeSentences.length === 1) {
     agenda = [
-      `Case Investigation: ${sentences[0]}`,
-      "Technical Packet Log Extraction",
-      "Notice Issuance under Section 91 CrPC"
+      `Case Investigation: ${activeSentences[0]}`,
+      "Technical Log Correlation"
     ];
   } else {
-    agenda = [
-      "Audio Transcript Ingestion & PII Redaction",
-      "Network Packet Trace & CDR Subpoena",
-      "Executive Action Items Matrix"
-    ];
+    agenda = ["Case Record Ingestion & Investigation"];
   }
 
-  // Extract Decisions directly from spoken content
+  // Extract Decisions from actual keywords or sentences
   const lower = cleanText.toLowerCase();
   let decisions = [];
   if (lower.includes("freeze") || lower.includes("bank") || lower.includes("account")) {
     decisions.push("Issue Section 91 CrPC emergency notice to freeze beneficiary bank accounts");
   }
-  if (lower.includes("telegram") || lower.includes("whatsapp") || lower.includes("ip")) {
-    decisions.push("Subpoena IP address logs and ISP registration details from compliance team");
+  if (lower.includes("cdr") || lower.includes("imei") || lower.includes("telecom") || lower.includes("ip")) {
+    decisions.push("Subpoena CDR, IPDR, and subscriber details from telecom compliance team under Section 91 CrPC");
   }
   if (lower.includes("crypto") || lower.includes("wallet")) {
-    decisions.push("Obtain court injunction to freeze crypto wallet address");
+    decisions.push("Obtain court injunction to freeze suspect crypto wallet address");
   }
   if (decisions.length === 0) {
-    decisions = [
-      "Issue urgent Section 91 CrPC notice to nodal officer",
-      "Escalate incident record to Senior Investigating Superintendent"
-    ];
+    if (activeSentences.length > 0) {
+      decisions.push(`Proceed with investigation directives: ${activeSentences[0].slice(0, 90)}`);
+    } else {
+      decisions.push("Initiate formal inquiry and preserve electronic evidence");
+    }
   }
 
-  // Extract Action Items Matrix
-  const actionItems = [
-    {
+  // Action Items Matrix derived from real sentences
+  const actionItems = [];
+  if (activeSentences.length > 0) {
+    actionItems.push({
       id: `act-${Date.now()}-1`,
-      task: sentences.length > 0 ? `Execute directive: ${sentences[0].slice(0, 60)}...` : "Verify packet trace and nodal officer response",
-      owner: user.username || "Investigating Officer POL-8842",
+      task: `Execute directive: ${activeSentences[0].slice(0, 80)}`,
+      owner: user.username || "Investigating Officer",
       deadline: new Date(Date.now() + 86400000).toISOString().split('T')[0],
       status: "PENDING"
-    },
-    {
-      id: `act-${Date.now()}-2`,
-      task: "Submit forensic technical summary to Cyber Cell Commander",
-      owner: "Cyber Forensic Analyst ISP-1029",
-      deadline: new Date(Date.now() + 172800000).toISOString().split('T')[0],
-      status: "IN_PROGRESS"
+    });
+    if (activeSentences.length > 1) {
+      actionItems.push({
+        id: `act-${Date.now()}-2`,
+        task: `Follow up on evidence: ${activeSentences[1].slice(0, 80)}`,
+        owner: user.username || "Cyber Analyst",
+        deadline: new Date(Date.now() + 172800000).toISOString().split('T')[0],
+        status: "IN_PROGRESS"
+      });
     }
-  ];
+  } else {
+    actionItems.push({
+      id: `act-${Date.now()}-1`,
+      task: "Verify case details and preserve forensic evidence",
+      owner: user.username || "Investigating Officer",
+      deadline: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+      status: "PENDING"
+    });
+  }
 
   return {
     redactedText,
@@ -172,34 +202,66 @@ function listMatches(text, regex, type) {
   const entities = [];
   let m;
   while ((m = regex.exec(text)) !== null) {
-    entities.push({ entity_type: type, start: m.index, end: m.index + m[0].length, value: m[0] });
+    entities.push({
+      entity_type: type,
+      start: m.index,
+      end: m.index + m[0].length,
+      value: m[0],
+      score: 1.0
+    });
   }
   return { entities };
 }
 
-// Get all meeting records (Role-gated data masking for AUDITOR)
+// Get all meeting records (Role-gated data masking & entity clearance evaluation)
 router.get("/", authenticateToken, (req, res) => {
   const role = req.user?.role || "INVESTIGATOR";
+  const userLevel = ROLE_LEVELS[role] ? ROLE_LEVELS[role].level : 2;
 
   const sanitizedMeetings = meetings.map((m) => {
     if (role === "AUDITOR") {
       return {
         ...m,
-        rawTranscript: "[RESTRICTED - AUDITOR CLEARANCE LEVEL]",
-        entitiesFound: []
+        rawTranscript: "[RESTRICTED - AUDITOR CLEARANCE LEVEL 0]",
+        entitiesFound: (m.entitiesFound || []).map(ent => ({
+          ...ent,
+          value: "[RESTRICTED]",
+          canUnmask: false,
+          requiredClearance: ENTITY_PERMISSIONS[ent.entity_type]?.clearance || "Level 4 (INVESTIGATOR+)",
+          riskLevel: ENTITY_PERMISSIONS[ent.entity_type]?.risk || "HIGH"
+        }))
       };
     }
-    return m;
+
+    // Annotate entities with real-time clearance permissions for the current role
+    const annotatedEntities = (m.entitiesFound || []).map(ent => {
+      const perm = ENTITY_PERMISSIONS[ent.entity_type];
+      const allowed = perm ? perm.allowedRoles.includes(role) || userLevel >= perm.minLevel : userLevel >= 4;
+      return {
+        ...ent,
+        canUnmask: allowed,
+        requiredClearance: perm?.clearance || "Level 4 (INVESTIGATOR+)",
+        riskLevel: perm?.risk || "MEDIUM",
+        minLevel: perm?.minLevel || 4
+      };
+    });
+
+    return {
+      ...m,
+      entitiesFound: annotatedEntities
+    };
   });
 
   res.json({ status: "success", count: sanitizedMeetings.length, meetings: sanitizedMeetings });
 });
 
-// Upload & Process Audio Recording (Vercel Serverless & Local Dual Compatibility)
+// Upload & Process Audio Recording (Proxies directly to Python faster-whisper / Presidio ML microservice)
 const parseFormOrJson = (req, res, next) => {
   if (req.is && req.is('multipart/form-data')) {
     upload.single("audio")(req, res, (err) => {
-      if (err) return next();
+      if (err) {
+        return res.status(400).json({ status: "error", message: `Multipart upload error: ${err.message}` });
+      }
       next();
     });
   } else {
@@ -207,37 +269,119 @@ const parseFormOrJson = (req, res, next) => {
   }
 };
 
-router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR", "ANALYST"), parseFormOrJson, (req, res) => {
+router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER", "TRAINEE"), parseFormOrJson, async (req, res) => {
   const user = req.user || { id: "usr-demo", username: "investigator_shinde", role: "INVESTIGATOR" };
   const customTitle = req.body?.title;
-  const customTranscript = req.body?.customTranscript;
+  let customTranscript = req.body?.customTranscript;
+  const createdBy = req.body?.createdBy || user.username || "Investigating Officer";
+  const pythonServiceUrl = process.env.PYTHON_SERVICE_URL || "http://localhost:8000";
 
-  const newId = `mtg-${Date.now().toString().slice(-4)}`;
-  
-  // AI Dynamic Title Extraction directly from spoken transcript!
-  let extractedTitle = customTitle?.trim();
-  if (!extractedTitle) {
-    extractedTitle = extractDynamicTitleFromSpeech(customTranscript, newId);
+  const hasAudioFile = !!(req.file && req.file.buffer && req.file.buffer.length > 0);
+  const hasCustomTranscript = !!(customTranscript && customTranscript.trim().length > 0);
+
+  if (!hasAudioFile && !hasCustomTranscript) {
+    return res.status(400).json({
+      status: "error",
+      message: "No audio file or transcript provided for processing. Please provide a valid audio file (.wav, .mp3, .m4a) or direct transcript text."
+    });
   }
 
-  // Run AI Natural Language Extraction Pipeline for EVERYTHING!
-  const aiResult = processTranscriptWithAI(customTranscript, user);
+  let pythonResponse = null;
+
+  // 1. Communicate with Python ML Service (faster-whisper CPU INT8 + Presidio PII + MoM Structuring)
+  try {
+    const formData = new FormData();
+
+    if (hasAudioFile) {
+      formData.append("file", req.file.buffer, {
+        filename: req.file.originalname || "meeting_audio.wav",
+        contentType: req.file.mimetype || "audio/wav"
+      });
+    }
+
+    if (hasCustomTranscript) {
+      formData.append("customTranscript", customTranscript.trim());
+    }
+
+    if (customTitle) {
+      formData.append("title", customTitle.trim());
+    }
+
+    if (createdBy) {
+      formData.append("createdBy", createdBy.trim());
+    }
+
+    const pyRes = await fetch(`${pythonServiceUrl}/process-meeting`, {
+      method: "POST",
+      body: formData,
+      headers: formData.getHeaders(),
+      timeout: 60000
+    });
+
+    const pyData = await pyRes.json().catch(() => null);
+
+    if (!pyRes.ok) {
+      const errorMsg = pyData?.message || pyData?.error || `Python ML microservice returned HTTP ${pyRes.status}`;
+      return res.status(pyRes.status || 500).json({
+        status: "error",
+        message: errorMsg
+      });
+    }
+
+    pythonResponse = pyData;
+    console.log(`[Python ML Service] Successfully processed meeting via ${pythonServiceUrl}`);
+  } catch (pyErr) {
+    console.error(`[Python ML Service] Unreachable or failed: ${pyErr.message}`);
+    if (hasAudioFile) {
+      return res.status(503).json({
+        status: "error",
+        message: `Python ML Microservice (faster-whisper) is offline or unreachable: ${pyErr.message}. Ensure python-service is running on port 8000.`
+      });
+    }
+    // If only text was provided and python service is offline, fallback to Node regex engine cleanly
+  }
+
+  const newId = `mtg-${Date.now().toString().slice(-4)}`;
+  let extractedTitle = customTitle?.trim();
+  let aiResult;
+
+  if (pythonResponse && pythonResponse.status === "success") {
+    customTranscript = pythonResponse.raw_transcript || customTranscript;
+    if (!extractedTitle && pythonResponse.mom?.title) {
+      extractedTitle = pythonResponse.mom.title;
+    }
+    aiResult = {
+      redactedText: pythonResponse.redacted_transcript || pythonResponse.raw_transcript,
+      entities: pythonResponse.entities_found || [],
+      agenda: pythonResponse.mom?.agenda || [],
+      decisions: pythonResponse.mom?.decisions || [],
+      actionItems: (pythonResponse.mom?.action_items || []).map((item, idx) => ({
+        id: item.id || `act-${Date.now()}-${idx + 1}`,
+        task: item.task,
+        owner: item.owner || createdBy,
+        deadline: item.deadline || new Date(Date.now() + 86400000).toISOString().split('T')[0],
+        status: item.status || "PENDING"
+      }))
+    };
+  } else {
+    if (!extractedTitle) {
+      extractedTitle = extractDynamicTitleFromSpeech(customTranscript, newId);
+    }
+    aiResult = processTranscriptWithRegex(customTranscript, user);
+  }
 
   const newMeeting = {
     id: newId,
-    title: extractedTitle,
+    title: extractedTitle || `Meeting Record (${newId})`,
     date: new Date().toISOString().split("T")[0],
-    createdBy: req.body?.createdBy || `${user.username}`,
+    createdBy: createdBy,
     status: "DRAFT_PENDING_REVIEW",
-    rawTranscript: customTranscript || "Inspector Shinde: Initiated emergency cyber cell investigation briefing. Identified unauthorized account transfers and compromised IP logs.",
-    redactedTranscript: aiResult.redactedText || customTranscript,
-    entitiesFound: aiResult.entities.length > 0 ? aiResult.entities : [
-      { entity_type: "FIR_ID", value: `FIR-2026-${Math.floor(1000 + Math.random() * 9000)}` },
-      { entity_type: "BADGE_ID", value: "POL-8842" }
-    ],
-    agenda: aiResult.agenda,
-    decisions: aiResult.decisions,
-    action_items: aiResult.actionItems
+    rawTranscript: customTranscript || "",
+    redactedTranscript: aiResult.redactedText || customTranscript || "",
+    entitiesFound: aiResult.entities || [],
+    agenda: aiResult.agenda || [],
+    decisions: aiResult.decisions || [],
+    action_items: aiResult.actionItems || []
   };
 
   meetings.unshift(newMeeting);
@@ -249,10 +393,14 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
     user.role,
     "MEETING_UPLOADED",
     newMeeting.id,
-    { title: newMeeting.title }
+    { title: newMeeting.title, engine: pythonResponse ? "faster-whisper-python-ml" : "node-regex-nlp" }
   );
 
-  res.json({ status: "success", meeting: newMeeting });
+  res.json({
+    status: "success",
+    meeting: newMeeting,
+    engine: pythonResponse ? "faster-whisper-python-ml" : "node-regex-nlp"
+  });
 });
 
 // Update Case Title (Allowed: ADMIN, INVESTIGATOR)
@@ -261,13 +409,21 @@ router.patch("/:id/title", authenticateToken, authorizeRoles("ADMIN", "INVESTIGA
   const { title } = req.body;
   const user = req.user || { id: "usr-demo", username: "investigator_shinde", role: "INVESTIGATOR" };
 
+  if (!title || !title.trim()) {
+    return res.status(400).json({ status: "error", message: "Title cannot be empty" });
+  }
+
   const meeting = meetings.find((m) => m.id === id);
   if (!meeting) {
     return res.status(404).json({ status: "error", message: "Meeting file not found" });
   }
 
+  if (meeting.status === "OFFICIALLY_APPROVED") {
+    return res.status(400).json({ status: "error", message: "Cannot edit title of an officially approved and locked record." });
+  }
+
   const oldTitle = meeting.title;
-  meeting.title = title;
+  meeting.title = title.trim();
   saveMeetingsToFile();
 
   createAuditEntry(
@@ -276,21 +432,97 @@ router.patch("/:id/title", authenticateToken, authorizeRoles("ADMIN", "INVESTIGA
     user.role,
     "UPDATE_CASE_TITLE",
     meeting.id,
-    { oldTitle, newTitle: title }
+    { oldTitle, newTitle: meeting.title }
   );
 
   res.json({ status: "success", meeting });
 });
 
-// Update Action Items Matrix (Allowed: ADMIN, INVESTIGATOR, ANALYST)
-router.patch("/:id/action-items", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR", "ANALYST"), (req, res) => {
+// Update Agenda Topics (Allowed: ADMIN, INVESTIGATOR, ANALYST)
+router.patch("/:id/agenda", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR", "ANALYST"), (req, res) => {
   const { id } = req.params;
-  const { action_items } = req.body;
+  const { agenda } = req.body;
   const user = req.user || { id: "usr-demo", username: "investigator_shinde", role: "INVESTIGATOR" };
+
+  if (!Array.isArray(agenda)) {
+    return res.status(400).json({ status: "error", message: "agenda must be an array" });
+  }
 
   const meeting = meetings.find((m) => m.id === id);
   if (!meeting) {
     return res.status(404).json({ status: "error", message: "Meeting record not found" });
+  }
+
+  if (meeting.status === "OFFICIALLY_APPROVED") {
+    return res.status(400).json({ status: "error", message: "Cannot edit agenda of an officially approved and locked record." });
+  }
+
+  meeting.agenda = agenda;
+  saveMeetingsToFile();
+
+  createAuditEntry(
+    user.id,
+    user.username,
+    user.role,
+    "UPDATE_AGENDA",
+    meeting.id,
+    { agendaCount: agenda.length }
+  );
+
+  res.json({ status: "success", meeting });
+});
+
+// Update Decisions Taken (Allowed: ADMIN, INVESTIGATOR, ANALYST, FIELD_OFFICER)
+router.patch("/:id/decisions", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER"), (req, res) => {
+  const { id } = req.params;
+  const { decisions } = req.body;
+  const user = req.user || { id: "usr-demo", username: "investigator_shinde", role: "INVESTIGATOR" };
+
+  if (!Array.isArray(decisions)) {
+    return res.status(400).json({ status: "error", message: "decisions must be an array" });
+  }
+
+  const meeting = meetings.find((m) => m.id === id);
+  if (!meeting) {
+    return res.status(404).json({ status: "error", message: "Meeting record not found" });
+  }
+
+  if (meeting.status === "OFFICIALLY_APPROVED") {
+    return res.status(400).json({ status: "error", message: "Cannot edit decisions of an officially approved and locked record." });
+  }
+
+  meeting.decisions = decisions;
+  saveMeetingsToFile();
+
+  createAuditEntry(
+    user.id,
+    user.username,
+    user.role,
+    "UPDATE_DECISIONS",
+    meeting.id,
+    { decisionsCount: decisions.length }
+  );
+
+  res.json({ status: "success", meeting });
+});
+
+// Update Action Items Matrix (Allowed: ADMIN, INVESTIGATOR, ANALYST, FIELD_OFFICER, TRAINEE)
+router.patch("/:id/action-items", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER", "TRAINEE"), (req, res) => {
+  const { id } = req.params;
+  const { action_items } = req.body;
+  const user = req.user || { id: "usr-demo", username: "investigator_shinde", role: "INVESTIGATOR" };
+
+  if (!Array.isArray(action_items)) {
+    return res.status(400).json({ status: "error", message: "action_items must be an array" });
+  }
+
+  const meeting = meetings.find((m) => m.id === id);
+  if (!meeting) {
+    return res.status(404).json({ status: "error", message: "Meeting record not found" });
+  }
+
+  if (meeting.status === "OFFICIALLY_APPROVED") {
+    return res.status(400).json({ status: "error", message: "Cannot edit action items of an officially approved and locked record." });
   }
 
   meeting.action_items = action_items;
@@ -319,6 +551,7 @@ router.post("/:id/approve", authenticateToken, authorizeRoles("ADMIN", "INVESTIG
   }
 
   meeting.status = "OFFICIALLY_APPROVED";
+  meeting.approvedBy = user.username || "Investigating Officer POL-8842";
   saveMeetingsToFile();
 
   createAuditEntry(
@@ -327,7 +560,7 @@ router.post("/:id/approve", authenticateToken, authorizeRoles("ADMIN", "INVESTIG
     user.role,
     "RECORD_APPROVED",
     meeting.id,
-    { status: "OFFICIALLY_APPROVED", title: meeting.title }
+    { status: "OFFICIALLY_APPROVED", title: meeting.title, approvedBy: meeting.approvedBy }
   );
 
   res.json({ status: "success", meeting });

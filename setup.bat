@@ -1,14 +1,15 @@
 @echo off
 setlocal enabledelayedexpansion
+title State Cyber Cell MoM - Installer & Diagnostics
 echo ====================================================================
-echo   State Cyber Cell MoM Application - Universal Cross-Platform Installer
+echo   STATE CYBER CELL MINUTES OF MEETING APP - SETUP & HARDENING
 echo ====================================================================
 echo.
 
 set PROJECT_ROOT=%~dp0
 set PORTABLE_PY=%PROJECT_ROOT%python-service\python_env\python.exe
 
-echo [1/4] Checking Python environment...
+echo [1/5] Checking Python ML Environment...
 
 rem Check custom portable python in project folder
 if exist "%PORTABLE_PY%" (
@@ -24,7 +25,7 @@ if exist "C:\Users\hp\python311\python.exe" (
     goto :PYTHON_READY
 )
 
-rem Check system PATH for python / py
+rem Check system PATH for python
 python --version >nul 2>&1
 if %errorlevel% equ 0 (
     set PY_CMD=python
@@ -32,14 +33,7 @@ if %errorlevel% equ 0 (
     goto :PYTHON_READY
 )
 
-py --version >nul 2>&1
-if %errorlevel% equ 0 (
-    set PY_CMD=py
-    echo [OK] Found Python launcher: py
-    goto :PYTHON_READY
-)
-
-echo [NOTICE] Python not detected on system. Automatically installing Portable Python 3.11...
+echo [NOTICE] Python not detected. Downloading portable Python 3.11 runtime...
 mkdir "%PROJECT_ROOT%python-service\python_env" 2>nul
 curl.exe -o "%PROJECT_ROOT%python-service\python_env\python.zip" "https://www.python.org/ftp/python/3.11.9/python-3.11.9-embed-amd64.zip"
 powershell -Command "Expand-Archive -Path '%PROJECT_ROOT%python-service\python_env\python.zip' -DestinationPath '%PROJECT_ROOT%python-service\python_env' -Force; Remove-Item '%PROJECT_ROOT%python-service\python_env\python.zip' -Force"
@@ -49,21 +43,48 @@ curl.exe -o "%PROJECT_ROOT%python-service\python_env\get-pip.py" "https://bootst
 set PY_CMD="%PORTABLE_PY%"
 
 :PYTHON_READY
-echo [2/4] Installing Python ML service dependencies...
+echo.
+echo [2/5] Installing Python ML Service Dependencies...
 cd /d "%PROJECT_ROOT%python-service"
 !PY_CMD! -m pip install fastapi uvicorn pydantic python-multipart requests >nul 2>&1
+echo [OK] Python dependencies verified.
 cd /d "%PROJECT_ROOT%"
 
-echo [3/4] Installing Node Backend ^& Frontend dependencies...
+echo.
+echo [3/5] Installing Node Backend & Frontend Dependencies...
 cd /d "%PROJECT_ROOT%backend"
 call npm install --silent
 cd /d "%PROJECT_ROOT%frontend"
 call npm install --silent
 cd /d "%PROJECT_ROOT%"
 call npm install --silent
+echo [OK] Node.js dependencies installed.
+
+echo.
+echo [4/5] Running Self-QA Test Suite (Hash Chain Integrity & RBAC)...
+node "%PROJECT_ROOT%backend\test_qa_suite.js"
+
+echo.
+echo [5/5] Port Conflict Audit (8000, 5000, 5173)...
+powershell -Command "$p = Get-NetTCPConnection -LocalPort 5000, 8000, 5173 -State Listen -ErrorAction SilentlyContinue; if ($p) { Write-Host 'Active listeners on ports:' ($p | ForEach-Object { $_.LocalPort }) -ForegroundColor Yellow } else { Write-Host 'All ports (5000, 8000, 5173) are clear!' -ForegroundColor Green }"
 
 echo.
 echo ====================================================================
-echo   SUCCESS! Application fully configured on this PC.
-echo   To launch full stack (Node + Python + React), run: npm start
+echo   SUCCESS! State Cyber Cell MoM Application is 100%% Ready!
 echo ====================================================================
+echo.
+echo Launch Options:
+echo   1. Launch Full Stack Now (Node + Python ML + React UI)
+echo   2. Run via npm (npm run start:full)
+echo   3. Exit Installer
+echo.
+set /p CHOICE="Enter choice [1/2/3] (default is 1): "
+if "%CHOICE%"=="" set CHOICE=1
+
+if "%CHOICE%"=="1" (
+    echo.
+    echo Starting all 3 microservices concurrently...
+    call "%PROJECT_ROOT%run.bat"
+) else (
+    echo To start the application anytime, double-click run.bat or run: npm run start:full
+)

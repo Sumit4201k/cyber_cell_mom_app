@@ -18,96 +18,16 @@ const AUDIT_FILE = path.join(DATA_DIR, "auditLogs.json");
 // Cryptographic Ledger Genesis Hash
 const GENESIS_HASH = "GENESIS_HASH_0000000000000000000000000000000000000000000000000000000000000000";
 
-// Initial Seed Meetings with 100% Unique Police Incident Titles & Dynamic Audio Durations
-const initialMeetings = [
-  {
-    id: "mtg-101",
-    title: "SIM-Swapping & Mobile Banking Fraud Review (FIR-2026-9941)",
-    date: "2026-08-16",
-    createdBy: "Investigating Officer POL-8842",
-    duration: 145,
-    status: "DRAFT_PENDING_REVIEW",
-    rawTranscript: "Inspector Shinde: Briefing on SIM swapping incident FIR-2026-9941. Target victim lost 4.2 Lakhs via unauthorized porting. Cyber Ticket CY-2026-8812 assigned to Analyst ISP-1029.",
-    redactedTranscript: "Inspector Shinde: Briefing on SIM swapping incident [FIR: FIR-2026-9941]. Target victim lost 4.2 Lakhs via unauthorized porting. Cyber Ticket [TICKET: CY-2026-8812] assigned to Analyst [BADGE: ISP-1029].",
-    entitiesFound: [
-      { entity_type: "FIR_ID", value: "FIR-2026-9941" },
-      { entity_type: "CYBER_TICKET", value: "CY-2026-8812" },
-      { entity_type: "BADGE_ID", value: "ISP-1029" }
-    ],
-    agenda: ["SIM Swapping Fraud Attack Vector", "CDR Packet Log Analysis", "Nodal Officer Subpoena"],
-    decisions: ["Issue Section 91 CrPC notice to telecom operator", "Freeze linked mule bank account"],
-    action_items: [
-      { id: "act-1", task: "Issue Section 91 CrPC notice to bank nodal officer", owner: "Investigating Officer POL-8842", deadline: "2026-08-17", status: "PENDING" },
-      { id: "act-2", task: "Extract packet trace for Ticket CY-2026-8812", owner: "Cyber Analyst ISP-1029", deadline: "2026-08-18", status: "IN_PROGRESS" }
-    ]
-  },
-  {
-    id: "mtg-102",
-    title: "Phishing Syndicate & Crypto Wallet Seizure (FIR-2026-8812)",
-    date: "2026-08-15",
-    createdBy: "Senior Inspector DSP-4021",
-    duration: 112,
-    status: "OFFICIALLY_APPROVED",
-    rawTranscript: "DSP Deshmukh: Reviewing phishing scam targeting senior citizens. Over 18 Lakhs funneled to USDT crypto wallet. Requesting immediate freeze from Binance compliance.",
-    redactedTranscript: "DSP Deshmukh: Reviewing phishing scam targeting senior citizens. Over 18 Lakhs funneled to USDT crypto wallet [CRYPTO_ADDR]. Requesting immediate freeze from Binance compliance.",
-    entitiesFound: [
-      { entity_type: "FIR_ID", value: "FIR-2026-8812" },
-      { entity_type: "BADGE_ID", value: "DSP-4021" }
-    ],
-    agenda: ["Fake Bank Utility Portal Phishing", "Blockchain Ledger Tracing", "Mule Account Freezing"],
-    decisions: ["Obtain court emergency injunction for crypto freeze", "Dispatch cyber team to suspect tower location"],
-    action_items: [
-      { id: "act-3", task: "Send formal request to crypto exchange compliance desk", owner: "Senior Inspector DSP-4021", deadline: "2026-08-16", status: "COMPLETED" },
-      { id: "act-4", task: "Analyze tower dumps for victim cell towers", owner: "Cyber Analyst ISP-1029", deadline: "2026-08-17", status: "IN_PROGRESS" }
-    ]
-  },
-  {
-    id: "mtg-103",
-    title: "Ransomware Server Breach & Data Extraction (CY-2026-7734)",
-    date: "2026-08-14",
-    createdBy: "Technical Lead CONST-5519",
-    duration: 188,
-    status: "DRAFT_PENDING_REVIEW",
-    rawTranscript: "Officer Pawar: Incident response meeting regarding LockBit strain detected on hospital servers. Threat actor demanding 2 BTC. Isolated network subnet at 03:00 AM.",
-    redactedTranscript: "Officer Pawar: Incident response meeting regarding LockBit strain detected on hospital servers. Threat actor demanding 2 BTC. Isolated network subnet at 03:00 AM.",
-    entitiesFound: [
-      { entity_type: "CYBER_TICKET", value: "CY-2026-7734" },
-      { entity_type: "BADGE_ID", value: "CONST-5519" }
-    ],
-    agenda: ["Ransomware Binary Memory Analysis", "Offsite Backup Restoration", "Cert-In Escalation"],
-    decisions: ["Do NOT pay ransom under any circumstances", "Restore air-gapped backups"],
-    action_items: [
-      { id: "act-5", task: "Perform forensic memory dump of infected domain controller", owner: "Technical Lead CONST-5519", deadline: "2026-08-15", status: "IN_PROGRESS" }
-    ]
-  },
-  {
-    id: "mtg-104",
-    title: "Deepfake Extortion & Telegram Channel Analysis (FIR-2026-5521)",
-    date: "2026-08-12",
-    createdBy: "Investigating Officer POL-8842",
-    duration: 94,
-    status: "OFFICIALLY_APPROVED",
-    rawTranscript: "Inspector Shinde: Case file FIR-2026-5521 regarding AI deepfake video creation and extortion via Telegram channel. Issued takedown notice under IT Act Section 66E.",
-    redactedTranscript: "Inspector Shinde: Case file [FIR: FIR-2026-5521] regarding AI deepfake video creation and extortion via Telegram channel. Issued takedown notice under IT Act Section 66E.",
-    entitiesFound: [
-      { entity_type: "FIR_ID", value: "FIR-2026-5521" },
-      { entity_type: "BADGE_ID", value: "POL-8842" }
-    ],
-    agenda: ["Synthetic Media Watermark Detection", "Telegram Admin IP Subpoena", "Victim Protection Protocols"],
-    decisions: ["Issue Section 91 CrPC notice to Telegram Legal", "Provide digital privacy counseling"],
-    action_items: [
-      { id: "act-6", task: "Track IP logs received from Telegram compliance officer", owner: "Investigating Officer POL-8842", deadline: "2026-08-14", status: "COMPLETED" }
-    ]
-  }
-];
+// Initial Seed Meetings: Empty for fresh production start
+const initialMeetings = [];
 
 // Persistent Global In-Memory Cache for Vercel Serverless Functions Cold Starts
 if (!globalThis.__CYBER_MEETINGS__) {
-  let initial = [...initialMeetings];
+  let initial = [];
   try {
     if (fs.existsSync(MEETINGS_FILE)) {
       const data = JSON.parse(fs.readFileSync(MEETINGS_FILE, "utf-8"));
-      if (Array.isArray(data) && data.length > 0) initial = data;
+      if (Array.isArray(data)) initial = data;
     }
   } catch (e) {}
   globalThis.__CYBER_MEETINGS__ = initial;
@@ -206,7 +126,111 @@ function verifyHashChainIntegrity() {
   return { valid: true, totalEntries: auditLogs.length };
 }
 
+// Role Clearance Levels & Hierarchy Map (From Admin Level 5 down to Auditor Level 0)
+const ROLE_LEVELS = {
+  ADMIN: { level: 5, title: "DCP Administrator (Super Clearance)", badgePrefix: "POL-10" },
+  INVESTIGATOR: { level: 4, title: "Senior Inspector (Case Lead)", badgePrefix: "POL-88" },
+  ANALYST: { level: 3, title: "Cyber Forensic Analyst", badgePrefix: "ISP-10" },
+  FIELD_OFFICER: { level: 2, title: "Sub-Inspector (Field Ops)", badgePrefix: "SI-33" },
+  TRAINEE: { level: 1, title: "Constable Trainee (Station Desk)", badgePrefix: "CON-90" },
+  AUDITOR: { level: 0, title: "Judicial Oversight / External Auditor", badgePrefix: "AUD-55" }
+};
+
+// Granular Entity-Level Access Control Matrix
+const ENTITY_PERMISSIONS = {
+  AADHAAR_NUMBER: {
+    minLevel: 5,
+    allowedRoles: ["ADMIN"],
+    label: "National ID (Aadhaar 12-Digit)",
+    clearance: "Level 5 (ADMIN ONLY - DPDP Act)",
+    risk: "CRITICAL"
+  },
+  PAN_NUMBER: {
+    minLevel: 4,
+    allowedRoles: ["ADMIN", "INVESTIGATOR"],
+    label: "Tax Identity (PAN Number)",
+    clearance: "Level 4 (INVESTIGATOR+)",
+    risk: "HIGH"
+  },
+  BANK_ACCOUNT: {
+    minLevel: 4,
+    allowedRoles: ["ADMIN", "INVESTIGATOR"],
+    label: "Financial Beneficiary Account",
+    clearance: "Level 4 (INVESTIGATOR+)",
+    risk: "HIGH"
+  },
+  IFSC_CODE: {
+    minLevel: 4,
+    allowedRoles: ["ADMIN", "INVESTIGATOR"],
+    label: "Bank IFSC Code",
+    clearance: "Level 4 (INVESTIGATOR+)",
+    risk: "MEDIUM"
+  },
+  CRYPTO_WALLET: {
+    minLevel: 3,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST"],
+    label: "Cryptocurrency Wallet Hash",
+    clearance: "Level 3 (ANALYST+)",
+    risk: "MEDIUM"
+  },
+  EMAIL_ADDRESS: {
+    minLevel: 3,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST"],
+    label: "Official / Target Email Address",
+    clearance: "Level 3 (ANALYST+)",
+    risk: "MEDIUM"
+  },
+  PHONE_NUMBER: {
+    minLevel: 2,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER"],
+    label: "Mobile / CDR Phone Number",
+    clearance: "Level 2 (FIELD_OFFICER+)",
+    risk: "LOW"
+  },
+  BADGE_ID: {
+    minLevel: 2,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER"],
+    label: "Police Officer Badge Reference",
+    clearance: "Level 2 (FIELD_OFFICER+)",
+    risk: "LOW"
+  },
+  FIR_ID: {
+    minLevel: 1,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER", "TRAINEE"],
+    label: "FIR Case Identification Number",
+    clearance: "Level 1 (TRAINEE+)",
+    risk: "LOW"
+  },
+  CYBER_TICKET: {
+    minLevel: 1,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST", "FIELD_OFFICER", "TRAINEE"],
+    label: "NCRP Cyber Crime Ticket Reference",
+    clearance: "Level 1 (TRAINEE+)",
+    risk: "LOW"
+  },
+  PERSON: {
+    minLevel: 3,
+    allowedRoles: ["ADMIN", "INVESTIGATOR", "ANALYST"],
+    label: "Citizen / Witness Name",
+    clearance: "Level 3 (ANALYST+)",
+    risk: "MEDIUM"
+  }
+};
+
+// Official Police User Directory & Role Clearance Map (Level 5 down to Level 0)
+const users = [
+  { id: "usr-1", username: "admin_pawar", role: "ADMIN", clearanceLevel: 5, name: "DCP Pawar (Administrator)", badgeId: "POL-1001", department: "Cyber Command & Control" },
+  { id: "usr-2", username: "investigator_shinde", role: "INVESTIGATOR", clearanceLevel: 4, name: "Inspector Shinde", badgeId: "POL-8842", department: "Financial Crimes Division" },
+  { id: "usr-3", username: "analyst_patil", role: "ANALYST", clearanceLevel: 3, name: "Analyst Patil", badgeId: "ISP-1029", department: "Digital Forensics & Malware Lab" },
+  { id: "usr-4", username: "subinspector_rao", role: "FIELD_OFFICER", clearanceLevel: 2, name: "Sub-Inspector Rao", badgeId: "SI-3391", department: "Tactical Field Interception Unit" },
+  { id: "usr-5", username: "trainee_kamble", role: "TRAINEE", clearanceLevel: 1, name: "Constable Trainee Kamble", badgeId: "CON-9021", department: "Station Inward & Data Entry" },
+  { id: "usr-6", username: "auditor_deshmukh", role: "AUDITOR", clearanceLevel: 0, name: "State Auditor Deshmukh", badgeId: "AUD-5520", department: "Judicial & Internal Affairs Oversight" }
+];
+
 module.exports = {
+  users,
+  ROLE_LEVELS,
+  ENTITY_PERMISSIONS,
   meetings,
   auditLogs,
   createAuditEntry,
