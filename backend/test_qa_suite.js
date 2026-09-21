@@ -78,6 +78,18 @@ if (testMeeting.status === "OFFICIALLY_APPROVED" && approvalLog.action === "RECO
   process.exit(1);
 }
 
+// Clean up temporary test objects and restore clean Genesis state so disk and store remain 100% clean
+store.meetings.length = 0;
+store.saveMeetingsToFile();
+
+// Restore auditLogs to Genesis block log-1 only
+if (store.auditLogs.length > 1) {
+  const genesis = store.auditLogs[0];
+  store.auditLogs.length = 0;
+  store.auditLogs.push(genesis);
+  store.saveAuditLogsToFile();
+}
+
 console.log("\n==================================================");
 console.log("  ALL BACKEND & HASH CHAIN QA CHECKS PASSED 100%");
 console.log("==================================================");

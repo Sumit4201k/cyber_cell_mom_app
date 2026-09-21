@@ -4,6 +4,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
   const [file, setFile] = useState(null);
   const [customTitle, setCustomTitle] = useState('');
   const [customOfficer, setCustomOfficer] = useState('');
+  const [selectedLanguage, setSelectedLanguage] = useState('auto');
   const [manualTranscript, setManualTranscript] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -63,7 +64,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
           const recognition = new SpeechRecognition();
           recognition.continuous = true;
           recognition.interimResults = true;
-          recognition.lang = 'en-US';
+          recognition.lang = selectedLanguage === 'hi' ? 'hi-IN' : selectedLanguage === 'gu' ? 'gu-IN' : 'en-IN';
 
           recognition.onresult = (event) => {
             let fullSpeech = '';
@@ -156,6 +157,10 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
         }
       }
 
+      if (selectedLanguage && selectedLanguage !== 'auto') {
+        formData.append('language', selectedLanguage);
+      }
+
       if (manualTranscript.trim()) {
         formData.append('customTranscript', manualTranscript.trim());
       } else if (liveTranscript.trim()) {
@@ -242,7 +247,7 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
 
         <div style={{ padding: '6px 0' }}>
           {/* Metadata Override Fields */}
-          <div className="modal-input-grid">
+          <div className="modal-input-grid" style={{ gridTemplateColumns: '1.2fr 1fr 1fr', gap: '8px' }}>
             <div>
               <label style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
                 CASE TITLE / FIR # (OPTIONAL)
@@ -258,16 +263,33 @@ export default function UploadModal({ isOpen, onClose, onUploadComplete, activeR
             </div>
             <div>
               <label style={{ fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
-                INVESTIGATING OFFICER (OPTIONAL)
+                RECORDING OFFICER
               </label>
               <input
                 type="text"
-                placeholder="e.g. Inspector Deshmukh (POL-8842)"
+                placeholder="e.g. Officer (Assigned)"
                 value={customOfficer}
                 onChange={(e) => setCustomOfficer(e.target.value)}
                 className="cyber-input"
                 disabled={isProcessing}
               />
+            </div>
+            <div>
+              <label style={{ fontSize: '11px', fontWeight: '700', color: '#0f172a', display: 'block', marginBottom: '4px', fontFamily: 'var(--font-mono)' }}>
+                PRIMARY SPEECH LANGUAGE
+              </label>
+              <select
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+                className="cyber-input"
+                style={{ width: '100%', fontWeight: '700', backgroundColor: '#ffffff', color: '#0f172a' }}
+                disabled={isProcessing}
+              >
+                <option value="auto">🌐 Auto-Detect (Indic/English)</option>
+                <option value="hi">🇮🇳 Hindi (हिन्दी)</option>
+                <option value="gu">🇮🇳 Gujarati (ગુજરાતી)</option>
+                <option value="en">🇮🇳 Hinglish / English</option>
+              </select>
             </div>
           </div>
 

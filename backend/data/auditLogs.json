@@ -1,808 +1,794 @@
 [
   {
     "id": "log-1",
-    "timestamp": "2026-09-07T13:46:10.832Z",
-    "userId": "SYSTEM_INIT",
-    "username": "SYSTEM_INIT",
+    "timestamp": "2026-09-20T10:49:01.976Z",
+    "userId": "SYSTEM_BOOTSTRAP",
+    "username": "SYSTEM_ADMIN",
     "role": "ADMIN",
     "action": "SYSTEM_BOOTSTRAP",
     "resourceId": "genesis",
     "details": {
-      "message": "State Cyber Cell Cryptographic Audit Ledger Bootstrapped"
+      "message": "State Cyber Cell Cryptographic Audit Ledger Initialized (Clean State)"
     },
     "prevHash": "GENESIS_HASH_0000000000000000000000000000000000000000000000000000000000000000",
-    "hash": "d175339f131208af91094bd719a9f75d47cc6456cebf9378083f84756564872d"
+    "hash": "8b1e17c9c6788b03946dc8d56c478a0b686ee9f394ba59482447b9771f434eef"
   },
   {
     "id": "log-2",
-    "timestamp": "2026-09-07T13:50:43.456Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "USER_LOGIN",
-    "resourceId": "usr-2",
+    "timestamp": "2026-09-20T12:05:09.516Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-9513",
     "details": {
-      "ip": "::1"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "5a5e56bb5a2853eb6d56d947af5965bee08a9540187f703c5e16da168875864a"
     },
-    "prevHash": "d175339f131208af91094bd719a9f75d47cc6456cebf9378083f84756564872d",
-    "hash": "e4e218f23900b484f9c83d1045d69fa55f2a653a9dc7995353ecf5519effff66"
+    "prevHash": "8b1e17c9c6788b03946dc8d56c478a0b686ee9f394ba59482447b9771f434eef",
+    "hash": "d1b375e3b80f5f39071b84e213b860843870db1d08623b5565cb65ac42d0aa41"
   },
   {
     "id": "log-3",
-    "timestamp": "2026-09-07T13:50:51.233Z",
-    "userId": "usr-demo",
-    "username": "demo_user",
-    "role": "INVESTIGATOR",
-    "action": "MFA_VERIFIED",
-    "resourceId": "session",
+    "timestamp": "2026-09-20T12:05:15.627Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-9513",
     "details": {
-      "codeUsed": "*****"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-9513/audio"
     },
-    "prevHash": "e4e218f23900b484f9c83d1045d69fa55f2a653a9dc7995353ecf5519effff66",
-    "hash": "7711d3f40e6a3f232a58fe5eb119890d797649a406174e1bf2dfea75f41b8467"
+    "prevHash": "d1b375e3b80f5f39071b84e213b860843870db1d08623b5565cb65ac42d0aa41",
+    "hash": "cc29d098fab8a5203f2ac1662966051612b1e087c0da5978c903440e4c3b034f"
   },
   {
     "id": "log-4",
-    "timestamp": "2026-09-18T07:24:29.064Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "USER_LOGIN",
-    "resourceId": "usr-2",
+    "timestamp": "2026-09-20T12:05:36.590Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-9513",
     "details": {
-      "ip": "::1"
+      "entityType": "PERSON",
+      "entityVal": "Victim",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "7711d3f40e6a3f232a58fe5eb119890d797649a406174e1bf2dfea75f41b8467",
-    "hash": "789179529f3f566fff45b271eba08050d85ccd3363a4ec40415845a1625e8edb"
+    "prevHash": "cc29d098fab8a5203f2ac1662966051612b1e087c0da5978c903440e4c3b034f",
+    "hash": "70936e8e2c0763d48735153db1b469e50689052abf55fd48e328763fae41d28b"
   },
   {
     "id": "log-5",
-    "timestamp": "2026-09-18T07:24:35.013Z",
-    "userId": "usr-demo",
-    "username": "demo_user",
-    "role": "INVESTIGATOR",
-    "action": "MFA_VERIFIED",
-    "resourceId": "session",
+    "timestamp": "2026-09-20T12:05:37.843Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-9513",
     "details": {
-      "codeUsed": "*****"
+      "entityType": "PERSON",
+      "entityVal": "Shindini Section 91CRPC",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "789179529f3f566fff45b271eba08050d85ccd3363a4ec40415845a1625e8edb",
-    "hash": "b050a02be41e09b8141290662483489c68498fee289200d11bc8257d7907d4a0"
+    "prevHash": "70936e8e2c0763d48735153db1b469e50689052abf55fd48e328763fae41d28b",
+    "hash": "57d86af95bdcab37d5680b3c311212afa7a70339e0d0620a2855af89b06254b6"
   },
   {
     "id": "log-6",
-    "timestamp": "2026-09-18T07:24:56.496Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "MEETING_UPLOADED",
-    "resourceId": "mtg-6495",
+    "timestamp": "2026-09-20T12:05:38.883Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-9513",
     "details": {
-      "title": "Deepfake & Extortion Threat Assessment [CASE-20260918]",
-      "engine": "faster-whisper-python-ml"
+      "entityType": "PERSON",
+      "entityVal": "Rao CDR Analysis",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "b050a02be41e09b8141290662483489c68498fee289200d11bc8257d7907d4a0",
-    "hash": "183e1dc62933212c02a6578fd28b63798f9aadfc395ff3fb2df9f143054ae63f"
+    "prevHash": "57d86af95bdcab37d5680b3c311212afa7a70339e0d0620a2855af89b06254b6",
+    "hash": "9628bb25211104f44d2c962db46f4beb0da73a169ccb614f9a01a0b606c7b096"
   },
   {
     "id": "log-7",
-    "timestamp": "2026-09-18T07:25:36.149Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_VIEW_MODE",
-    "resourceId": "mtg-6495",
+    "timestamp": "2026-09-20T12:05:39.700Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-9513",
     "details": {
-      "mode": "redacted"
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "9876-543-210",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "183e1dc62933212c02a6578fd28b63798f9aadfc395ff3fb2df9f143054ae63f",
-    "hash": "7e3a5f6232faf3b1e9ea0ae06be74b1be713a2b3c0d20cc591a82ef9c766d91c"
+    "prevHash": "9628bb25211104f44d2c962db46f4beb0da73a169ccb614f9a01a0b606c7b096",
+    "hash": "c8ef398600dbbf1f6787031414d61986ced582a1a5bead3521967ffb49bf4e37"
   },
   {
     "id": "log-8",
-    "timestamp": "2026-09-18T07:25:37.236Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_VIEW_MODE",
-    "resourceId": "mtg-6495",
+    "timestamp": "2026-09-20T12:06:28.319Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "RECORD_APPROVED",
+    "resourceId": "mtg-9513",
     "details": {
-      "mode": "raw"
+      "status": "OFFICIALLY_APPROVED",
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "approvedBy": "admin_pawar"
     },
-    "prevHash": "7e3a5f6232faf3b1e9ea0ae06be74b1be713a2b3c0d20cc591a82ef9c766d91c",
-    "hash": "6cb58a2dc0b6d75e1a91e536d0d30e92887bd76d68d1103c83afb59f95392a03"
+    "prevHash": "c8ef398600dbbf1f6787031414d61986ced582a1a5bead3521967ffb49bf4e37",
+    "hash": "872676028fc0a9955985a769795dd21050d518b3b5f4b3ea4892ef6e2005c3a2"
   },
   {
     "id": "log-9",
-    "timestamp": "2026-09-18T07:25:39.100Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-6495",
+    "timestamp": "2026-09-20T12:12:43.701Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-3698",
     "details": {
-      "entity": "0100234567890",
-      "unmasked": true
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290"
     },
-    "prevHash": "6cb58a2dc0b6d75e1a91e536d0d30e92887bd76d68d1103c83afb59f95392a03",
-    "hash": "5e8fa4fecd0f4a0a8210b66c86da620a8d74cde00e6308f2982f1e0926736596"
+    "prevHash": "872676028fc0a9955985a769795dd21050d518b3b5f4b3ea4892ef6e2005c3a2",
+    "hash": "074a9268767e4059464000cd7a97e462e5c97ed3ee8eaa6016e1ea054e7643bf"
   },
   {
     "id": "log-10",
-    "timestamp": "2026-09-18T07:25:40.068Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-6495",
+    "timestamp": "2026-09-20T12:12:50.935Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-3698",
     "details": {
-      "entity": "Account 50100234567890",
-      "unmasked": true
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-3698/audio"
     },
-    "prevHash": "5e8fa4fecd0f4a0a8210b66c86da620a8d74cde00e6308f2982f1e0926736596",
-    "hash": "c94379fa1f4d5fcebe5ecd3420e5126ba5db14ab2975c280a5696f668a79e926"
+    "prevHash": "074a9268767e4059464000cd7a97e462e5c97ed3ee8eaa6016e1ea054e7643bf",
+    "hash": "701d39bf5fdc243e26d1f89f140664258e4b3c4a6c85d3ab73b71a1ea5ce21c6"
   },
   {
     "id": "log-11",
-    "timestamp": "2026-09-18T07:25:42.341Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-6495",
+    "timestamp": "2026-09-20T12:26:27.224Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-7222",
     "details": {
-      "title": "Deepfake & Extortion Threat Assessment [CASE-20260918]",
-      "speed": 1,
-      "audioUrl": "Speech Synth Utterance"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290"
     },
-    "prevHash": "c94379fa1f4d5fcebe5ecd3420e5126ba5db14ab2975c280a5696f668a79e926",
-    "hash": "665a1def6f1132a1a5204f1515ecf934e9a3473dc3dbfe3667abe92557beaa28"
+    "prevHash": "701d39bf5fdc243e26d1f89f140664258e4b3c4a6c85d3ab73b71a1ea5ce21c6",
+    "hash": "3a44730ef02d61baf261d3de60e6b98b1807c6c21ea0a1c6a60cfb2758a295b5"
   },
   {
     "id": "log-12",
-    "timestamp": "2026-09-18T07:28:53.812Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "MEETING_UPLOADED",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T12:26:37.508Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-7222",
     "details": {
-      "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260918]",
-      "engine": "faster-whisper-python-ml"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-7222/audio"
     },
-    "prevHash": "665a1def6f1132a1a5204f1515ecf934e9a3473dc3dbfe3667abe92557beaa28",
-    "hash": "c99c5f63d100be578bb164d795a5ff7f0534e2fa0647980b8d626fd87defe355"
+    "prevHash": "3a44730ef02d61baf261d3de60e6b98b1807c6c21ea0a1c6a60cfb2758a295b5",
+    "hash": "f07139d29b9669d4f2f9719b3dbd27706ea789b4266f11aede3452af42b3d5f7"
   },
   {
     "id": "log-13",
-    "timestamp": "2026-09-18T07:29:49.108Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_VIEW_MODE",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T12:30:15.264Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-5261",
     "details": {
-      "mode": "redacted"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290"
     },
-    "prevHash": "c99c5f63d100be578bb164d795a5ff7f0534e2fa0647980b8d626fd87defe355",
-    "hash": "8f7c1be7acc96741d9e7c24f68b3959205818287c4e755d14c9548a00bf53403"
+    "prevHash": "f07139d29b9669d4f2f9719b3dbd27706ea789b4266f11aede3452af42b3d5f7",
+    "hash": "148ccf3b4da4c14478fd3816148b7a3f97f7f1df439244ae29fef3d7de2aa957"
   },
   {
     "id": "log-14",
-    "timestamp": "2026-09-18T07:29:50.570Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_VIEW_MODE",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T12:44:56.866Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-6845",
     "details": {
-      "mode": "raw"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290"
     },
-    "prevHash": "8f7c1be7acc96741d9e7c24f68b3959205818287c4e755d14c9548a00bf53403",
-    "hash": "5f86f397a2d0e6491bba4690df3d657408afa00986074607e17eee5168d67195"
+    "prevHash": "148ccf3b4da4c14478fd3816148b7a3f97f7f1df439244ae29fef3d7de2aa957",
+    "hash": "c32d4da6ff49b630138c751eb3d6759996c4e028776b228bb8042fca6286ca88"
   },
   {
     "id": "log-15",
-    "timestamp": "2026-09-18T07:31:11.767Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T12:45:04.701Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "VERIFY_AUDIT_LEDGER",
-    "resourceId": "ledger-root",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-6845",
     "details": {
-      "note": "Cryptographic SHA-256 Hash Integrity Audit Initiated"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-6845/audio"
     },
-    "prevHash": "5f86f397a2d0e6491bba4690df3d657408afa00986074607e17eee5168d67195",
-    "hash": "4fa212df28a3a717938493db2039cb3a0850ded771e17bd961067d8f7ac3daf7"
+    "prevHash": "c32d4da6ff49b630138c751eb3d6759996c4e028776b228bb8042fca6286ca88",
+    "hash": "f296a3dcb3e69cb9ebd5a5577b5700188d26b9bc6190034e1f721fe34dad2f3e"
   },
   {
     "id": "log-16",
-    "timestamp": "2026-09-18T07:31:17.229Z",
-    "userId": "usr-demo",
-    "username": "demo_user",
-    "role": "INVESTIGATOR",
-    "action": "MFA_VERIFIED",
-    "resourceId": "session",
+    "timestamp": "2026-09-20T13:10:58.038Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-8034",
     "details": {
-      "codeUsed": "*****"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290"
     },
-    "prevHash": "4fa212df28a3a717938493db2039cb3a0850ded771e17bd961067d8f7ac3daf7",
-    "hash": "b5b208cebf07dcc9fc6bb8bf4e89160648f62c0bea3e605ce58ea16f93d951ff"
+    "prevHash": "f296a3dcb3e69cb9ebd5a5577b5700188d26b9bc6190034e1f721fe34dad2f3e",
+    "hash": "cb14c4bf515eb4dec688e6a25b26455c23eb298035c2f52738cbf396561aaa71"
   },
   {
     "id": "log-17",
-    "timestamp": "2026-09-18T07:41:44.995Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "TRAINEE",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T13:11:24.810Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-4806",
     "details": {
-      "entityType": "FIR_ID",
-      "entityVal": "FIR 2026-5531",
-      "unmasked": true,
-      "officerRole": "TRAINEE",
-      "clearanceLevel": 1
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "5a5e56bb5a2853eb6d56d947af5965bee08a9540187f703c5e16da168875864a"
     },
-    "prevHash": "b5b208cebf07dcc9fc6bb8bf4e89160648f62c0bea3e605ce58ea16f93d951ff",
-    "hash": "41e6a043629c0d10ac4f256b155fd200fca666bdbdf3957dbf539cdd4c6b628e"
+    "prevHash": "cb14c4bf515eb4dec688e6a25b26455c23eb298035c2f52738cbf396561aaa71",
+    "hash": "3e1224a25a89dc8230fb89b58b350862ffe8480e9b30ab2cb059a57f87d87733"
   },
   {
     "id": "log-18",
-    "timestamp": "2026-09-18T07:41:46.513Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "TRAINEE",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T13:12:24.229Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-4227",
     "details": {
-      "entityType": "FIR_ID",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "TRAINEE",
-      "clearanceLevel": 1
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290"
     },
-    "prevHash": "41e6a043629c0d10ac4f256b155fd200fca666bdbdf3957dbf539cdd4c6b628e",
-    "hash": "1dbd9ecfdca15ee194a44ddc41bce0fe56781c6b2d2a54f6625d7b849b39a6bb"
+    "prevHash": "3e1224a25a89dc8230fb89b58b350862ffe8480e9b30ab2cb059a57f87d87733",
+    "hash": "0a87e1de20e6f8ebf4f94642434d3cb4f6f5ff3969d1f1ee2c9e99b769155a4f"
   },
   {
     "id": "log-19",
-    "timestamp": "2026-09-18T10:46:47.986Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T13:24:17.416Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-7412",
     "details": {
-      "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260918]",
-      "speed": 1,
-      "audioUrl": "Speech Synth Utterance"
+      "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "7bc4d6ea1a365428ad0b0a5f46078fcd594f899c85dbac40da65c734d3cb7dde"
     },
-    "prevHash": "1dbd9ecfdca15ee194a44ddc41bce0fe56781c6b2d2a54f6625d7b849b39a6bb",
-    "hash": "035d69c161377013baa8848da4caa6cdbd10b39a742ad51c35dba0b0f357d50e"
+    "prevHash": "0a87e1de20e6f8ebf4f94642434d3cb4f6f5ff3969d1f1ee2c9e99b769155a4f",
+    "hash": "8c948f6b65082dc0798e1fc257f7632cc5872579f0c1bb31303bf5ee721d4b56"
   },
   {
     "id": "log-20",
-    "timestamp": "2026-09-18T10:47:09.149Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-3811",
+    "timestamp": "2026-09-20T13:24:25.506Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-7412",
     "details": {
-      "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260918]",
-      "speed": 1,
-      "audioUrl": "Speech Synth Utterance"
+      "entityType": "PERSON",
+      "entityVal": "Rao Tatkalik",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "035d69c161377013baa8848da4caa6cdbd10b39a742ad51c35dba0b0f357d50e",
-    "hash": "97973e881b7e5ab6c0d680f4618c7419a7271ab4317c90c453dc0538c599cf37"
+    "prevHash": "8c948f6b65082dc0798e1fc257f7632cc5872579f0c1bb31303bf5ee721d4b56",
+    "hash": "8cc8630bbb225046b98f313459a59f21ac9a95a6ea1eaa595bae4bff6e0d264f"
   },
   {
     "id": "log-21",
-    "timestamp": "2026-09-18T10:47:39.467Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "MEETING_UPLOADED",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:26.722Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-7412",
     "details": {
-      "title": "LockBit Ransomware Breach Response [CASE-20260918]",
-      "engine": "faster-whisper-python-ml"
+      "entityType": "PERSON",
+      "entityVal": "kardachar kharu pistali sabaj shabpan karur",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "97973e881b7e5ab6c0d680f4618c7419a7271ab4317c90c453dc0538c599cf37",
-    "hash": "7b88c13cef6937b030c179cc528f52194a5672ee747a9211fa47f2c9ef208abb"
+    "prevHash": "8cc8630bbb225046b98f313459a59f21ac9a95a6ea1eaa595bae4bff6e0d264f",
+    "hash": "8319025c74b86efc0189ef059a2577b7ca005994d5b51191049a862380650a1b"
   },
   {
     "id": "log-22",
-    "timestamp": "2026-09-18T10:47:43.030Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:30.947Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-7412",
     "details": {
-      "title": "LockBit Ransomware Breach Response [CASE-20260918]",
-      "speed": 1,
-      "audioUrl": "Speech Synth Utterance"
+      "entityType": "PERSON",
+      "entityVal": "dani",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "7b88c13cef6937b030c179cc528f52194a5672ee747a9211fa47f2c9ef208abb",
-    "hash": "d3e4fe367b429d94a124e153852c22795e18cdf8c76f8ae5c576abdc1068a4f1"
+    "prevHash": "8319025c74b86efc0189ef059a2577b7ca005994d5b51191049a862380650a1b",
+    "hash": "6f6c3804da60396ea88a30928b35b6131d4ca160384f7e8680d70e25a82cfb67"
   },
   {
     "id": "log-23",
-    "timestamp": "2026-09-18T10:47:55.396Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:31.666Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-7412",
     "details": {
-      "title": "LockBit Ransomware Breach Response [CASE-20260918]",
-      "speed": 0.75,
-      "audioUrl": "Speech Synth Utterance"
+      "entityType": "PERSON",
+      "entityVal": "kari pasethi CDR",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "d3e4fe367b429d94a124e153852c22795e18cdf8c76f8ae5c576abdc1068a4f1",
-    "hash": "ac076a44a2bd585adc1869556c441ebf210626fb23341760a2e0fa1c3dc32fda"
+    "prevHash": "6f6c3804da60396ea88a30928b35b6131d4ca160384f7e8680d70e25a82cfb67",
+    "hash": "b3037cf2029b6b6938a2629f79f18c9574a0b520a35d862de7dbce7f4dcf3a94"
   },
   {
     "id": "log-24",
-    "timestamp": "2026-09-18T10:47:58.899Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:32.858Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-7412",
     "details": {
-      "title": "LockBit Ransomware Breach Response [CASE-20260918]",
-      "speed": 2,
-      "audioUrl": "Speech Synth Utterance"
+      "entityType": "PERSON",
+      "entityVal": "Meera Vashi",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "ac076a44a2bd585adc1869556c441ebf210626fb23341760a2e0fa1c3dc32fda",
-    "hash": "0db57eea150b566d26f23e84942d4ae7aeff7bf47f5fc03aa873726af8156636"
+    "prevHash": "b3037cf2029b6b6938a2629f79f18c9574a0b520a35d862de7dbce7f4dcf3a94",
+    "hash": "51c635553aa2fa109d09b103fe708f4f447b711a4537ec97d8903b8bf33984c0"
   },
   {
     "id": "log-25",
-    "timestamp": "2026-09-18T10:48:00.988Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:43.796Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-7412",
     "details": {
-      "entityType": "CYBER_TICKET",
-      "entityVal": "CY-2026-8812",
-      "unmasked": true,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "mode": "raw",
+      "role": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "0db57eea150b566d26f23e84942d4ae7aeff7bf47f5fc03aa873726af8156636",
-    "hash": "764b4f053f1c96573d0c89ad7e7e46c12ebb6c4e9739479114a21740b646845d"
+    "prevHash": "51c635553aa2fa109d09b103fe708f4f447b711a4537ec97d8903b8bf33984c0",
+    "hash": "6d71e2ae6539cabd3863bdbe28131bbbcac414ce9d820b40ce513da7ddd86f83"
   },
   {
     "id": "log-26",
-    "timestamp": "2026-09-18T10:48:01.499Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:54.173Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-7412",
     "details": {
-      "entityType": "CYBER_TICKET",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "mode": "raw",
+      "role": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "764b4f053f1c96573d0c89ad7e7e46c12ebb6c4e9739479114a21740b646845d",
-    "hash": "0b20debffc3ad90ef2c65b5b845a445930eb5e810c6141176cabfc09d1336b17"
+    "prevHash": "6d71e2ae6539cabd3863bdbe28131bbbcac414ce9d820b40ce513da7ddd86f83",
+    "hash": "b968921eb1bb9a967c4717512359b910ee83b74c5170ff2e89ee912cedbee106"
   },
   {
     "id": "log-27",
-    "timestamp": "2026-09-18T10:48:02.123Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:24:59.572Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-7412",
     "details": {
-      "entityType": "PERSON",
-      "entityVal": "Patel",
-      "unmasked": true,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-7412/audio"
     },
-    "prevHash": "0b20debffc3ad90ef2c65b5b845a445930eb5e810c6141176cabfc09d1336b17",
-    "hash": "a5203426d2343bdd866924f7241822e4b68aeadd7e42eb17d796875cec780d60"
+    "prevHash": "b968921eb1bb9a967c4717512359b910ee83b74c5170ff2e89ee912cedbee106",
+    "hash": "8f8435fabfe8de378c3865735aa569323c9feaf51854fe363916090028653348"
   },
   {
     "id": "log-28",
-    "timestamp": "2026-09-18T10:48:02.522Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:26:19.090Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-9085",
     "details": {
-      "entityType": "PERSON",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "1d275a93bcafeda538eeda90a2d4eddcf62ec5dacb6371a06ae2bef84469a620"
     },
-    "prevHash": "a5203426d2343bdd866924f7241822e4b68aeadd7e42eb17d796875cec780d60",
-    "hash": "f8bf325be9f4b7e684d36639c4a81ca6c7bb180039c91931b161f68af6b2d963"
+    "prevHash": "8f8435fabfe8de378c3865735aa569323c9feaf51854fe363916090028653348",
+    "hash": "624d18dcbc8cef9ae2d886b7b3472b8a2919c98a76bd3fdaadd047321a3b99c8"
   },
   {
     "id": "log-29",
-    "timestamp": "2026-09-18T10:48:03.036Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:26:29.438Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-9085",
     "details": {
-      "entityType": "CYBER_TICKET",
-      "entityVal": "CY-2026-8812",
-      "unmasked": true,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-9085/audio"
     },
-    "prevHash": "f8bf325be9f4b7e684d36639c4a81ca6c7bb180039c91931b161f68af6b2d963",
-    "hash": "1d18044f435bc39d2ed3978a1f22a8a52bf8def87bec360a57c0d1440df4ceec"
+    "prevHash": "624d18dcbc8cef9ae2d886b7b3472b8a2919c98a76bd3fdaadd047321a3b99c8",
+    "hash": "c7bf4e194f54d34721bace2e61467346ef377910a951a84068d2e56a36448d32"
   },
   {
     "id": "log-30",
-    "timestamp": "2026-09-18T10:48:04.123Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:26:41.478Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-9085",
     "details": {
-      "entityType": "PERSON",
-      "entityVal": "Patel",
-      "unmasked": true,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "mode": "redacted",
+      "role": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "1d18044f435bc39d2ed3978a1f22a8a52bf8def87bec360a57c0d1440df4ceec",
-    "hash": "73979bfd9a8a7eab1a05181ec156eff100b4da1151333f17bcec8cec53007422"
+    "prevHash": "c7bf4e194f54d34721bace2e61467346ef377910a951a84068d2e56a36448d32",
+    "hash": "e79c71b073d0784e482b22a1ea9c1d23388097f34097fd7dad4facf61d2e21a2"
   },
   {
     "id": "log-31",
-    "timestamp": "2026-09-18T10:48:05.107Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:26:43.084Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-9085",
     "details": {
-      "entityType": "PERSON",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "mode": "raw",
+      "role": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "73979bfd9a8a7eab1a05181ec156eff100b4da1151333f17bcec8cec53007422",
-    "hash": "ce587675c6ca1c669b0e65553b314343cf4b8d2bb3be90cd44f99d39efe223bb"
+    "prevHash": "e79c71b073d0784e482b22a1ea9c1d23388097f34097fd7dad4facf61d2e21a2",
+    "hash": "e029ea1673bce5c6400e306d839958e4b578dee3e76a6ab6ec44507dd50d39d6"
   },
   {
     "id": "log-32",
-    "timestamp": "2026-09-18T10:48:05.691Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-9467",
+    "timestamp": "2026-09-20T13:26:43.900Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-9085",
     "details": {
-      "entityType": "CYBER_TICKET",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "INVESTIGATOR",
-      "clearanceLevel": 4
+      "mode": "redacted",
+      "role": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "ce587675c6ca1c669b0e65553b314343cf4b8d2bb3be90cd44f99d39efe223bb",
-    "hash": "242ceb996368f25423dab43bb4a475d1e5c60118b1cf6f542b0ac3b3a4840730"
+    "prevHash": "e029ea1673bce5c6400e306d839958e4b578dee3e76a6ab6ec44507dd50d39d6",
+    "hash": "1c59a75c8101002061cfe98c265815e592c4521e49dcd9ecc689ffbae3c034ab"
   },
   {
     "id": "log-33",
-    "timestamp": "2026-09-18T10:49:05.355Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "MEETING_UPLOADED",
-    "resourceId": "mtg-5355",
+    "timestamp": "2026-09-20T13:26:44.700Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-9085",
     "details": {
-      "title": "SIM-Swapping & Financial Account Compromise [CASE-20260918]",
-      "engine": "faster-whisper-python-ml"
+      "mode": "raw",
+      "role": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "242ceb996368f25423dab43bb4a475d1e5c60118b1cf6f542b0ac3b3a4840730",
-    "hash": "edbedef7435957331439c64a519ffd5de604a31ab4d25a079ded75503d53f10e"
+    "prevHash": "1c59a75c8101002061cfe98c265815e592c4521e49dcd9ecc689ffbae3c034ab",
+    "hash": "8dcc659a317cf3c8dfb80b9d46d73f78b6f97f27bcc0ef7122a25bd05ef354d1"
   },
   {
     "id": "log-34",
-    "timestamp": "2026-09-18T10:49:34.600Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "RECORD_APPROVED",
-    "resourceId": "mtg-5355",
+    "timestamp": "2026-09-20T13:27:06.517Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-6513",
     "details": {
-      "status": "OFFICIALLY_APPROVED",
-      "title": "SIM-Swapping & Financial Account Compromise [CASE-20260918]",
-      "approvedBy": "investigator_shinde"
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "1d275a93bcafeda538eeda90a2d4eddcf62ec5dacb6371a06ae2bef84469a620"
     },
-    "prevHash": "edbedef7435957331439c64a519ffd5de604a31ab4d25a079ded75503d53f10e",
-    "hash": "79db02189f2063473f9aa4ffebe1c61320f2b15f4bb8dd956ef90808cab75d5c"
+    "prevHash": "8dcc659a317cf3c8dfb80b9d46d73f78b6f97f27bcc0ef7122a25bd05ef354d1",
+    "hash": "b3d533c39d0a6437d972de67be4b734121ca182da22628701a6809e24e7dbe0d"
   },
   {
     "id": "log-35",
-    "timestamp": "2026-09-18T11:01:04.895Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:26.832Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "PLAY_AUDIO_RECORDING",
-    "resourceId": "mtg-5355",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-6513",
     "details": {
-      "title": "SIM-Swapping & Financial Account Compromise [CASE-20260918]",
-      "speed": 2,
-      "audioUrl": "Speech Synth Utterance"
+      "entityType": "PERSON",
+      "entityVal": "Varma Baj 4000",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "79db02189f2063473f9aa4ffebe1c61320f2b15f4bb8dd956ef90808cab75d5c",
-    "hash": "a40245f0767563eb55d8e7d4ea810c0d1df69dcce4ec1172cf4805674eeeffb4"
+    "prevHash": "b3d533c39d0a6437d972de67be4b734121ca182da22628701a6809e24e7dbe0d",
+    "hash": "e2f1945fe40478ecd755aa676a502e85143b286181d46a378dd3f31fad7467ad"
   },
   {
     "id": "log-36",
-    "timestamp": "2026-09-18T11:01:49.909Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:29.205Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
     "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "resourceId": "mtg-6513",
     "details": {
-      "entityType": "BANK_ACCOUNT",
-      "entityVal": "234567890123",
-      "unmasked": true,
+      "entityType": "PERSON",
+      "entityVal": "[MASKED]",
+      "unmasked": false,
       "officerRole": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "a40245f0767563eb55d8e7d4ea810c0d1df69dcce4ec1172cf4805674eeeffb4",
-    "hash": "49e5fa19a5c6008d9e60fddb0f4ffcee9398236d5b75f9c22ecbf1c421bf2acc"
+    "prevHash": "e2f1945fe40478ecd755aa676a502e85143b286181d46a378dd3f31fad7467ad",
+    "hash": "8a1d1d14cea552d720aac5c24649550b4110c7c9537d366ba0b61b9c3185b3fa"
   },
   {
     "id": "log-37",
-    "timestamp": "2026-09-18T11:01:51.145Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:29.654Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
     "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "resourceId": "mtg-6513",
     "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "987-654-3210",
+      "entityType": "PERSON",
+      "entityVal": "Varma Baj 4000",
       "unmasked": true,
       "officerRole": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "49e5fa19a5c6008d9e60fddb0f4ffcee9398236d5b75f9c22ecbf1c421bf2acc",
-    "hash": "4843f0ddd0ee4ee9b3170dace2171bbd3de9b7cc4b9567d5e2cf3052fe1f3f8d"
+    "prevHash": "8a1d1d14cea552d720aac5c24649550b4110c7c9537d366ba0b61b9c3185b3fa",
+    "hash": "355a744c91fc66849bee7c415567c240affbed61ccd8df02e5f9774d618f02a2"
   },
   {
     "id": "log-38",
-    "timestamp": "2026-09-18T11:01:52.021Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:30.454Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
     "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "resourceId": "mtg-6513",
     "details": {
       "entityType": "PERSON",
-      "entityVal": "Verma Badge",
-      "unmasked": true,
+      "entityVal": "[MASKED]",
+      "unmasked": false,
       "officerRole": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "4843f0ddd0ee4ee9b3170dace2171bbd3de9b7cc4b9567d5e2cf3052fe1f3f8d",
-    "hash": "a0aa2f5bc705ceb4eaf25465d89003a29d8e436f5c5737920f584aa902869597"
+    "prevHash": "355a744c91fc66849bee7c415567c240affbed61ccd8df02e5f9774d618f02a2",
+    "hash": "faa0dcee50be5d53c7a0e19a345158a3e70302447d88c08d67983b9b29d006b9"
   },
   {
     "id": "log-39",
-    "timestamp": "2026-09-18T11:01:52.978Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:32.207Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-6513",
     "details": {
-      "entityType": "PERSON",
-      "entityVal": "Sharma",
-      "unmasked": true,
-      "officerRole": "ADMIN",
-      "clearanceLevel": 5
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-6513/audio"
     },
-    "prevHash": "a0aa2f5bc705ceb4eaf25465d89003a29d8e436f5c5737920f584aa902869597",
-    "hash": "5d901cc79dfc785bf71aac8c33f4729b8770d630a2458928b58d323c66ba04f2"
+    "prevHash": "faa0dcee50be5d53c7a0e19a345158a3e70302447d88c08d67983b9b29d006b9",
+    "hash": "7db9895b3699ca6c9aabaa9ec924df06a03d84c21c1f590746842f5a021a0a5d"
   },
   {
     "id": "log-40",
-    "timestamp": "2026-09-18T11:01:53.882Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:54.728Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-6513",
     "details": {
-      "entityType": "PERSON",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "ADMIN",
+      "mode": "redacted",
+      "role": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "5d901cc79dfc785bf71aac8c33f4729b8770d630a2458928b58d323c66ba04f2",
-    "hash": "59c8e58c53b0e51df07ba740be9da3f8ecfc803d875f39fbced9e32c158f48a5"
+    "prevHash": "7db9895b3699ca6c9aabaa9ec924df06a03d84c21c1f590746842f5a021a0a5d",
+    "hash": "4ac916108cfe12f5e87674da110089aeb16d09603d082b5f92fa0a41d389d4eb"
   },
   {
     "id": "log-41",
-    "timestamp": "2026-09-18T11:01:54.890Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:27:57.103Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-6513",
     "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "ADMIN",
+      "mode": "raw",
+      "role": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "59c8e58c53b0e51df07ba740be9da3f8ecfc803d875f39fbced9e32c158f48a5",
-    "hash": "745faba2035b0a27447d3ad4be1364811dfee06c9aa2aec30fe7060544807e64"
+    "prevHash": "4ac916108cfe12f5e87674da110089aeb16d09603d082b5f92fa0a41d389d4eb",
+    "hash": "b71ad951f9e348aefeedd829e705d83c4369c5441390f461713d14259cbdf8f7"
   },
   {
     "id": "log-42",
-    "timestamp": "2026-09-18T11:01:55.675Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:28:48.174Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "action": "MEETING_UPLOADED",
+    "resourceId": "mtg-8171",
     "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "ADMIN",
-      "clearanceLevel": 5
+      "title": "Deepfake & Extortion Threat Assessment [CASE-20260920]",
+      "engine": "faster-whisper-python-ml",
+      "audioSaved": true,
+      "audioHash": "5c86d836b49f3dadc04bfca14ada5773e96062354268492a9b0ebe2576601032"
     },
-    "prevHash": "745faba2035b0a27447d3ad4be1364811dfee06c9aa2aec30fe7060544807e64",
-    "hash": "98c85793b71526f10bca06a299b661a9b9d43eee6a5baac1da6991a7e2c31b25"
+    "prevHash": "b71ad951f9e348aefeedd829e705d83c4369c5441390f461713d14259cbdf8f7",
+    "hash": "75cba66237d70a5a521e8b0e1c7074c0d9deb4ae39c1f01b95edb7b088c51c6a"
   },
   {
     "id": "log-43",
-    "timestamp": "2026-09-18T11:01:57.138Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:28:52.721Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "action": "PLAY_AUDIO_RECORDING",
+    "resourceId": "mtg-8171",
     "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "234567890123",
-      "unmasked": true,
-      "officerRole": "ADMIN",
-      "clearanceLevel": 5
+      "title": "Deepfake & Extortion Threat Assessment [CASE-20260920]",
+      "speed": 1,
+      "audioUrl": "/api/meetings/mtg-8171/audio"
     },
-    "prevHash": "98c85793b71526f10bca06a299b661a9b9d43eee6a5baac1da6991a7e2c31b25",
-    "hash": "5aeeb6e3de628190ff40f0403aa77c9eb8c363ca8644ec9a118cd25259a87f0d"
+    "prevHash": "75cba66237d70a5a521e8b0e1c7074c0d9deb4ae39c1f01b95edb7b088c51c6a",
+    "hash": "82698f97bed940e27f84fb7010b3274dd1b9afd10431344acca97dca51fae25b"
   },
   {
     "id": "log-44",
-    "timestamp": "2026-09-18T11:01:57.690Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:29:11.674Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-8171",
     "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "ADMIN",
+      "mode": "redacted",
+      "role": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "5aeeb6e3de628190ff40f0403aa77c9eb8c363ca8644ec9a118cd25259a87f0d",
-    "hash": "251de21bc8d29b67c33e997d22b0d5ac9e629ab0cb40d40e6072698202f73c32"
+    "prevHash": "82698f97bed940e27f84fb7010b3274dd1b9afd10431344acca97dca51fae25b",
+    "hash": "7735513015018781a8268aa5327dd316cdaf849bb8529fab9aad2b97b165be32"
   },
   {
     "id": "log-45",
-    "timestamp": "2026-09-18T11:01:58.274Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
+    "timestamp": "2026-09-20T13:29:12.632Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
+    "role": "ADMIN",
+    "action": "TOGGLE_VIEW_MODE",
+    "resourceId": "mtg-8171",
+    "details": {
+      "mode": "raw",
+      "role": "ADMIN",
+      "clearanceLevel": 5
+    },
+    "prevHash": "7735513015018781a8268aa5327dd316cdaf849bb8529fab9aad2b97b165be32",
+    "hash": "b450231eaf4ee9d4202c25d8c57d9031fdea4c633987d72ac0b8a4c357f45af6"
+  },
+  {
+    "id": "log-46",
+    "timestamp": "2026-09-20T13:29:19.506Z",
+    "userId": "usr-1",
+    "username": "admin_pawar",
     "role": "ADMIN",
     "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
+    "resourceId": "mtg-8171",
     "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "234567890123",
+      "entityType": "PERSON",
+      "entityVal": "Rao Baj-1190",
       "unmasked": true,
       "officerRole": "ADMIN",
       "clearanceLevel": 5
     },
-    "prevHash": "251de21bc8d29b67c33e997d22b0d5ac9e629ab0cb40d40e6072698202f73c32",
-    "hash": "e009b834eac41340f3fa4b1ea58cee089a2166faebe3e37c9d8724d103f7c485"
-  },
-  {
-    "id": "log-46",
-    "timestamp": "2026-09-18T11:01:58.698Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "ADMIN",
-    "action": "TOGGLE_PII_UNMASK",
-    "resourceId": "mtg-5355",
-    "details": {
-      "entityType": "PHONE_NUMBER",
-      "entityVal": "[MASKED]",
-      "unmasked": false,
-      "officerRole": "ADMIN",
-      "clearanceLevel": 5
-    },
-    "prevHash": "e009b834eac41340f3fa4b1ea58cee089a2166faebe3e37c9d8724d103f7c485",
-    "hash": "0d44be6daf0446e14bf4cc96008d659190ce33d9d20c11dbd939f88bcde0fb82"
+    "prevHash": "b450231eaf4ee9d4202c25d8c57d9031fdea4c633987d72ac0b8a4c357f45af6",
+    "hash": "8b547bd64d41c05758c4e69afe16b2d4e65d687c748a15d26d7ad51350d991c1"
   },
   {
     "id": "log-47",
-    "timestamp": "2026-09-18T11:06:12.526Z",
+    "timestamp": "2026-09-20T13:29:20.401Z",
     "userId": "usr-1",
-    "username": "admin_chief",
+    "username": "admin_pawar",
     "role": "ADMIN",
-    "action": "MEETING_UPLOADED",
-    "resourceId": "mtg-1",
+    "action": "TOGGLE_PII_UNMASK",
+    "resourceId": "mtg-8171",
     "details": {
-      "test": 1
+      "entityType": "PHONE_NUMBER",
+      "entityVal": "2021-46-44-21",
+      "unmasked": true,
+      "officerRole": "ADMIN",
+      "clearanceLevel": 5
     },
-    "prevHash": "0d44be6daf0446e14bf4cc96008d659190ce33d9d20c11dbd939f88bcde0fb82",
-    "hash": "6b8b941e95ec6b6cf9eef2d4b1c6a905868a01e10ae6f2785539fcb2a5495140"
-  },
-  {
-    "id": "log-48",
-    "timestamp": "2026-09-18T11:06:12.530Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "ACTION_ITEMS_EDITED",
-    "resourceId": "mtg-1",
-    "details": {
-      "test": 2
-    },
-    "prevHash": "6b8b941e95ec6b6cf9eef2d4b1c6a905868a01e10ae6f2785539fcb2a5495140",
-    "hash": "ccfab6c9909d2cc3dcc1f003cadb92d864ff374f27518abd7e346fe122afebd8"
-  },
-  {
-    "id": "log-49",
-    "timestamp": "2026-09-18T11:06:12.531Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "RECORD_APPROVED",
-    "resourceId": "mtg-1",
-    "details": {
-      "test": 3
-    },
-    "prevHash": "ccfab6c9909d2cc3dcc1f003cadb92d864ff374f27518abd7e346fe122afebd8",
-    "hash": "a6f1ecb3b344e1ad5a95a84f0df7db8db545402bc4434f3e418914f404e84434"
-  },
-  {
-    "id": "log-50",
-    "timestamp": "2026-09-18T11:06:12.534Z",
-    "userId": "usr-2",
-    "username": "investigator_shinde",
-    "role": "INVESTIGATOR",
-    "action": "RECORD_APPROVED",
-    "resourceId": "mtg-qa-1",
-    "details": {
-      "status": "OFFICIALLY_APPROVED"
-    },
-    "prevHash": "a6f1ecb3b344e1ad5a95a84f0df7db8db545402bc4434f3e418914f404e84434",
-    "hash": "967c2987a6862e20866c1e8bdf16321277ae2de30646b358bcd61ba95f311e03"
+    "prevHash": "8b547bd64d41c05758c4e69afe16b2d4e65d687c748a15d26d7ad51350d991c1",
+    "hash": "a5d83d09a7fa0ee16bbe2bcfe5145db579559c745fa19dfa24b9d2f88051ea31"
   }
 ]

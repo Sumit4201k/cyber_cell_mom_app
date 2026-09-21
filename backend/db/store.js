@@ -94,7 +94,11 @@ function createAuditEntry(userId, username, role, action, resourceId, details = 
   auditLogs.push(logEntry);
 
   saveAuditLogsToFile();
-  saveMeetingsToFile();
+
+  try {
+    const { syncAuditLogToMongo } = require("./mongo");
+    syncAuditLogToMongo(logEntry);
+  } catch (e) {}
 
   return logEntry;
 }
@@ -116,9 +120,19 @@ function verifyHashChainIntegrity() {
       return { valid: false, brokenAtIndex: i, reason: "Previous Hash Mismatch" };
     }
 
-    const { hash, ...dataToHash } = current;
+    const dataToHash = {
+      id: current.id,
+      timestamp: current.timestamp,
+      userId: current.userId,
+      username: current.username,
+      role: current.role,
+      action: current.action,
+      resourceId: current.resourceId,
+      details: current.details,
+      prevHash: current.prevHash
+    };
     const recalculatedHash = computeHash(dataToHash);
-    if (recalculatedHash !== hash) {
+    if (recalculatedHash !== current.hash) {
       return { valid: false, brokenAtIndex: i, reason: "Content Hash Altered" };
     }
   }
@@ -217,18 +231,78 @@ const ENTITY_PERMISSIONS = {
   }
 };
 
-// Official Police User Directory & Role Clearance Map (Level 5 down to Level 0)
-const users = [
-  { id: "usr-1", username: "admin_pawar", role: "ADMIN", clearanceLevel: 5, name: "DCP Pawar (Administrator)", badgeId: "POL-1001", department: "Cyber Command & Control" },
-  { id: "usr-2", username: "investigator_shinde", role: "INVESTIGATOR", clearanceLevel: 4, name: "Inspector Shinde", badgeId: "POL-8842", department: "Financial Crimes Division" },
-  { id: "usr-3", username: "analyst_patil", role: "ANALYST", clearanceLevel: 3, name: "Analyst Patil", badgeId: "ISP-1029", department: "Digital Forensics & Malware Lab" },
-  { id: "usr-4", username: "subinspector_rao", role: "FIELD_OFFICER", clearanceLevel: 2, name: "Sub-Inspector Rao", badgeId: "SI-3391", department: "Tactical Field Interception Unit" },
-  { id: "usr-5", username: "trainee_kamble", role: "TRAINEE", clearanceLevel: 1, name: "Constable Trainee Kamble", badgeId: "CON-9021", department: "Station Inward & Data Entry" },
-  { id: "usr-6", username: "auditor_deshmukh", role: "AUDITOR", clearanceLevel: 0, name: "State Auditor Deshmukh", badgeId: "AUD-5520", department: "Judicial & Internal Affairs Oversight" }
+// Persistent Police Users File
+const USERS_FILE = path.join(DATA_DIR, "users.json");
+
+// Default Police Officers Directory (Admin only seeded for production)
+const defaultUsers = [
+  {
+    id: "usr-admin-1",
+    username: "admin",
+    email: "admin@cybercell.gov.in",
+    password: "CyberCell@2026",
+    role: "ADMIN",
+    clearanceLevel: 5,
+    name: "DCP Admin (Superintendent)",
+    badgeId: "POL-1001",
+    department: "Cyber Command & Control",
+    mfaSecret: "JBSWY3DPEHPK3PXP" // Production Base32 TOTP Key
+  }
 ];
+
+// In-Memory & Persistent Cache for Users
+if (!globalThis.__CYBER_USERS__) {
+  let loadedUsers = [...defaultUsers];
+  try {
+    if (fs.existsSync(USERS_FILE)) {
+      const data = JSON.parse(fs.readFileSync(USERS_FILE, "utf-8"));
+      if (Array.isArray(data) && data.length > 0) loadedUsers = data;
+    }
+  } catch (e) {}
+  globalThis.__CYBER_USERS__ = loadedUsers;
+}
+
+const users = globalThis.__CYBER_USERS__;
+
+function saveUsersToFile() {
+  try {
+    if (fs.existsSync(DATA_DIR)) {
+      fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), "utf-8");
+    }
+  } catch (e) {}
+}
+
+function addUser(userData) {
+  users.push(userData);
+  saveUsersToFile();
+  try {
+    const { syncUserToMongo } = require("./mongo");
+    syncUserToMongo(userData);
+  } catch (e) {}
+  return userData;
+}
+
+function removeUser(userId) {
+  const idx = users.findIndex(u => u.id === userId);
+  if (idx !== -1) {
+    const removed = users.splice(idx, 1);
+    saveUsersToFile();
+    return removed[0];
+  }
+  return null;
+}
+
+function clearAllMeetings() {
+  meetings.length = 0;
+  saveMeetingsToFile();
+  return true;
+}
 
 module.exports = {
   users,
+  addUser,
+  removeUser,
+  saveUsersToFile,
   ROLE_LEVELS,
   ENTITY_PERMISSIONS,
   meetings,
@@ -236,5 +310,6 @@ module.exports = {
   createAuditEntry,
   verifyHashChainIntegrity,
   saveMeetingsToFile,
-  saveAuditLogsToFile
+  saveAuditLogsToFile,
+  clearAllMeetings
 };

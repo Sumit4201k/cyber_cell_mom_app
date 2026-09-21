@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Navbar({ activeRole, setActiveRole, activeTab, setActiveTab, openMfaModal, currentUser, onLogout }) {
+export default function Navbar({ activeRole, setActiveRole, activeTab, setActiveTab, openMfaModal, openAdminModal, currentUser, onLogout }) {
   return (
     <header>
       <div className="classification-header">
@@ -55,6 +55,12 @@ export default function Navbar({ activeRole, setActiveRole, activeTab, setActive
             >
               SHA-256 Audit Ledger
             </button>
+            <button
+              onClick={() => setActiveTab('officers')}
+              className={`btn-outline ${activeTab === 'officers' ? 'btn-outline-active' : ''}`}
+            >
+              {activeRole === 'ADMIN' ? '[+ PROVISION OFFICERS]' : 'Officers & RBAC'}
+            </button>
           </div>
 
           {/* Role Switcher & User Profile */}
@@ -68,12 +74,12 @@ export default function Navbar({ activeRole, setActiveRole, activeTab, setActive
                 onChange={(e) => setActiveRole(e.target.value)}
                 className="role-select-box"
               >
-                <option value="ADMIN">L5: ADMIN (DCP Pawar)</option>
-                <option value="INVESTIGATOR">L4: INVESTIGATOR (Insp. Shinde)</option>
-                <option value="ANALYST">L3: ANALYST (Patil)</option>
-                <option value="FIELD_OFFICER">L2: FIELD OFFICER (SI Rao)</option>
-                <option value="TRAINEE">L1: TRAINEE (Kamble)</option>
-                <option value="AUDITOR">L0: AUDITOR (Deshmukh)</option>
+                <option value="ADMIN">L5: ADMIN (Superintendent)</option>
+                <option value="INVESTIGATOR">L4: INVESTIGATOR (Case Lead)</option>
+                <option value="ANALYST">L3: ANALYST (Forensics Lab)</option>
+                <option value="FIELD_OFFICER">L2: FIELD OFFICER (Operations)</option>
+                <option value="TRAINEE">L1: TRAINEE (Station Desk)</option>
+                <option value="AUDITOR">L0: AUDITOR (Judicial Oversight)</option>
               </select>
             </div>
 

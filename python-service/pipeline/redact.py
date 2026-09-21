@@ -2,6 +2,8 @@ import re
 import logging
 
 logger = logging.getLogger("redact")
+logging.getLogger("presidio-analyzer").setLevel(logging.ERROR)
+logging.getLogger("presidio-anonymizer").setLevel(logging.ERROR)
 
 # Standardized regex patterns for Indian Cyber Cell & Financial PII
 PATTERNS = {

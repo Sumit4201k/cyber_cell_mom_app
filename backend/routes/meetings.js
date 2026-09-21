@@ -3,8 +3,13 @@ const router = express.Router();
 const multer = require("multer");
 const FormData = require("form-data");
 const fetch = require("node-fetch");
+const fs = require("fs");
+const path = require("path");
 const { meetings, createAuditEntry, saveMeetingsToFile, ROLE_LEVELS, ENTITY_PERMISSIONS } = require("../db/store");
 const { authenticateToken, authorizeRoles } = require("../middleware/auth");
+const Meeting = require("../models/Meeting");
+const { isMongoConnected, syncMeetingToMongo } = require("../db/mongo");
+const { saveAudioFile, getAudioFilePath } = require("../services/storageService");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -154,7 +159,7 @@ function processTranscriptWithRegex(transcript, user) {
   }
   if (decisions.length === 0) {
     if (activeSentences.length > 0) {
-      decisions.push(`Proceed with investigation directives: ${activeSentences[0].slice(0, 90)}`);
+      decisions.push(`Proceed with investigation directives: ${activeSentences[0]}`);
     } else {
       decisions.push("Initiate formal inquiry and preserve electronic evidence");
     }
@@ -165,7 +170,7 @@ function processTranscriptWithRegex(transcript, user) {
   if (activeSentences.length > 0) {
     actionItems.push({
       id: `act-${Date.now()}-1`,
-      task: `Execute directive: ${activeSentences[0].slice(0, 80)}`,
+      task: `Execute directive: ${activeSentences[0]}`,
       owner: user.username || "Investigating Officer",
       deadline: new Date(Date.now() + 86400000).toISOString().split('T')[0],
       status: "PENDING"
@@ -173,7 +178,7 @@ function processTranscriptWithRegex(transcript, user) {
     if (activeSentences.length > 1) {
       actionItems.push({
         id: `act-${Date.now()}-2`,
-        task: `Follow up on evidence: ${activeSentences[1].slice(0, 80)}`,
+        task: `Follow up on evidence: ${activeSentences[1]}`,
         owner: user.username || "Cyber Analyst",
         deadline: new Date(Date.now() + 172800000).toISOString().split('T')[0],
         status: "IN_PROGRESS"
@@ -214,11 +219,23 @@ function listMatches(text, regex, type) {
 }
 
 // Get all meeting records (Role-gated data masking & entity clearance evaluation)
-router.get("/", authenticateToken, (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
   const role = req.user?.role || "INVESTIGATOR";
   const userLevel = ROLE_LEVELS[role] ? ROLE_LEVELS[role].level : 2;
 
-  const sanitizedMeetings = meetings.map((m) => {
+  let currentMeetings = meetings;
+  if (isMongoConnected()) {
+    try {
+      const dbMeetings = await Meeting.find({}).sort({ createdAt: -1 }).lean();
+      if (dbMeetings && dbMeetings.length > 0) {
+        currentMeetings = dbMeetings;
+      }
+    } catch (dbErr) {
+      console.warn("MongoDB meetings fetch note:", dbErr.message);
+    }
+  }
+
+  const sanitizedMeetings = currentMeetings.map((m) => {
     if (role === "AUDITOR") {
       return {
         ...m,
@@ -248,6 +265,7 @@ router.get("/", authenticateToken, (req, res) => {
 
     return {
       ...m,
+      audioUrl: m.audioUrl || (m.audioStorage ? `/api/meetings/${m.id}/audio` : undefined),
       entitiesFound: annotatedEntities
     };
   });
@@ -311,11 +329,16 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
       formData.append("createdBy", createdBy.trim());
     }
 
+    const language = req.body?.language;
+    if (language) {
+      formData.append("language", language.trim());
+    }
+
     const pyRes = await fetch(`${pythonServiceUrl}/process-meeting`, {
       method: "POST",
       body: formData,
       headers: formData.getHeaders(),
-      timeout: 60000
+      timeout: 300000 // 5 minutes timeout for CPU transcription of long audio recordings
     });
 
     const pyData = await pyRes.json().catch(() => null);
@@ -332,13 +355,10 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
     console.log(`[Python ML Service] Successfully processed meeting via ${pythonServiceUrl}`);
   } catch (pyErr) {
     console.error(`[Python ML Service] Unreachable or failed: ${pyErr.message}`);
-    if (hasAudioFile) {
-      return res.status(503).json({
-        status: "error",
-        message: `Python ML Microservice (faster-whisper) is offline or unreachable: ${pyErr.message}. Ensure python-service is running on port 8000.`
-      });
-    }
-    // If only text was provided and python service is offline, fallback to Node regex engine cleanly
+    return res.status(503).json({
+      status: "error",
+      message: `AI/ML Microservice is offline or unreachable: ${pyErr.message}. Ensure python-service is active on port 8000.`
+    });
   }
 
   const newId = `mtg-${Date.now().toString().slice(-4)}`;
@@ -370,19 +390,53 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
     aiResult = processTranscriptWithRegex(customTranscript, user);
   }
 
+  // Save audio file locally to file-based storage if present
+  let audioStorageMeta = null;
+  if (hasAudioFile) {
+    audioStorageMeta = saveAudioFile(
+      req.file.buffer,
+      newId,
+      req.file.originalname || "meeting_audio.wav",
+      req.file.mimetype || "audio/wav"
+    );
+  }
+
   const newMeeting = {
     id: newId,
     title: extractedTitle || `Meeting Record (${newId})`,
+    caseFir: (extractedTitle && extractedTitle.match(/FIR[-\s]?\d{4}[-\s]?\d{4,6}/i)) ? extractedTitle.match(/FIR[-\s]?\d{4}[-\s]?\d{4,6}/i)[0] : undefined,
     date: new Date().toISOString().split("T")[0],
     createdBy: createdBy,
     status: "DRAFT_PENDING_REVIEW",
+    audioStorage: audioStorageMeta,
+    audioUrl: audioStorageMeta ? `/api/meetings/${newId}/audio` : undefined,
     rawTranscript: customTranscript || "",
     redactedTranscript: aiResult.redactedText || customTranscript || "",
     entitiesFound: aiResult.entities || [],
     agenda: aiResult.agenda || [],
     decisions: aiResult.decisions || [],
-    action_items: aiResult.actionItems || []
+    action_items: aiResult.actionItems || [],
+    mom: {
+      title: extractedTitle,
+      summary: pythonResponse?.mom?.summary || `Meeting briefing conducted on ${new Date().toISOString().split("T")[0]} by Officer ${createdBy}.`,
+      incident_type: pythonResponse?.mom?.incident_type || "Cyber Crime Investigation",
+      severity: pythonResponse?.mom?.severity || "HIGH",
+      attendees: pythonResponse?.mom?.attendees || [createdBy],
+      agenda: aiResult.agenda || [],
+      decisions: aiResult.decisions || [],
+      action_items: aiResult.actionItems || []
+    }
   };
+
+  // Persist to MongoDB if connected
+  if (isMongoConnected()) {
+    try {
+      await syncMeetingToMongo(newMeeting);
+      console.log(`[MONGODB] Meeting record ${newMeeting.id} ("${newMeeting.title}") saved to MongoDB.`);
+    } catch (dbErr) {
+      console.warn("MongoDB Meeting save warning:", dbErr.message);
+    }
+  }
 
   meetings.unshift(newMeeting);
   saveMeetingsToFile();
@@ -393,7 +447,12 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
     user.role,
     "MEETING_UPLOADED",
     newMeeting.id,
-    { title: newMeeting.title, engine: pythonResponse ? "faster-whisper-python-ml" : "node-regex-nlp" }
+    {
+      title: newMeeting.title,
+      engine: pythonResponse ? "faster-whisper-python-ml" : "node-regex-nlp",
+      audioSaved: !!audioStorageMeta,
+      audioHash: audioStorageMeta?.sha256Hash
+    }
   );
 
   res.json({
@@ -401,6 +460,48 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
     meeting: newMeeting,
     engine: pythonResponse ? "faster-whisper-python-ml" : "node-regex-nlp"
   });
+});
+
+// Stream Meeting Audio Recording (With HTTP 206 Range support for audio player)
+router.get("/:id/audio", (req, res) => {
+  const { id } = req.params;
+  const meeting = meetings.find((m) => m.id === id);
+
+  if (!meeting || !meeting.audioStorage) {
+    return res.status(404).json({ status: "error", message: "No audio recording file is associated with this meeting record." });
+  }
+
+  const audioPath = getAudioFilePath(meeting.audioStorage.storagePath || meeting.audioStorage.fileName);
+  if (!audioPath || !fs.existsSync(audioPath)) {
+    return res.status(404).json({ status: "error", message: "Audio file missing from local storage directory." });
+  }
+
+  const stat = fs.statSync(audioPath);
+  const fileSize = stat.size;
+  const range = req.headers.range;
+
+  if (range) {
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunkSize = end - start + 1;
+    const file = fs.createReadStream(audioPath, { start, end });
+    const head = {
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunkSize,
+      "Content-Type": meeting.audioStorage.mimeType || "audio/wav"
+    };
+    res.writeHead(206, head);
+    file.pipe(res);
+  } else {
+    const head = {
+      "Content-Length": fileSize,
+      "Content-Type": meeting.audioStorage.mimeType || "audio/wav"
+    };
+    res.writeHead(200, head);
+    fs.createReadStream(audioPath).pipe(res);
+  }
 });
 
 // Update Case Title (Allowed: ADMIN, INVESTIGATOR)
@@ -425,6 +526,7 @@ router.patch("/:id/title", authenticateToken, authorizeRoles("ADMIN", "INVESTIGA
   const oldTitle = meeting.title;
   meeting.title = title.trim();
   saveMeetingsToFile();
+  syncMeetingToMongo(meeting);
 
   createAuditEntry(
     user.id,
@@ -459,6 +561,7 @@ router.patch("/:id/agenda", authenticateToken, authorizeRoles("ADMIN", "INVESTIG
 
   meeting.agenda = agenda;
   saveMeetingsToFile();
+  syncMeetingToMongo(meeting);
 
   createAuditEntry(
     user.id,
@@ -493,6 +596,7 @@ router.patch("/:id/decisions", authenticateToken, authorizeRoles("ADMIN", "INVES
 
   meeting.decisions = decisions;
   saveMeetingsToFile();
+  syncMeetingToMongo(meeting);
 
   createAuditEntry(
     user.id,
@@ -527,6 +631,7 @@ router.patch("/:id/action-items", authenticateToken, authorizeRoles("ADMIN", "IN
 
   meeting.action_items = action_items;
   saveMeetingsToFile();
+  syncMeetingToMongo(meeting);
 
   createAuditEntry(
     user.id,
@@ -553,6 +658,7 @@ router.post("/:id/approve", authenticateToken, authorizeRoles("ADMIN", "INVESTIG
   meeting.status = "OFFICIALLY_APPROVED";
   meeting.approvedBy = user.username || "Investigating Officer POL-8842";
   saveMeetingsToFile();
+  syncMeetingToMongo(meeting);
 
   createAuditEntry(
     user.id,
@@ -564,6 +670,87 @@ router.post("/:id/approve", authenticateToken, authorizeRoles("ADMIN", "INVESTIG
   );
 
   res.json({ status: "success", meeting });
+});
+
+// Reset / Wipe All Meeting Records (Admin / Clean Initialization)
+router.post("/reset-all", authenticateToken, authorizeRoles("ADMIN"), async (req, res) => {
+  const { clearAllMeetings } = require("../db/store");
+  clearAllMeetings();
+
+  if (isMongoConnected()) {
+    try {
+      const Meeting = require("../models/Meeting");
+      await Meeting.deleteMany({});
+    } catch (e) {}
+  }
+
+  const user = req.user || { id: "usr-1", username: "admin_pawar", role: "ADMIN" };
+  createAuditEntry(
+    user.id,
+    user.username,
+    user.role,
+    "MEETINGS_WIPED_CLEAN",
+    "all",
+    { message: "All case meetings wiped clean to zero state." }
+  );
+
+  res.json({ status: "success", message: "All meeting records wiped clean.", count: 0, meetings: [] });
+});
+
+// Stream / Download Meeting Audio Recording File
+router.get("/:id/audio", (req, res) => {
+  const { id } = req.params;
+  const meeting = meetings.find((m) => m.id === id);
+  if (!meeting) {
+    return res.status(404).json({ status: "error", message: "Meeting record not found." });
+  }
+
+  const storagePath = meeting.audioStorage?.storagePath || meeting.audioStorage?.fileName;
+  let filePath = getAudioFilePath(storagePath);
+
+  // If not in primary storage, check samples directory if originalName matches
+  if (!filePath && meeting.audioStorage?.originalName) {
+    const sampleCandidate = path.join(__dirname, "../../samples", meeting.audioStorage.originalName);
+    if (fs.existsSync(sampleCandidate)) {
+      filePath = sampleCandidate;
+    }
+  }
+
+  if (!filePath || !fs.existsSync(filePath)) {
+    return res.status(404).json({
+      status: "error",
+      message: "Audio recording file is unavailable or was not saved on server disk."
+    });
+  }
+
+  const stat = fs.statSync(filePath);
+  const fileSize = stat.size;
+  const range = req.headers.range;
+  const mimeType = meeting.audioStorage?.mimeType || (filePath.endsWith('.mp3') ? 'audio/mpeg' : 'audio/wav');
+
+  if (range) {
+    const parts = range.replace(/bytes=/, "").split("-");
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunksize = (end - start) + 1;
+    const file = fs.createReadStream(filePath, { start, end });
+    const head = {
+      'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': chunksize,
+      'Content-Type': mimeType,
+    };
+    res.writeHead(206, head);
+    file.pipe(res);
+  } else {
+    const head = {
+      'Content-Length': fileSize,
+      'Content-Type': mimeType,
+      'Accept-Ranges': 'bytes'
+    };
+    res.writeHead(200, head);
+    fs.createReadStream(filePath).pipe(res);
+  }
 });
 
 module.exports = router;

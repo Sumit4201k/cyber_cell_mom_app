@@ -8,10 +8,14 @@ export default function MFAModal({ isOpen, onClose, activeRole }) {
   if (!isOpen) return null;
 
   const handleVerify = async () => {
+    if (!code || !code.trim()) {
+      setStatus({ success: false, message: 'Please enter the 6-digit TOTP code from your Authenticator app.' });
+      return;
+    }
     try {
       const data = await fetchApi('/auth/verify-mfa', {
         method: 'POST',
-        body: JSON.stringify({ code: code || '123456' })
+        body: JSON.stringify({ code: code.trim() })
       }, activeRole);
       setStatus({ success: true, message: data.message });
     } catch (err) {
@@ -39,20 +43,21 @@ export default function MFAModal({ isOpen, onClose, activeRole }) {
 
         <div style={{ padding: '10px 0', textAlign: 'center' }}>
           <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '16px' }}>
-            Enter 6-digit Google Authenticator code for security clearance verification:
+            Enter 6-digit Time-Based One-Time Password (TOTP) from your authenticator device:
           </p>
 
           <input
             type="text"
-            placeholder="123456"
+            placeholder="000000"
+            maxLength={6}
             value={code}
             onChange={(e) => setCode(e.target.value)}
             className="cyber-input"
-            style={{ textAlign: 'center', fontSize: '16px', letterSpacing: '4px', marginBottom: '16px' }}
+            style={{ textAlign: 'center', fontSize: '18px', fontWeight: '800', letterSpacing: '6px', marginBottom: '12px', fontFamily: 'var(--font-mono)' }}
           />
 
-          <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
-            Demo Hint: Enter demo code <strong>123456</strong>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+            [RFC 6238 COMPLIANCE] Live 30-Second Rolling Code
           </p>
 
           {status && (

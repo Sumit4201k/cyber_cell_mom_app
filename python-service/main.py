@@ -44,7 +44,8 @@ async def process_meeting(
     custom_transcript: str = Form(None),
     customTranscript: str = Form(None),
     title: str = Form(None),
-    createdBy: str = Form(None)
+    createdBy: str = Form(None),
+    language: str = Form(None)
 ):
     """
     Unified endpoint accepting multipart audio uploads, form data, or JSON payloads.
@@ -58,6 +59,7 @@ async def process_meeting(
     filename = "meeting_audio.wav"
     custom_title = title
     created_by_officer = createdBy
+    target_language = language
 
     content_type = request.headers.get("content-type", "")
 
@@ -68,6 +70,7 @@ async def process_meeting(
             raw_text = body.get("customTranscript") or body.get("custom_transcript") or body.get("rawTranscript") or ""
             custom_title = body.get("title") or custom_title
             created_by_officer = body.get("createdBy") or body.get("created_by") or created_by_officer
+            target_language = body.get("language") or target_language
             filename = body.get("filename") or "direct_transcript.txt"
         except Exception as e:
             logger.warning(f"Error parsing JSON payload: {e}")
@@ -82,8 +85,8 @@ async def process_meeting(
                     status_code=400,
                     content={"status": "error", "message": f"Uploaded audio file '{filename}' is empty or too small to contain speech."}
                 )
-            logger.info(f"Processing uploaded audio file: {filename} ({len(audio_bytes)} bytes)")
-            raw_text = transcribe_audio(audio_bytes, filename)
+            logger.info(f"Processing uploaded audio file: {filename} ({len(audio_bytes)} bytes), language={target_language or 'auto'}")
+            raw_text = transcribe_audio(audio_bytes, filename, language=target_language)
         except ValueError as ve:
             logger.warning(f"Audio transcription validation note: {str(ve)}")
             direct_input = custom_transcript or customTranscript

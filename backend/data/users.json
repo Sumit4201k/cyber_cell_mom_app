@@ -1,0 +1,14 @@
+[
+  {
+    "id": "usr-admin-1",
+    "username": "admin",
+    "email": "admin@cybercell.gov.in",
+    "password": "CyberCell@2026",
+    "role": "ADMIN",
+    "clearanceLevel": 5,
+    "name": "DCP Admin (Superintendent)",
+    "badgeId": "POL-1001",
+    "department": "Cyber Command & Control",
+    "mfaSecret": "JBSWY3DPEHPK3PXP"
+  }
+]

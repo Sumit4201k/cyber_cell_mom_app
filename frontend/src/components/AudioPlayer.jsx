@@ -11,7 +11,6 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
   
   const audioRef = useRef(null);
   const animFrameRef = useRef(null);
-  const synthTimerRef = useRef(null);
 
   const isAuditor = activeRole === 'AUDITOR';
   const speedNum = parseFloat(playbackSpeed) || 1.0;
@@ -26,20 +25,18 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       audioRef.current = null;
     }
 
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
+    const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const API_ORIGIN = import.meta.env.VITE_API_BASE_URL 
+      ? import.meta.env.VITE_API_BASE_URL.replace(/\/api$/, '') 
+      : (isLocal ? 'http://localhost:5000' : window.location.origin);
+
+    let streamUrl = meeting?.audioUrl || (meeting?.audioStorage || meeting?.id ? `/api/meetings/${meeting.id}/audio` : null);
+    if (streamUrl && !streamUrl.startsWith('http')) {
+      streamUrl = `${API_ORIGIN}${streamUrl}`;
     }
 
-    if (synthTimerRef.current) {
-      clearInterval(synthTimerRef.current);
-    }
-
-    if (animFrameRef.current) {
-      cancelAnimationFrame(animFrameRef.current);
-    }
-
-    if (meeting?.audioUrl) {
-      const audio = new Audio(meeting.audioUrl);
+    if (streamUrl) {
+      const audio = new Audio(streamUrl);
       audio.volume = audioVolume;
       audio.playbackRate = speedNum;
       audioRef.current = audio;
@@ -47,8 +44,8 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       audio.onloadedmetadata = () => {
         if (audio.duration && !isNaN(audio.duration) && audio.duration !== Infinity && audio.duration > 0) {
           setTotalDuration(Math.ceil(audio.duration));
-        } else {
-          estimateDurationFromTranscript();
+        } else if (meeting?.duration) {
+          setTotalDuration(Math.ceil(meeting.duration));
         }
       };
 
@@ -62,10 +59,15 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
       };
 
       audio.onerror = () => {
-        estimateDurationFromTranscript();
+        setIsPlaying(false);
+        if (meeting?.duration) setTotalDuration(Math.ceil(meeting.duration));
       };
     } else {
-      estimateDurationFromTranscript();
+      if (meeting?.duration) {
+        setTotalDuration(Math.ceil(meeting.duration));
+      } else {
+        setTotalDuration(0);
+      }
     }
 
     return () => {
@@ -73,36 +75,11 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
         audioRef.current.pause();
         audioRef.current = null;
       }
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-      if (synthTimerRef.current) {
-        clearInterval(synthTimerRef.current);
-      }
       if (animFrameRef.current) {
         cancelAnimationFrame(animFrameRef.current);
       }
     };
   }, [meeting, playbackSpeed]);
-
-  const estimateDurationFromTranscript = () => {
-    if (meeting?.duration && typeof meeting.duration === 'number' && meeting.duration > 0) {
-      setTotalDuration(Math.ceil(meeting.duration / speedNum));
-      return;
-    }
-
-    const text = meeting?.rawTranscript || meeting?.redactedTranscript || "";
-    const words = text.split(/\s+/).filter(Boolean).length;
-    const charLen = text.length;
-
-    // Calculate dynamic duration based on spoken words and character length
-    if (words > 0) {
-      const calculatedSecs = Math.max(24, Math.ceil((words * 0.55 + charLen * 0.08) / speedNum));
-      setTotalDuration(calculatedSecs);
-    } else {
-      setTotalDuration(45);
-    }
-  };
 
   // Dynamic Equalizer Animation Loop when playing
   useEffect(() => {
@@ -132,19 +109,19 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
 
   const togglePlay = async () => {
     if (isAuditor) {
-      showToast('warning', 'Access Restricted', 'Audio playback is restricted for Auditor clearance level.');
+      if (showToast) showToast('warning', 'Access Restricted', 'Audio playback is restricted for Auditor clearance level.');
+      return;
+    }
+
+    const hasAudio = meeting?.audioUrl || meeting?.audioStorage || meeting?.id;
+    if (!hasAudio && !audioRef.current) {
+      if (showToast) showToast('warning', 'Audio Unavailable', 'No audio recording file is associated with this meeting record.');
       return;
     }
 
     if (isPlaying) {
       if (audioRef.current) {
         audioRef.current.pause();
-      }
-      if (window.speechSynthesis) {
-        window.speechSynthesis.pause();
-      }
-      if (synthTimerRef.current) {
-        clearInterval(synthTimerRef.current);
       }
       setIsPlaying(false);
     } else {
@@ -154,7 +131,7 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
           body: JSON.stringify({
             action: 'PLAY_AUDIO_RECORDING',
             resourceId: meeting?.id || 'audio-1',
-            details: { title: meeting?.title, speed: speedNum, audioUrl: meeting?.audioUrl ? 'Real Audio File' : 'Speech Synth Utterance' }
+            details: { title: meeting?.title, speed: speedNum, audioUrl: meeting?.audioUrl }
           })
         }, activeRole);
       } catch (e) {}
@@ -163,45 +140,13 @@ export default function AudioPlayer({ meeting, activeRole, showToast }) {
         audioRef.current.playbackRate = speedNum;
         audioRef.current.play().then(() => {
           setIsPlaying(true);
-        }).catch(() => {
-          playSpeechSynthFallback();
+        }).catch((err) => {
+          setIsPlaying(false);
+          if (showToast) showToast('warning', 'Audio Playback Error', `Failed to play audio stream: ${err.message || 'Audio file unreachable'}`);
         });
       } else {
-        playSpeechSynthFallback();
+        if (showToast) showToast('warning', 'Audio Unavailable', 'Audio recording stream could not be initialized.');
       }
-    }
-  };
-
-  const playSpeechSynthFallback = () => {
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const textToSpeak = meeting?.rawTranscript || "State Cyber Cell meeting recording playback initialized.";
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
-      utterance.rate = speedNum;
-      utterance.volume = audioVolume;
-      
-      utterance.onend = () => {
-        setIsPlaying(false);
-        setCurrentTime(0);
-        if (synthTimerRef.current) clearInterval(synthTimerRef.current);
-      };
-
-      window.speechSynthesis.speak(utterance);
-      setIsPlaying(true);
-
-      // Dynamic timer progress for speech synth matching playback speed
-      synthTimerRef.current = setInterval(() => {
-        setCurrentTime(prev => {
-          if (prev >= totalDuration) {
-            clearInterval(synthTimerRef.current);
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000 / speedNum);
-    } else {
-      setIsPlaying(true);
     }
   };
 

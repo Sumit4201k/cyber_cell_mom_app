@@ -9,15 +9,11 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
 
   const isApproved = meeting.status === 'OFFICIALLY_APPROVED';
 
-  // Flexible Fallback Extractors for Action Items, Agenda, and Decisions
+  // Extractors for Action Items, Agenda, and Decisions
   const actionItems = meeting.action_items || meeting.actionItems || meeting.mom?.action_items || meeting.mom?.actionItems || [];
   const agendaList = meeting.agenda || meeting.mom?.agenda || [];
   const decisionList = meeting.decisions || meeting.mom?.decisions || [];
-  const attendeeList = meeting.attendees || meeting.mom?.attendees || [
-    "Investigating Officer POL-8842",
-    "Cyber Forensic Analyst ISP-1029",
-    "Technical Lead CONST-5519"
-  ];
+  const attendeeList = meeting.attendees || meeting.mom?.attendees || (meeting.createdBy ? [meeting.createdBy] : []);
 
   return (
     <div className="pdf-modal-overlay" style={{
@@ -79,15 +75,32 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
             box-shadow: none !important;
             border: none !important;
             background: #ffffff !important;
+            page-break-inside: auto !important;
+            break-inside: auto !important;
           }
 
           #printable-pdf-document * {
             visibility: visible !important;
           }
 
+          .pdf-section {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            margin-bottom: 12px !important;
+          }
+
+          .transcript-print-block {
+            page-break-inside: auto !important;
+            break-inside: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
+            white-space: pre-wrap !important;
+            word-break: break-word !important;
+          }
+
           @page {
             size: A4 portrait;
-            margin: 8mm 12mm 8mm 12mm;
+            margin: 10mm 14mm 10mm 14mm;
           }
         }
       `}</style>
@@ -252,22 +265,21 @@ export default function PdfReportModal({ isOpen, onClose, meeting, activeRole })
           </table>
         </div>
 
-        {/* Topic 5: Redacted Transcript Summary */}
-        <div style={{ marginBottom: '10px' }}>
-          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '4px' }}>
-            5. Presidio Anonymized Transcript Excerpt
+        {/* Topic 5: Complete Redacted Transcript */}
+        <div className="pdf-section" style={{ marginBottom: '14px' }}>
+          <h3 style={{ fontSize: '11px', fontWeight: '700', borderBottom: '1px solid #cbd5e1', paddingBottom: '3px', marginBottom: '6px' }}>
+            5. Full Presidio Anonymized Meeting Transcript
           </h3>
-          <div style={{
+          <div className="transcript-print-block" style={{
             backgroundColor: '#f8fafc',
-            border: '1px solid #e2e8f0',
-            padding: '6px 10px',
-            borderRadius: '4px',
-            fontSize: '10px',
-            fontFamily: 'monospace',
-            color: '#334155',
-            lineHeight: 1.35,
-            maxHeight: '90px',
-            overflow: 'hidden'
+            border: '1px solid #cbd5e1',
+            padding: '8px 12px',
+            fontSize: '9.5px',
+            fontFamily: 'var(--font-mono)',
+            color: '#1e293b',
+            lineHeight: 1.45,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word'
           }}>
             {meeting.redactedTranscript || meeting.rawTranscript || "Anonymized transcript record attached."}
           </div>

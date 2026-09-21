@@ -3,10 +3,8 @@ import { fetchApi } from '../api/client';
 
 export default function LoginScreen({ onLoginSuccess }) {
   const [step, setStep] = useState('credentials'); // 'credentials' | '2fa'
-  const [username, setUsername] = useState('investigator_shinde');
+  const [username, setUsername] = useState('admin@cybercell.gov.in');
   const [password, setPassword] = useState('CyberCell@2026');
-  const [role, setRole] = useState('INVESTIGATOR');
-  const [badgeId, setBadgeId] = useState('POL-8842');
   const [mfaCode, setMfaCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,7 +15,7 @@ export default function LoginScreen({ onLoginSuccess }) {
     e.preventDefault();
     setError('');
     if (!username.trim() || !password.trim()) {
-      setError('Please enter both Officer ID/Username and Security Passphrase.');
+      setError('Please enter both Officer ID/Email and Security Passphrase.');
       return;
     }
 
@@ -27,9 +25,7 @@ export default function LoginScreen({ onLoginSuccess }) {
         method: 'POST',
         body: JSON.stringify({
           username: username.trim(),
-          password: password.trim(),
-          role,
-          badgeId: badgeId.trim()
+          password: password.trim()
         })
       });
 
@@ -59,18 +55,14 @@ export default function LoginScreen({ onLoginSuccess }) {
           token: sessionToken,
           code: mfaCode.trim()
         })
-      }, role);
+      }, userData?.role || 'ADMIN');
 
       localStorage.setItem('cyber_token', sessionToken);
-      localStorage.setItem('cyber_user', JSON.stringify({
-        ...userData,
-        role,
-        badgeId
-      }));
+      localStorage.setItem('cyber_user', JSON.stringify(userData));
 
       setLoading(false);
       if (onLoginSuccess) {
-        onLoginSuccess(userData, role);
+        onLoginSuccess(userData, userData.role);
       }
     } catch (err) {
       setLoading(false);
@@ -92,7 +84,7 @@ export default function LoginScreen({ onLoginSuccess }) {
     }}>
       {/* Top Police System Banner */}
       <div style={{
-        maxWidth: '460px',
+        maxWidth: '520px',
         width: '100%',
         marginBottom: '16px',
         textAlign: 'center'
@@ -120,7 +112,7 @@ export default function LoginScreen({ onLoginSuccess }) {
 
       {/* Main Login Card */}
       <div style={{
-        maxWidth: '460px',
+        maxWidth: '520px',
         width: '100%',
         backgroundColor: 'var(--surface-1)',
         color: 'var(--text-main)',
@@ -177,118 +169,47 @@ export default function LoginScreen({ onLoginSuccess }) {
 
         {step === 'credentials' ? (
           <form onSubmit={handleCredentialsSubmit}>
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
-                Officer ID / Username
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#0f172a', marginBottom: '6px', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>
+                Official Email / Username *
               </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="cyber-input"
-                style={{ width: '100%', fontSize: '13px', fontWeight: '600' }}
-                placeholder="e.g. investigator_shinde"
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  color: '#0f172a',
+                  border: '1.5px solid #0f172a'
+                }}
+                placeholder="e.g. admin@cybercell.gov.in"
                 required
+                autoFocus
               />
             </div>
 
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
-                Security Passphrase
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: '800', color: '#0f172a', marginBottom: '6px', textTransform: 'uppercase', fontFamily: 'var(--font-mono)' }}>
+                Security Passphrase *
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="cyber-input"
-                style={{ width: '100%', fontSize: '13px' }}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  fontSize: '13px',
+                  border: '1.5px solid #0f172a'
+                }}
                 placeholder="••••••••••••"
                 required
               />
-            </div>
-
-            {/* Quick Police Profile Switcher */}
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ display: 'block', fontSize: '10px', fontWeight: '800', color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Quick Police Profile Selection:
-              </label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
-                {[
-                  { u: 'admin_pawar', r: 'ADMIN', b: 'POL-1001', label: 'L5: DCP Pawar (Admin)', color: '#dc2626' },
-                  { u: 'investigator_shinde', r: 'INVESTIGATOR', b: 'POL-8842', label: 'L4: Insp. Shinde (Case Lead)', color: '#ea580c' },
-                  { u: 'analyst_patil', r: 'ANALYST', b: 'ISP-1029', label: 'L3: Analyst Patil (Forensics)', color: '#2563eb' },
-                  { u: 'subinspector_rao', r: 'FIELD_OFFICER', b: 'SI-3391', label: 'L2: SI Rao (Field Ops)', color: '#0891b2' },
-                  { u: 'trainee_kamble', r: 'TRAINEE', b: 'CON-9021', label: 'L1: Constable Trainee', color: '#4b5563' },
-                  { u: 'auditor_deshmukh', r: 'AUDITOR', b: 'AUD-5520', label: 'L0: Auditor Deshmukh', color: '#7c3aed' }
-                ].map((prof) => (
-                  <button
-                    key={prof.u}
-                    type="button"
-                    onClick={() => {
-                      setUsername(prof.u);
-                      setRole(prof.r);
-                      setBadgeId(prof.b);
-                    }}
-                    style={{
-                      fontSize: '10px',
-                      padding: '6px 4px',
-                      backgroundColor: role === prof.r ? 'var(--surface-3)' : 'var(--surface-2)',
-                      border: role === prof.r ? `1.5px solid ${prof.color}` : '1px solid var(--border-color)',
-                      color: role === prof.r ? '#ffffff' : 'var(--text-main)',
-                      fontWeight: role === prof.r ? '700' : '500',
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      borderRadius: '0px'
-                    }}
-                  >
-                    {prof.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '16px' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
-                  Clearance Role
-                </label>
-                <select
-                  value={role}
-                  onChange={(e) => {
-                    const newRole = e.target.value;
-                    setRole(newRole);
-                    if (newRole === 'ADMIN') { setUsername('admin_pawar'); setBadgeId('POL-1001'); }
-                    else if (newRole === 'INVESTIGATOR') { setUsername('investigator_shinde'); setBadgeId('POL-8842'); }
-                    else if (newRole === 'ANALYST') { setUsername('analyst_patil'); setBadgeId('ISP-1029'); }
-                    else if (newRole === 'FIELD_OFFICER') { setUsername('subinspector_rao'); setBadgeId('SI-3391'); }
-                    else if (newRole === 'TRAINEE') { setUsername('trainee_kamble'); setBadgeId('CON-9021'); }
-                    else if (newRole === 'AUDITOR') { setUsername('auditor_deshmukh'); setBadgeId('AUD-5520'); }
-                  }}
-                  className="role-select-box"
-                  style={{ width: '100%', padding: '7px 8px', fontSize: '11.5px', fontWeight: '700' }}
-                >
-                  <option value="ADMIN">Level 5: ADMIN (Super Clearance)</option>
-                  <option value="INVESTIGATOR">Level 4: INVESTIGATOR (Case Lead & MoM)</option>
-                  <option value="ANALYST">Level 3: ANALYST (Technical Forensics)</option>
-                  <option value="FIELD_OFFICER">Level 2: FIELD OFFICER (Sub-Inspector)</option>
-                  <option value="TRAINEE">Level 1: TRAINEE (Constable Desk)</option>
-                  <option value="AUDITOR">Level 0: AUDITOR (Redacted Oversight)</option>
-                </select>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '4px', textTransform: 'uppercase' }}>
-                  Badge ID
-                </label>
-                <input
-                  type="text"
-                  value={badgeId}
-                  onChange={(e) => setBadgeId(e.target.value)}
-                  className="cyber-input"
-                  style={{ width: '100%', fontSize: '11.5px', fontWeight: '700' }}
-                  placeholder="POL-8842"
-                />
-              </div>
             </div>
 
             <button
@@ -297,7 +218,7 @@ export default function LoginScreen({ onLoginSuccess }) {
               className="btn-outline btn-outline-active"
               style={{
                 width: '100%',
-                padding: '10px',
+                padding: '12px',
                 fontSize: '12px',
                 fontWeight: '800',
                 justifyContent: 'center',
@@ -336,19 +257,19 @@ export default function LoginScreen({ onLoginSuccess }) {
                   margin: '0 auto 10px auto',
                   display: 'block'
                 }}
-                placeholder="123456"
+                placeholder="000000"
                 autoFocus
               />
 
               <div style={{
                 fontSize: '11px',
-                color: '#64748b',
+                color: '#475569',
                 backgroundColor: 'var(--surface-2)',
-                padding: '6px',
+                padding: '6px 10px',
                 border: '1px solid var(--border-color)',
                 fontFamily: 'var(--font-mono)'
               }}>
-                Security Code Hint: <strong>123456</strong>
+                [2FA POLICY] Strictly verified via RFC 6238 TOTP rolling code.
               </div>
             </div>
 

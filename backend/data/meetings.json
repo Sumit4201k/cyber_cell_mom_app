@@ -1,60 +1,513 @@
 [
   {
-    "id": "mtg-5355",
-    "title": "SIM-Swapping & Financial Account Compromise [CASE-20260918]",
-    "date": "2026-09-18",
-    "createdBy": "investigator_shinde",
-    "status": "OFFICIALLY_APPROVED",
-    "rawTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941. The accused orchestrated an illegal SIM swap fraud against Axis Bank account number 9875-4321012. The associated compromised mobile number is 987-654-3210 and Aadhaar reference 234567890123. Senior Inspector Sharma\n[30.00s -> 38.88s] has issued a Section 91 CrPC notice to the telecom operator. Officer Verma Badge 4082 will coordinate\n[38.88s -> 42.80s] the CDR analysis and submit the final forensic report by Friday.",
-    "redactedTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941. The accused orchestrated an illegal SIM swap fraud against Axis Bank account number 9875-4321012. The associated compromised mobile number is <PHONE_NUMBER> and Aadhaar reference <BANK_ACCOUNT>. Senior Inspector <PERSON>\n[30.00s -> 38.88s] has issued a Section 91 CrPC notice to the telecom operator. Officer <PERSON> 4082 will coordinate\n[38.88s -> 42.80s] the CDR analysis and submit the final forensic report by Friday.",
+    "id": "mtg-8171",
+    "title": "Deepfake & Extortion Threat Assessment [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-8171_1789910928171_sample_case_crypto_extortion.wav",
+      "originalName": "sample_case_crypto_extortion.wav",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-8171_1789910928171_sample_case_crypto_extortion.wav",
+      "relativeUrl": "/api/meetings/mtg-8171/audio",
+      "fileSize": 1563924,
+      "mimeType": "audio/wav",
+      "sha256Hash": "5c86d836b49f3dadc04bfca14ada5773e96062354268492a9b0ebe2576601032",
+      "savedAt": "2026-09-20T13:28:48.173Z"
+    },
+    "audioUrl": "/api/meetings/mtg-8171/audio",
+    "rawTranscript": "[0.00s -> 30.79s] State Cyber Investigation Team Meeting on for 2021-46-44-21 Digital Extortion Network-targeting senior citizens via fraudulent investment portals. Siphon funds totalling 45-lock rupees rooted to pen number A-----1234- and Suspicious Bank account 50100-234567-890. Sub Inspector Rao Baj-1190 is serving formal freezing orders to the payment gate.\n[30.79s -> 34.69s] way and coordinating with Binance compliance desk for wallet tracking.",
+    "redactedTranscript": "[0.00s -> 30.79s] State Cyber Investigation Team Meeting on for <PHONE_NUMBER> Digital Extortion Network-targeting senior citizens via fraudulent investment portals. Siphon funds totalling 45-lock rupees rooted to pen number A-----1234- and Suspicious Bank account 50100-234567-890. Sub Inspector <PERSON> is serving formal freezing orders to the payment gate.\n[30.79s -> 34.69s] way and coordinating with Binance compliance desk for wallet tracking.",
     "entitiesFound": [
       {
-        "entity_type": "AADHAAR_NUMBER",
-        "start": 277,
-        "end": 289,
-        "score": 0.95,
-        "value": "234567890123"
+        "entity_type": "PERSON",
+        "start": 296,
+        "end": 308,
+        "score": 0.85,
+        "value": "Rao Baj-1190"
       },
       {
         "entity_type": "PHONE_NUMBER",
-        "start": 277,
-        "end": 289,
-        "score": 0.95,
-        "value": "234567890123"
-      },
-      {
-        "entity_type": "BANK_ACCOUNT",
-        "start": 277,
-        "end": 289,
-        "score": 0.95,
-        "value": "234567890123"
-      },
-      {
-        "entity_type": "PERSON",
-        "start": 308,
-        "end": 314,
-        "score": 0.85,
-        "value": "Sharma"
-      },
-      {
-        "entity_type": "PERSON",
-        "start": 403,
-        "end": 414,
-        "score": 0.85,
-        "value": "Verma Badge"
-      },
-      {
-        "entity_type": "PHONE_NUMBER",
-        "start": 242,
-        "end": 254,
-        "score": 0.75,
-        "value": "987-654-3210"
+        "start": 64,
+        "end": 77,
+        "score": 0.4,
+        "value": "2021-46-44-21"
       }
     ],
     "agenda": [
-      "Case Briefing: State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941...",
-      "Technical Evidence & Inquest: The accused orchestrated an illegal SIM swap fraud against Axis Bank account num...",
-      "Operational Next Steps: the CDR analysis and submit the final forensic report by Friday..."
+      "Case Briefing: State Cyber Investigation Team Meeting on for <PHONE_NUMBER> Digital Extortion Network-targeting senior citizens via fraudulent investment portals",
+      "Technical Evidence & Inquest: Siphon funds totalling 45-lock rupees rooted to pen number A-----1234- and Suspicious Bank account 50100-234567-890",
+      "Operational Next Steps: way and coordinating with Binance compliance desk for wallet tracking"
+    ],
+    "decisions": [
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+      "Dispatch compliance freeze notices to cryptocurrency exchanges and trace blockchain transactions."
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: State Cyber Investigation Team Meeting on for <PHONE_NUMBER> Digital Extortion Network-targeting senior citizens via fraudulent investment portals",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Siphon funds totalling 45-lock rupees rooted to pen number A-----1234- and Suspicious Bank account 50100-234567-890",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Deepfake & Extortion Threat Assessment [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: State Cyber Investigation Team Meeting on for <PHONE_NUMBER> Digital Extortion Network-targeting senior citizens via fraudulent investment portals",
+        "Technical Evidence & Inquest: Siphon funds totalling 45-lock rupees rooted to pen number A-----1234- and Suspicious Bank account 50100-234567-890",
+        "Operational Next Steps: way and coordinating with Binance compliance desk for wallet tracking"
+      ],
+      "decisions": [
+        "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+        "Dispatch compliance freeze notices to cryptocurrency exchanges and trace blockchain transactions."
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: State Cyber Investigation Team Meeting on for <PHONE_NUMBER> Digital Extortion Network-targeting senior citizens via fraudulent investment portals",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Siphon funds totalling 45-lock rupees rooted to pen number A-----1234- and Suspicious Bank account 50100-234567-890",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-6513",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-6513_1789910826514_sample_case_phishing_email.wav",
+      "originalName": "sample_case_phishing_email.wav",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-6513_1789910826514_sample_case_phishing_email.wav",
+      "relativeUrl": "/api/meetings/mtg-6513/audio",
+      "fileSize": 1354290,
+      "mimeType": "audio/wav",
+      "sha256Hash": "1d275a93bcafeda538eeda90a2d4eddcf62ec5dacb6371a06ae2bef84469a620",
+      "savedAt": "2026-09-20T13:27:06.516Z"
+    },
+    "audioUrl": "/api/meetings/mtg-6513/audio",
+    "rawTranscript": "[0.00s -> 30.25s] State Cyber Crime Cell Investigative Briefing for For 2026-5531. Spear Fishing Campaign Targeting Municipal Accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to Attacker MailboxBatActor99 at protonmail.com. Senior Inspector Varma Baj 4000 and 82 will serve notice to the Domain Registrar and Notify Notal Officer at cyberdesk at Gov.in.",
+    "redactedTranscript": "[0.00s -> 30.25s] State Cyber Crime Cell Investigative Briefing for For 2026-5531. Spear Fishing Campaign Targeting Municipal Accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to Attacker MailboxBatActor99 at protonmail.com. Senior Inspector <PERSON> and 82 will serve notice to the Domain Registrar and Notify Notal Officer at cyberdesk at Gov.in.",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 299,
+        "end": 313,
+        "score": 0.85,
+        "value": "Varma Baj 4000"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: State Cyber Crime Cell Investigative Briefing for For 2026-5531",
+      "Technical Evidence & Inquest: Spear Fishing Campaign Targeting Municipal Accounts",
+      "Operational Next Steps: Senior Inspector <PERSON> and 82 will serve notice to the Domain Registrar and Notify Notal Officer at cyberdesk at Gov"
+    ],
+    "decisions": [
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: State Cyber Crime Cell Investigative Briefing for For 2026-5531",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Spear Fishing Campaign Targeting Municipal Accounts",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: State Cyber Crime Cell Investigative Briefing for For 2026-5531",
+        "Technical Evidence & Inquest: Spear Fishing Campaign Targeting Municipal Accounts",
+        "Operational Next Steps: Senior Inspector <PERSON> and 82 will serve notice to the Domain Registrar and Notify Notal Officer at cyberdesk at Gov"
+      ],
+      "decisions": [
+        "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: State Cyber Crime Cell Investigative Briefing for For 2026-5531",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Spear Fishing Campaign Targeting Municipal Accounts",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-9085",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-9085_1789910779086_sample_case_phishing_email.wav",
+      "originalName": "sample_case_phishing_email.wav",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-9085_1789910779086_sample_case_phishing_email.wav",
+      "relativeUrl": "/api/meetings/mtg-9085/audio",
+      "fileSize": 1354290,
+      "mimeType": "audio/wav",
+      "sha256Hash": "1d275a93bcafeda538eeda90a2d4eddcf62ec5dacb6371a06ae2bef84469a620",
+      "savedAt": "2026-09-20T13:26:19.088Z"
+    },
+    "audioUrl": "/api/meetings/mtg-9085/audio",
+    "rawTranscript": "[0.00s -> 30.25s] State Cybercrime Cell Investigative Briefing For For 2026-5531. Spear Fishing Campaign Targeting Municipal Accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to attacker mailboxbadactor99 at protonmail.com. Senior Inspector Varma Badge 4000 and 82 will serve notice to the domain registrar and notify nodal officer at cyberdesk.in.",
+    "redactedTranscript": "[0.00s -> 30.25s] State Cybercrime Cell Investigative Briefing For For 2026-5531. Spear Fishing Campaign Targeting Municipal Accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to attacker mailboxbadactor99 at protonmail.com. Senior Inspector <PERSON> 4000 and 82 will serve notice to the domain registrar and notify nodal officer at cyberdesk.in.",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 298,
+        "end": 309,
+        "score": 0.85,
+        "value": "Varma Badge"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: State Cybercrime Cell Investigative Briefing For For 2026-5531",
+      "Technical Evidence & Inquest: Spear Fishing Campaign Targeting Municipal Accounts",
+      "Operational Next Steps: Senior Inspector <PERSON> 4000 and 82 will serve notice to the domain registrar and notify nodal officer at cyberdesk"
+    ],
+    "decisions": [
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: State Cybercrime Cell Investigative Briefing For For 2026-5531",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Spear Fishing Campaign Targeting Municipal Accounts",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: State Cybercrime Cell Investigative Briefing For For 2026-5531",
+        "Technical Evidence & Inquest: Spear Fishing Campaign Targeting Municipal Accounts",
+        "Operational Next Steps: Senior Inspector <PERSON> 4000 and 82 will serve notice to the domain registrar and notify nodal officer at cyberdesk"
+      ],
+      "decisions": [
+        "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: State Cybercrime Cell Investigative Briefing For For 2026-5531",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Spear Fishing Campaign Targeting Municipal Accounts",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-7412",
+    "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-7412_1789910657413_sample_case_gujarati.mp3",
+      "originalName": "sample_case_gujarati.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-7412_1789910657413_sample_case_gujarati.mp3",
+      "relativeUrl": "/api/meetings/mtg-7412/audio",
+      "fileSize": 397632,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "7bc4d6ea1a365428ad0b0a5f46078fcd594f899c85dbac40da65c734d3cb7dde",
+      "savedAt": "2026-09-20T13:24:17.414Z"
+    },
+    "audioUrl": "/api/meetings/mtg-7412/audio",
+    "rawTranscript": "[30.00s -> 38.50s] dani adhar kardachar kharu pistali sabaj shabpan karur sansat lag hityo tirhajara ratsu na varnu nondavamahavya se.\n[39.50s -> 47.78s] Sabh inspector Rao Tatkalik saibar portal par data upalod karashi andi bank nodaladhi kari pasethi CDR.\n[48.50s -> 49.50s] Meera Vashi",
+    "redactedTranscript": "[30.00s -> 38.50s] <PERSON> adhar <PERSON> sansat lag hityo tirhajara ratsu na varnu nondavamahavya se.\n[39.50s -> 47.78s] Sabh inspector <PERSON> saibar portal par data upalod karashi andi bank nodaladhi <PERSON>.\n[48.50s -> 49.50s] <PERSON>",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 19,
+        "end": 23,
+        "score": 0.85,
+        "value": "dani"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 30,
+        "end": 73,
+        "score": 0.85,
+        "value": "kardachar kharu pistali sabaj shabpan karur"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 169,
+        "end": 181,
+        "score": 0.85,
+        "value": "Rao Tatkalik"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 240,
+        "end": 256,
+        "score": 0.85,
+        "value": "kari pasethi CDR"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 277,
+        "end": 288,
+        "score": 0.85,
+        "value": "Meera Vashi"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: <PERSON> adhar <PERSON> sansat lag hityo tirhajara ratsu na varnu nondavamahavya se",
+      "Technical Evidence & Inquest: Sabh inspector <PERSON> saibar portal par data upalod karashi andi bank nodaladhi <PERSON>",
+      "Operational Next Steps: <PERSON>"
+    ],
+    "decisions": [
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: <PERSON> adhar <PERSON> sansat lag hityo tirhajara ratsu na varnu nondavamahavya se",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Sabh inspector <PERSON> saibar portal par data upalod karashi andi bank nodaladhi <PERSON>",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: <PERSON> adhar <PERSON> sansat lag hityo tirhajara ratsu na varnu nondavamahavya se",
+        "Technical Evidence & Inquest: Sabh inspector <PERSON> saibar portal par data upalod karashi andi bank nodaladhi <PERSON>",
+        "Operational Next Steps: <PERSON>"
+      ],
+      "decisions": [
+        "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: <PERSON> adhar <PERSON> sansat lag hityo tirhajara ratsu na varnu nondavamahavya se",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Sabh inspector <PERSON> saibar portal par data upalod karashi andi bank nodaladhi <PERSON>",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-4227",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-4227_1789909944227_sample_case_hindi.mp3",
+      "originalName": "sample_case_hindi.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-4227_1789909944227_sample_case_hindi.mp3",
+      "relativeUrl": "/api/meetings/mtg-4227/audio",
+      "fileSize": 360384,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290",
+      "savedAt": "2026-09-20T13:12:24.228Z"
+    },
+    "audioUrl": "/api/meetings/mtg-4227/audio",
+    "rawTranscript": "[30.40s -> 35.12s] PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA\n[35.12s -> 37.69s] INSPECTA-PARTIL-DIGITAL\n[37.69s -> 39.73s] FOR INSIC-LAB SE LOGS\n[39.73s -> 41.21s] KA-WISHLATION KERINGE\n[41.21s -> 44.21s] OR NODAL ADDICARI COUNTIST JARI KERINGE",
+    "redactedTranscript": "[30.40s -> 35.12s] PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA\n[35.12s -> 37.69s] INSPECTA-PARTIL-DIGITAL\n[37.69s -> 39.73s] FOR INSIC-LAB SE LOGS\n[39.73s -> 41.21s] KA-WISHLATION KERINGE\n[41.21s -> 44.21s] OR NODAL ADDICARI COUNTIST JARI KERINGE",
+    "entitiesFound": [],
+    "agenda": [
+      "Case Briefing: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+      "Technical Evidence & Inquest: INSPECTA-PARTIL-DIGITAL",
+      "Operational Next Steps: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+    ],
+    "decisions": [
+      "Proceed with case directives: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: INSPECTA-PARTIL-DIGITAL",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+        "Technical Evidence & Inquest: INSPECTA-PARTIL-DIGITAL",
+        "Operational Next Steps: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+      ],
+      "decisions": [
+        "Proceed with case directives: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: INSPECTA-PARTIL-DIGITAL",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-4806",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-4806_1789909884807_sample_case_hinglish.mp3",
+      "originalName": "sample_case_hinglish.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-4806_1789909884807_sample_case_hinglish.mp3",
+      "relativeUrl": "/api/meetings/mtg-4806/audio",
+      "fileSize": 368064,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "5a5e56bb5a2853eb6d56d947af5965bee08a9540187f703c5e16da168875864a",
+      "savedAt": "2026-09-20T13:11:24.809Z"
+    },
+    "audioUrl": "/api/meetings/mtg-4806/audio",
+    "rawTranscript": "[0.00s -> 15.84s] State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941. Accused near-axis bank account number 9875-432-1012 say unauthorized transfer gear.\n[15.84s -> 30.29s] Victim's mobile number 9,876,543,210, and Adhar reference 23456789-O123.\n[30.29s -> 37.81s] Senior Inspector Shindini Section 91CRPC notice telecom operator is also given.\n[37.81s -> 44.81s] Sub-Inspector Rao CDR Analysis will coordinate and submit forensic reports until Friday.",
+    "redactedTranscript": "[0.00s -> 15.84s] State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941. Accused near-axis bank account number 9875-432-1012 say unauthorized transfer gear.\n[15.84s -> 30.29s] Victim's mobile number 9,876,543,210, and Adhar reference 23456789-O123.\n[30.29s -> 37.81s] Senior Inspector <PERSON> notice telecom operator is also given.\n[37.81s -> 44.81s] Sub-Inspector <PERSON> will coordinate and submit forensic reports until Friday.",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 299,
+        "end": 322,
+        "score": 0.85,
+        "value": "Shindini Section 91CRPC"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 395,
+        "end": 411,
+        "score": 0.85,
+        "value": "Rao CDR Analysis"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+      "Technical Evidence & Inquest: Accused near-axis bank account number 9875-432-1012 say unauthorized transfer gear",
+      "Operational Next Steps: Sub-Inspector <PERSON> will coordinate and submit forensic reports until Friday"
     ],
     "decisions": [
       "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
@@ -63,194 +516,571 @@
     "action_items": [
       {
         "id": "act-1",
-        "task": "Investigate and verify incident details: State Cyber Crime Cell Operational Meeting Briefing regarding case for 2026-9941",
+        "task": "Investigate and verify incident details: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
         "owner": "Investigating Officer (Assigned)",
-        "deadline": "2026-09-19",
+        "deadline": "2026-09-21",
         "status": "PENDING"
       },
       {
         "id": "act-2",
-        "task": "Follow up on forensic evidence: The accused orchestrated an illegal SIM swap fraud against Axis Bank account number 9875-4",
+        "task": "Follow up on forensic evidence: Accused near-axis bank account number 9875-432-1012 say unauthorized transfer gear",
         "owner": "Investigating Officer (Assigned)",
-        "deadline": "2026-09-20",
+        "deadline": "2026-09-22",
         "status": "IN_PROGRESS"
-      }
-    ],
-    "approvedBy": "investigator_shinde"
-  },
-  {
-    "id": "mtg-9467",
-    "title": "LockBit Ransomware Breach Response [CASE-20260918]",
-    "date": "2026-09-18",
-    "createdBy": "investigator_shinde",
-    "status": "DRAFT_PENDING_REVIEW",
-    "rawTranscript": "[0.00s -> 30.00s] Cyber defense incident response to briefing on Case CY-2026-8812. LockBit 3.0 Ransomware infection identified across the civil hospital internal network servers. The threat actors demand ransom payment to Crypto Wallet 1A1-ZP1-EP5-Q5-2-DMP-TF-T-L-5-SL-MV-7-Defene. Deputy Superintendent Patel directed immediate network airgapping, Firewall Rule Revocation, and deployment of\n[30.00s -> 37.00s] clean snapshot backups. Digital Forensics Unit must preserve server log hashes for judicial submission.",
-    "redactedTranscript": "[0.00s -> 30.00s] Cyber defense incident response to briefing on Case <CYBER_TICKET>. LockBit 3.0 Ransomware infection identified across the civil hospital internal network servers. The threat actors demand ransom payment to Crypto Wallet 1A1-ZP1-EP5-Q5-2-DMP-TF-T-L-5-SL-MV-7-Defene. Deputy Superintendent <PERSON> directed immediate network airgapping, Firewall Rule Revocation, and deployment of\n[30.00s -> 37.00s] clean snapshot backups. Digital Forensics Unit must preserve server log hashes for judicial submission.",
-    "entitiesFound": [
-      {
-        "entity_type": "CYBER_TICKET",
-        "start": 70,
-        "end": 82,
-        "score": 0.95,
-        "value": "CY-2026-8812"
-      },
-      {
-        "entity_type": "PERSON",
-        "start": 305,
-        "end": 310,
-        "score": 0.85,
-        "value": "Patel"
-      }
-    ],
-    "agenda": [
-      "Case Briefing: Cyber defense incident response to briefing on Case <CYBER_TICKET>...",
-      "Technical Evidence & Inquest: LockBit 3...",
-      "Operational Next Steps: Digital Forensics Unit must preserve server log hashes for judicial submission..."
-    ],
-    "decisions": [
-      "Dispatch compliance freeze notices to cryptocurrency exchanges and trace blockchain transactions."
-    ],
-    "action_items": [
-      {
-        "id": "act-1",
-        "task": "Investigate and verify incident details: Cyber defense incident response to briefing on Case <CYBER_TICKET>",
-        "owner": "Investigating Officer (Assigned)",
-        "deadline": "2026-09-19",
-        "status": "PENDING"
-      },
-      {
-        "id": "act-2",
-        "task": "Follow up on forensic evidence: LockBit 3",
-        "owner": "Investigating Officer (Assigned)",
-        "deadline": "2026-09-20",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-3811",
-    "title": "Phishing Syndicate & Fraud Portal Inquest [CASE-20260918]",
-    "date": "2026-09-18",
-    "createdBy": "investigator_shinde",
-    "status": "DRAFT_PENDING_REVIEW",
-    "rawTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell investigative briefing for FIR 2026-5531. Spear phishing campaign targeting municipal accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to attacker mailbox bat actor 99 at protonmail.com. Senior Inspector Varma Badge 4000 and 82 will serve notice to the Domain Registrar and notify Nodal Officer at cyberdesk.in.",
-    "redactedTranscript": "[0.00s -> 30.00s] State Cyber Crime Cell investigative briefing for <FIR_ID>. Spear phishing campaign targeting municipal accounts. The malicious email originated from support at cyber-verify.org and victim credentials were sent to attacker mailbox bat actor 99 at protonmail.com. Senior Inspector <PERSON> 4000 and 82 will serve notice to the Domain Registrar and notify Nodal Officer at cyberdesk.in.",
-    "entitiesFound": [
-      {
-        "entity_type": "FIR_ID",
-        "start": 68,
-        "end": 81,
-        "score": 0.95,
-        "value": "FIR 2026-5531"
-      },
-      {
-        "entity_type": "PERSON",
-        "start": 303,
-        "end": 314,
-        "score": 0.85,
-        "value": "Varma Badge"
-      }
-    ],
-    "agenda": [
-      "Case Briefing: State Cyber Crime Cell investigative briefing for <FIR_ID>...",
-      "Technical Evidence & Inquest: Spear phishing campaign targeting municipal accounts...",
-      "Operational Next Steps: Senior Inspector <PERSON> 4000 and 82 will serve notice to the Domain Registrar ..."
-    ],
-    "decisions": [
-      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts."
-    ],
-    "action_items": [
-      {
-        "id": "act-1",
-        "task": "Investigate and verify incident details: State Cyber Crime Cell investigative briefing for <FIR_ID>",
-        "owner": "Investigating Officer (Assigned)",
-        "deadline": "2026-09-19",
-        "status": "PENDING"
-      },
-      {
-        "id": "act-2",
-        "task": "Follow up on forensic evidence: Spear phishing campaign targeting municipal accounts",
-        "owner": "Investigating Officer (Assigned)",
-        "deadline": "2026-09-20",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-6495",
-    "title": "Deepfake & Extortion Threat Assessment [CASE-20260918]",
-    "date": "2026-09-18",
-    "createdBy": "investigator_shinde",
-    "status": "DRAFT_PENDING_REVIEW",
-    "rawTranscript": "[0.00s -> 30.00s] State Cyber Investigation Team Meeting on for 2026-4421. Digital Extortion Network targeting senior citizens via fraudulent investment portals. Siphon funds totalling 45 Lockropies rooted to PAN number ABCDE-1234F and Suspicious Bank Account 50100234567890. Sub-Inspector Row Batch 1190 is serving formal freezing orders to\n[30.00s -> 37.00s] the Payment Gateway and co-ordinating with Binance Compliance Desk for Wallet Tracking.",
-    "redactedTranscript": "[0.00s -> 30.00s] State Cyber Investigation Team Meeting on for 2026-4421. Digital Extortion Network targeting senior citizens via fraudulent investment portals. Siphon funds totalling 45 Lockropies rooted to PAN number ABCDE-1234F and Suspicious Bank <BANK_ACCOUNT>. Sub-Inspector Row Batch 1190 is serving formal freezing orders to\n[30.00s -> 37.00s] the Payment Gateway and co-ordinating with Binance Compliance Desk for Wallet Tracking.",
-    "entitiesFound": [
-      {
-        "entity_type": "BANK_ACCOUNT",
-        "start": 252,
-        "end": 274,
-        "score": 0.95,
-        "value": "Account 50100234567890"
-      },
-      {
-        "entity_type": "PHONE_NUMBER",
-        "start": 261,
-        "end": 274,
-        "score": 0.95,
-        "value": "0100234567890"
-      }
-    ],
-    "agenda": [
-      "Case Briefing: State Cyber Investigation Team Meeting on for 2026-4421...",
-      "Technical Evidence & Inquest: Digital Extortion Network targeting senior citizens via fraudulent investment po...",
-      "Operational Next Steps: the Payment Gateway and co-ordinating with Binance Compliance Desk for Wallet Tr..."
-    ],
-    "decisions": [
-      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
-      "Dispatch compliance freeze notices to cryptocurrency exchanges and trace blockchain transactions."
-    ],
-    "action_items": [
-      {
-        "id": "act-1",
-        "task": "Investigate and verify incident details: State Cyber Investigation Team Meeting on for 2026-4421",
-        "owner": "Inspector Row Batch",
-        "deadline": "2026-09-19",
-        "status": "PENDING"
-      },
-      {
-        "id": "act-2",
-        "task": "Follow up on forensic evidence: Digital Extortion Network targeting senior citizens via fraudulent investment portals",
-        "owner": "Inspector Row Batch",
-        "deadline": "2026-09-20",
-        "status": "IN_PROGRESS"
-      }
-    ]
-  },
-  {
-    "id": "mtg-qa-1",
-    "title": "Test Cyber Incident (Case FIR-2026-9941)",
-    "date": "2026-08-16",
-    "status": "OFFICIALLY_APPROVED",
-    "createdBy": "investigator_shinde",
-    "rawTranscript": "Inspector POL-8842 reported FIR-2026-9941 under Ticket CY-2026-8812. Contact Constable Sharma +91 9876543210.",
-    "redactedTranscript": "Inspector <BADGE_ID> reported <FIR_ID> under Ticket <CYBER_TICKET>. Contact Constable <PERSON> <PHONE_NUMBER>.",
-    "entitiesFound": [
-      {
-        "entity_type": "FIR_ID",
-        "value": "FIR-2026-9941"
       }
     ],
     "mom": {
-      "title": "Test Cyber Incident",
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+        "Technical Evidence & Inquest: Accused near-axis bank account number 9875-432-1012 say unauthorized transfer gear",
+        "Operational Next Steps: Sub-Inspector <PERSON> will coordinate and submit forensic reports until Friday"
+      ],
+      "decisions": [
+        "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+        "Subpoena CDR, IPDR, and subscriber CAF details from telecom service providers under Section 91 CrPC."
+      ],
       "action_items": [
         {
           "id": "act-1",
-          "task": "Freeze accounts",
-          "owner": "Cyber Inspector Patil",
-          "deadline": "2026-08-17"
+          "task": "Investigate and verify incident details: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Accused near-axis bank account number 9875-432-1012 say unauthorized transfer gear",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-8034",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-8034_1789909858034_sample_case_hindi.mp3",
+      "originalName": "sample_case_hindi.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-8034_1789909858034_sample_case_hindi.mp3",
+      "relativeUrl": "/api/meetings/mtg-8034/audio",
+      "fileSize": 360384,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290",
+      "savedAt": "2026-09-20T13:10:58.036Z"
+    },
+    "audioUrl": "/api/meetings/mtg-8034/audio",
+    "rawTranscript": "[30.40s -> 35.12s] PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA\n[35.12s -> 37.69s] INSPECTA-PARTIL-DIGITAL\n[37.69s -> 39.73s] FOR INSIC-LAB SE LOGS\n[39.73s -> 41.21s] KA-WISHLATION KERINGE\n[41.21s -> 44.21s] OR NODAL ADDICARI COUNTIST JARI KERINGE",
+    "redactedTranscript": "[30.40s -> 35.12s] PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA\n[35.12s -> 37.69s] INSPECTA-PARTIL-DIGITAL\n[37.69s -> 39.73s] FOR INSIC-LAB SE LOGS\n[39.73s -> 41.21s] KA-WISHLATION KERINGE\n[41.21s -> 44.21s] OR NODAL ADDICARI COUNTIST JARI KERINGE",
+    "entitiesFound": [],
+    "agenda": [
+      "Case Briefing: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+      "Technical Evidence & Inquest: INSPECTA-PARTIL-DIGITAL",
+      "Operational Next Steps: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+    ],
+    "decisions": [
+      "Proceed with case directives: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: INSPECTA-PARTIL-DIGITAL",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+        "Technical Evidence & Inquest: INSPECTA-PARTIL-DIGITAL",
+        "Operational Next Steps: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+      ],
+      "decisions": [
+        "Proceed with case directives: OR NODAL ADDICARI COUNTIST JARI KERINGE"
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: PAN CARD ABCD-1-2-3-4--CHIN-HIT-KIA",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: INSPECTA-PARTIL-DIGITAL",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-6845",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-6845_1789908296845_sample_case_hindi.mp3",
+      "originalName": "sample_case_hindi.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-6845_1789908296845_sample_case_hindi.mp3",
+      "relativeUrl": "/api/meetings/mtg-6845/audio",
+      "fileSize": 360384,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290",
+      "savedAt": "2026-09-20T12:44:56.847Z"
+    },
+    "audioUrl": "/api/meetings/mtg-6845/audio",
+    "rawTranscript": "[0.00s -> 30.91s] राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।",
+    "redactedTranscript": "[0.00s -> 30.91s] राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।",
+    "entitiesFound": [],
+    "agenda": [
+      "Case Incident Review: राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।",
+      "Technical Trace & Log Correlation"
+    ],
+    "decisions": [
+      "Initiate formal inquiry into: राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।"
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Incident Review: राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।",
+        "Technical Trace & Log Correlation"
+      ],
+      "decisions": [
+        "Initiate formal inquiry into: राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।"
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: राज्य साइब पुलिसेशन की मैहत्वों समीक्षा बेरत क।",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-5261",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-5261_1789907415261_sample_case_hindi.mp3",
+      "originalName": "sample_case_hindi.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-5261_1789907415261_sample_case_hindi.mp3",
+      "relativeUrl": "/api/meetings/mtg-5261/audio",
+      "fileSize": 360384,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290",
+      "savedAt": "2026-09-20T12:30:15.263Z"
+    },
+    "audioUrl": "/api/meetings/mtg-5261/audio",
+    "rawTranscript": "[0.00s -> 30.00s] Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case Sankhya FIR-2626-884, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�\n[30.00s -> 37.88s] ૤ਸतાત૾તાતતતતાતતએતતાતਾતતતતતતતતતતતતતતા૾govern làm統\n[37.88s -> 50.24s] protod мик 포인트를",
+    "redactedTranscript": "[0.00s -> 30.00s] Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�\n[30.00s -> 37.88s] ૤ਸतાત૾તાતતતતાતતએતતાતਾતતતતતતતતતતતતતતા૾govern làm統\n[37.88s -> 50.24s] protod мик 포인트를",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 81,
+        "end": 101,
+        "score": 0.85,
+        "value": "Sankhya FIR-2626-884"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+      "Technical Evidence & Inquest: ૤ਸतાત૾તાતતતતાતતએતતાતਾતતતતતતતતતતતતતતા૾govern làm統",
+      "Operational Next Steps: protod мик 포인트를"
+    ],
+    "decisions": [
+      "Proceed with case directives: protod мик 포인트를"
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: ૤ਸतાત૾તાતતતતાતતએતતાતਾતતતતતતતતતતતતતતા૾govern làm統",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+        "Technical Evidence & Inquest: ૤ਸतાત૾તાતતતતાતતએતતાતਾતતતતતતતતતતતતતતા૾govern làm統",
+        "Operational Next Steps: protod мик 포인트를"
+      ],
+      "decisions": [
+        "Proceed with case directives: protod мик 포인트를"
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: ૤ਸतાત૾તાતતતતાતતએતતાતਾતતતતતતતતતતતતતતા૾govern làm統",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-7222",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-7222_1789907187222_sample_case_hindi.mp3",
+      "originalName": "sample_case_hindi.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-7222_1789907187222_sample_case_hindi.mp3",
+      "relativeUrl": "/api/meetings/mtg-7222/audio",
+      "fileSize": 360384,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290",
+      "savedAt": "2026-09-20T12:26:27.223Z"
+    },
+    "audioUrl": "/api/meetings/mtg-7222/audio",
+    "rawTranscript": "[0.00s -> 30.00s] Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case Sankhya FIR-2626-884, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�\n[30.00s -> 45.04s] તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�",
+    "redactedTranscript": "[0.00s -> 30.00s] Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�\n[30.00s -> 45.04s] તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 81,
+        "end": 101,
+        "score": 0.85,
+        "value": "Sankhya FIR-2626-884"
+      }
+    ],
+    "agenda": [
+      "Incident Inquest: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+      "Follow-up Directives: તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�"
+    ],
+    "decisions": [
+      "Proceed with case directives: તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�"
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Incident Inquest: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+        "Follow-up Directives: તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�"
+      ],
+      "decisions": [
+        "Proceed with case directives: તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�"
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: તતાતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતતત�",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-3698",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "DRAFT_PENDING_REVIEW",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-3698_1789906363698_sample_case_hindi.mp3",
+      "originalName": "sample_case_hindi.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-3698_1789906363698_sample_case_hindi.mp3",
+      "relativeUrl": "/api/meetings/mtg-3698/audio",
+      "fileSize": 360384,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "81f2a153fc32f1561fed78b8655086ec7377e25d3f6f4bfa7f42c0660c279290",
+      "savedAt": "2026-09-20T12:12:43.700Z"
+    },
+    "audioUrl": "/api/meetings/mtg-3698/audio",
+    "rawTranscript": "[0.00s -> 30.00s] Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case Sankhya FIR-2626-884, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�\n[30.00s -> 35.76s] Pınd¹吧-at-a-pind¹cd¹emic 1-2-3-4 F-Chinaït buen مجھجент\n[35.78s -> 39.18s] Insect-a-partel Digital Forこ-incic labs Thoseic labs\n[39.18s -> 40.50s] on-going log Roadlife\n[40.50s -> 41.98s] backpack-resident of clinic\n[41.98s -> 43.98s] Food network\n[43.98s -> 45.28s] More information\n[45.78s -> 55.28s] Country care",
+    "redactedTranscript": "[0.00s -> 30.00s] Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�\n[30.00s -> 35.76s] Pınd¹吧-at-a-pind¹cd¹emic 1-2-3-4 F-Chinaït buen مجھجент\n[35.78s -> 39.18s] Insect-a-partel Digital Forこ-incic labs Thoseic labs\n[39.18s -> 40.50s] on-going log Roadlife\n[40.50s -> 41.98s] backpack-resident of clinic\n[41.98s -> 43.98s] Food network\n[43.98s -> 45.28s] More information\n[45.78s -> 55.28s] Country care",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 81,
+        "end": 101,
+        "score": 0.85,
+        "value": "Sankhya FIR-2626-884"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+      "Technical Evidence & Inquest: Pınd¹吧-at-a-pind¹cd¹emic 1-2-3-4 F-Chinaït buen مجھجент",
+      "Operational Next Steps: Country care"
+    ],
+    "decisions": [
+      "Proceed with case directives: Country care"
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Pınd¹吧-at-a-pind¹cd¹emic 1-2-3-4 F-Chinaït buen مجھجент",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+        "Technical Evidence & Inquest: Pınd¹吧-at-a-pind¹cd¹emic 1-2-3-4 F-Chinaït buen مجھجент",
+        "Operational Next Steps: Country care"
+      ],
+      "decisions": [
+        "Proceed with case directives: Country care"
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: Raajya Saiba Police Station's Mehidwapoon Samikshabethak, case <PERSON>, તતાતાતારાતાતાતાતાતાતાતતાતાતાતતાતાતાતાાતાાતાતાતાતાતાતાતાાતતાાાત�",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Pınd¹吧-at-a-pind¹cd¹emic 1-2-3-4 F-Chinaït buen مجھجент",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
+        }
+      ]
+    }
+  },
+  {
+    "id": "mtg-9513",
+    "title": "Cyber Crime Investigation [CASE-20260920]",
+    "date": "2026-09-20",
+    "createdBy": "admin_pawar",
+    "status": "OFFICIALLY_APPROVED",
+    "audioStorage": {
+      "provider": "LOCAL_DISK",
+      "fileName": "mtg-9513_1789905909513_sample_case_hinglish.mp3",
+      "originalName": "sample_case_hinglish.mp3",
+      "storagePath": "C:\\Users\\hp\\Documents\\vscodee\\cyber_cell_mom_app\\storage\\audio\\mtg-9513_1789905909513_sample_case_hinglish.mp3",
+      "relativeUrl": "/api/meetings/mtg-9513/audio",
+      "fileSize": 368064,
+      "mimeType": "audio/mpeg",
+      "sha256Hash": "5a5e56bb5a2853eb6d56d947af5965bee08a9540187f703c5e16da168875864a",
+      "savedAt": "2026-09-20T12:05:09.515Z"
+    },
+    "audioUrl": "/api/meetings/mtg-9513/audio",
+    "rawTranscript": "[0.00s -> 13.42s] State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941. Accused near-axis bank account number 9875-432-1012\n[13.42s -> 30.04s] from unauthorized transfer. Victim's mobile number 9876-543-210, or Adhar reference 234567-89-0123.\n[30.04s -> 37.58s] Senior Inspector Shindini Section 91CRPC notice telecom operator is also given.\n[37.58s -> 45.18s] Sub-Inspector Rao CDR Analysis will coordinate and submit forensic reports until Friday.",
+    "redactedTranscript": "[0.00s -> 13.42s] State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941. Accused near-axis bank account number 9875-432-1012\n[13.42s -> 30.04s] from unauthorized transfer. <PERSON>'s mobile number <PHONE_NUMBER>, or Adhar reference 234567-89-0123.\n[30.04s -> 37.58s] Senior Inspector <PERSON> notice telecom operator is also given.\n[37.58s -> 45.18s] Sub-Inspector <PERSON> will coordinate and submit forensic reports until Friday.",
+    "entitiesFound": [
+      {
+        "entity_type": "PERSON",
+        "start": 186,
+        "end": 192,
+        "score": 0.85,
+        "value": "Victim"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 294,
+        "end": 317,
+        "score": 0.85,
+        "value": "Shindini Section 91CRPC"
+      },
+      {
+        "entity_type": "PERSON",
+        "start": 390,
+        "end": 406,
+        "score": 0.85,
+        "value": "Rao CDR Analysis"
+      },
+      {
+        "entity_type": "PHONE_NUMBER",
+        "start": 209,
+        "end": 221,
+        "score": 0.75,
+        "value": "9876-543-210"
+      }
+    ],
+    "agenda": [
+      "Case Briefing: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+      "Technical Evidence & Inquest: Accused near-axis bank account number 9875-432-1012",
+      "Operational Next Steps: Sub-Inspector <PERSON> will coordinate and submit forensic reports until Friday"
+    ],
+    "decisions": [
+      "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+      "Subpoena CDR, IPDR, and subscriber CAF details from telecom service providers under Section 91 CrPC."
+    ],
+    "action_items": [
+      {
+        "id": "act-1",
+        "task": "Investigate and verify incident details: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-21",
+        "status": "PENDING"
+      },
+      {
+        "id": "act-2",
+        "task": "Follow up on forensic evidence: Accused near-axis bank account number 9875-432-1012",
+        "owner": "Investigating Officer (Assigned)",
+        "deadline": "2026-09-22",
+        "status": "IN_PROGRESS"
+      }
+    ],
+    "mom": {
+      "title": "Cyber Crime Investigation [CASE-20260920]",
+      "summary": "Meeting briefing conducted on 2026-09-20 by Officer admin_pawar.",
+      "incident_type": "Cyber Crime Investigation",
+      "severity": "HIGH",
+      "attendees": [
+        "admin_pawar",
+        "Investigating Officer (Assigned)"
+      ],
+      "agenda": [
+        "Case Briefing: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+        "Technical Evidence & Inquest: Accused near-axis bank account number 9875-432-1012",
+        "Operational Next Steps: Sub-Inspector <PERSON> will coordinate and submit forensic reports until Friday"
+      ],
+      "decisions": [
+        "Issue emergency notice under Section 91 CrPC to bank nodal officer for freezing beneficiary accounts.",
+        "Subpoena CDR, IPDR, and subscriber CAF details from telecom service providers under Section 91 CrPC."
+      ],
+      "action_items": [
+        {
+          "id": "act-1",
+          "task": "Investigate and verify incident details: State Cyber Cell Operational Briefing Regarding Case Phir 2026-9941",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-21",
+          "status": "PENDING"
+        },
+        {
+          "id": "act-2",
+          "task": "Follow up on forensic evidence: Accused near-axis bank account number 9875-432-1012",
+          "owner": "Investigating Officer (Assigned)",
+          "deadline": "2026-09-22",
+          "status": "IN_PROGRESS"
         }
       ]
     },
-    "approvedBy": "investigator_shinde"
+    "approvedBy": "admin_pawar"
   }
 ]

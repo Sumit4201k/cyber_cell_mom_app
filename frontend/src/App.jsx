@@ -7,6 +7,7 @@ import AuditLogTable from './components/AuditLogTable';
 import UploadModal from './components/UploadModal';
 import PdfReportModal from './components/PdfReportModal';
 import MFAModal from './components/MFAModal';
+import AdminUserModal from './components/AdminUserModal';
 import LoginScreen from './components/LoginScreen';
 import Toast from './components/Toast';
 import { fetchApi, uploadMeetingAudio } from './api/client';
@@ -21,6 +22,7 @@ export default function App() {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isPdfOpen, setIsPdfOpen] = useState(false);
   const [isMfaOpen, setIsMfaOpen] = useState(false);
+  const [isPersonnelOpen, setIsPersonnelOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const [mobileScreen, setMobileScreen] = useState('case_list'); // 'case_list' | 'case_detail'
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
@@ -56,6 +58,24 @@ export default function App() {
         setIsAuthenticated(false);
       }
     }
+
+    // Purge any stale client-side cache from previous sessions
+    try {
+      localStorage.removeItem('cyber_meetings_cache');
+    } catch (e) {}
+
+    // Handle token or session expiration: automatically return to login screen
+    const handleSessionExpired = (e) => {
+      setIsAuthenticated(false);
+      setCurrentUser(null);
+      setMeetings([]);
+      setSelectedMeetingState(null);
+      const msg = e.detail?.message || 'Your session has expired. Please sign in with your officer credentials.';
+      showToast('warning', 'Session Expired', msg);
+    };
+
+    window.addEventListener('cyber_session_expired', handleSessionExpired);
+    return () => window.removeEventListener('cyber_session_expired', handleSessionExpired);
   }, []);
 
   const handleLoginSuccess = (user, role) => {
@@ -88,28 +108,24 @@ export default function App() {
       const data = await fetchApi('/meetings', {}, activeRole);
       if (data.meetings) {
         setMeetings(data.meetings);
-        
-        // Cache meetings in browser localStorage for offline/mobile resiliency
-        try { localStorage.setItem('cyber_meetings_cache', JSON.stringify(data.meetings)); } catch(e){}
 
-        const savedId = localStorage.getItem('cyber_selected_meeting_id');
-        const found = data.meetings.find(m => m.id === savedId);
-        if (found) {
-          setSelectedMeetingState(found);
-        } else if (data.meetings.length > 0 && !selectedMeeting) {
-          setSelectedMeetingState(data.meetings[0]);
+        if (data.meetings.length === 0) {
+          setSelectedMeetingState(null);
+          localStorage.removeItem('cyber_selected_meeting_id');
+        } else {
+          const savedId = localStorage.getItem('cyber_selected_meeting_id');
+          const found = data.meetings.find(m => m.id === savedId);
+          if (found) {
+            setSelectedMeetingState(found);
+          } else {
+            setSelectedMeetingState(data.meetings[0]);
+          }
         }
       }
     } catch (err) {
-      // Offline fallback: load cached meetings if server fetch fails
-      const stored = localStorage.getItem('cyber_meetings_cache');
-      if (stored) {
-        try {
-          const cached = JSON.parse(stored);
-          setMeetings(cached);
-          if (cached.length > 0 && !selectedMeeting) setSelectedMeetingState(cached[0]);
-        } catch(e){}
-      }
+      showToast('warning', 'Server Connection Error', `Failed to fetch case files from server: ${err.message}`);
+      setMeetings([]);
+      setSelectedMeetingState(null);
     }
   };
 
@@ -227,6 +243,7 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         openMfaModal={() => setIsMfaOpen(true)}
+        openAdminModal={() => setActiveTab('officers')}
         currentUser={currentUser}
         onLogout={handleLogout}
       />
@@ -471,9 +488,17 @@ export default function App() {
               </div>
             )}
           </>
-        ) : (
+        ) : activeTab === 'audit' ? (
           /* Cryptographic Audit Ledger View */
           <AuditLogTable activeRole={activeRole} showToast={showToast} />
+        ) : (
+          /* Officer Directory & RBAC Provisioning Portal View */
+          <AdminUserModal
+            isPage={true}
+            onClose={() => setActiveTab('dashboard')}
+            activeRole={activeRole}
+            showToast={showToast}
+          />
         )}
       </main>
 

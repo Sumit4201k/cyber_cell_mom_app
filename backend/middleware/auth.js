@@ -5,15 +5,11 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  // Demo fallback: default to demo user if no token provided
   if (!token) {
-    req.user = {
-      id: "usr-2",
-      username: "investigator_shinde",
-      role: req.headers["x-demo-role"] || "INVESTIGATOR", // DEMO AFFORDANCE: Header role override for live testing
-      name: "Inspector Shinde"
-    };
-    return next();
+    return res.status(401).json({
+      status: "error",
+      error: "Authentication Required: Missing Bearer Token. Please sign in with your officer credentials."
+    });
   }
 
   jwt.verify(token, JWT_SECRET, (err, user) => {

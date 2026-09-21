@@ -86,7 +86,19 @@ export async function fetchApi(endpoint, options = {}, activeRole = 'INVESTIGATO
   }
 
   if (!response.ok) {
-    throw new Error(data.message || data.error || `Request failed with status HTTP ${response.status}`);
+    const errorMsg = data.message || data.error || `Request failed with status HTTP ${response.status}`;
+    
+    // Check for 401 / 403 session or token expiration and trigger redirect to login page
+    const isTokenError = response.status === 401 || (response.status === 403 && /token|session|expired|unauthorized|bearer/i.test(errorMsg));
+    if (isTokenError && typeof window !== 'undefined') {
+      localStorage.removeItem('cyber_token');
+      localStorage.removeItem('cyber_user');
+      window.dispatchEvent(new CustomEvent('cyber_session_expired', {
+        detail: { message: errorMsg || 'Session token expired or invalid. Please sign in again.' }
+      }));
+    }
+
+    throw new Error(errorMsg);
   }
 
   return data;
@@ -132,7 +144,18 @@ export async function uploadMeetingAudio(formData, activeRole = 'INVESTIGATOR') 
   }
 
   if (!response.ok) {
-    throw new Error(data.message || data.error || `Audio processing failed with HTTP ${response.status}`);
+    const errorMsg = data.message || data.error || `Audio processing failed with HTTP ${response.status}`;
+    
+    const isTokenError = response.status === 401 || (response.status === 403 && /token|session|expired|unauthorized|bearer/i.test(errorMsg));
+    if (isTokenError && typeof window !== 'undefined') {
+      localStorage.removeItem('cyber_token');
+      localStorage.removeItem('cyber_user');
+      window.dispatchEvent(new CustomEvent('cyber_session_expired', {
+        detail: { message: errorMsg || 'Session token expired or invalid. Please sign in again.' }
+      }));
+    }
+
+    throw new Error(errorMsg);
   }
 
   return data;

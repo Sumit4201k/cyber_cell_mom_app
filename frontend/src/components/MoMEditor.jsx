@@ -10,6 +10,7 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
   const [isEditingDecisions, setIsEditingDecisions] = useState(false);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [titleText, setTitleText] = useState('');
+  const [officersList, setOfficersList] = useState([]);
 
   const isApproved = meeting?.status === 'OFFICIALLY_APPROVED';
   const isAuditor = activeRole === 'AUDITOR';
@@ -17,6 +18,21 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
   const canEditTitle = !isApproved && (activeRole === 'ADMIN' || activeRole === 'INVESTIGATOR');
   const canEditTasks = !isApproved && activeRole !== 'AUDITOR';
   const canEditContent = !isApproved && activeRole !== 'AUDITOR';
+
+  useEffect(() => {
+    // Load registered officer directory for task assignments
+    const fetchOfficers = async () => {
+      try {
+        const data = await fetchApi('/auth/users', {}, activeRole);
+        if (data.users && Array.isArray(data.users)) {
+          setOfficersList(data.users);
+        }
+      } catch (e) {
+        // Silently preserve offline usability
+      }
+    };
+    fetchOfficers();
+  }, [activeRole]);
 
   useEffect(() => {
     setActionItems(meeting?.action_items || []);
@@ -353,14 +369,43 @@ export default function MoMEditor({ meeting, activeRole, onSaveActionItems, onAp
                   </td>
                   <td>
                     {isEditingTasks ? (
-                      <input
-                        type="text"
-                        value={item.owner}
-                        onChange={(e) => handleTaskChange(idx, 'owner', e.target.value)}
-                        className="cyber-input"
-                      />
+                      <div>
+                        {officersList.length > 0 ? (
+                          <select
+                            value={officersList.some(o => o.name === item.owner) ? item.owner : 'CUSTOM'}
+                            onChange={(e) => {
+                              if (e.target.value !== 'CUSTOM') {
+                                handleTaskChange(idx, 'owner', e.target.value);
+                              }
+                            }}
+                            className="cyber-input"
+                            style={{ fontSize: '11px', marginBottom: officersList.some(o => o.name === item.owner) ? '0' : '4px' }}
+                          >
+                            <option value="" disabled>-- Select Registered Officer --</option>
+                            {officersList.map(o => (
+                              <option key={o.id || o.username} value={o.name}>
+                                {o.name} ({o.badgeId} - {o.role})
+                              </option>
+                            ))}
+                            <option value="CUSTOM">Custom / External Officer...</option>
+                          </select>
+                        ) : null}
+
+                        {(!officersList.length || !officersList.some(o => o.name === item.owner)) && (
+                          <input
+                            type="text"
+                            value={item.owner}
+                            placeholder="Enter officer or agency name"
+                            onChange={(e) => handleTaskChange(idx, 'owner', e.target.value)}
+                            className="cyber-input"
+                            style={{ fontSize: '11px' }}
+                          />
+                        )}
+                      </div>
                     ) : (
-                      <span style={{ color: 'var(--text-muted)' }}>{item.owner}</span>
+                      <span style={{ color: 'var(--text-main)', fontWeight: '600', fontSize: '12px' }}>
+                        {item.owner}
+                      </span>
                     )}
                   </td>
                   <td style={{ fontFamily: 'var(--font-mono)', fontSize: '11px' }}>

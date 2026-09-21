@@ -100,28 +100,28 @@ def extract_dynamic_mom(text: str) -> dict:
     # If no pattern keywords matched, use key statements from the text as decisions
     if not decisions:
         if len(sentences) >= 2:
-            decisions.append(f"Proceed with case directives: {sentences[-1][:100]}")
+            decisions.append(f"Proceed with case directives: {sentences[-1]}")
         elif sentences:
-            decisions.append(f"Initiate formal inquiry into: {sentences[0][:100]}")
+            decisions.append(f"Initiate formal inquiry into: {sentences[0]}")
         else:
             decisions.append(f"Initiate technical investigation for {case_ref}.")
 
-    # 6. Extract Dynamic Agenda from actual transcript sentences
+    # 6. Extract Dynamic Agenda from actual transcript sentences without truncation
     agenda = []
     if len(sentences) >= 3:
         agenda = [
-            f"Case Briefing: {sentences[0][:80]}...",
-            f"Technical Evidence & Inquest: {sentences[1][:80]}...",
-            f"Operational Next Steps: {sentences[-1][:80]}..."
+            f"Case Briefing: {sentences[0]}",
+            f"Technical Evidence & Inquest: {sentences[1]}",
+            f"Operational Next Steps: {sentences[-1]}"
         ]
     elif len(sentences) == 2:
         agenda = [
-            f"Incident Inquest: {sentences[0][:90]}",
-            f"Follow-up Directives: {sentences[1][:90]}"
+            f"Incident Inquest: {sentences[0]}",
+            f"Follow-up Directives: {sentences[1]}"
         ]
     elif len(sentences) == 1:
         agenda = [
-            f"Case Incident Review: {sentences[0][:90]}",
+            f"Case Incident Review: {sentences[0]}",
             "Technical Trace & Log Correlation"
         ]
     else:
@@ -130,7 +130,7 @@ def extract_dynamic_mom(text: str) -> dict:
             "Action Item Assignment"
         ]
 
-    # 7. Extract Dynamic Action Items Matrix from real extracted data
+    # 7. Extract Dynamic Action Items Matrix from real extracted data without truncation
     primary_owner = attendees[0] if attendees else "Investigating Officer"
     secondary_owner = attendees[1] if len(attendees) > 1 else primary_owner
 
@@ -141,7 +141,7 @@ def extract_dynamic_mom(text: str) -> dict:
     if sentences:
         action_items.append({
             "id": "act-1",
-            "task": f"Investigate and verify incident details: {sentences[0][:90]}",
+            "task": f"Investigate and verify incident details: {sentences[0]}",
             "owner": primary_owner,
             "deadline": d1,
             "status": "PENDING"
@@ -149,7 +149,7 @@ def extract_dynamic_mom(text: str) -> dict:
         if len(sentences) > 1:
             action_items.append({
                 "id": "act-2",
-                "task": f"Follow up on forensic evidence: {sentences[1][:90]}",
+                "task": f"Follow up on forensic evidence: {sentences[1]}",
                 "owner": secondary_owner,
                 "deadline": d2,
                 "status": "IN_PROGRESS"
