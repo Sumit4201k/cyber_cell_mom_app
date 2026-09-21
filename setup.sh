@@ -15,12 +15,12 @@ elif command -v python &> /dev/null; then
     PY_CMD="python"
     echo "[OK] Found Python: $($PY_CMD --version)"
 else
-    echo "[ERROR] Python 3.10+ is required. Please install Python 3 (e.g., 'brew install python' on macOS)."
+    echo "[ERROR] Python 3.10+ is required. Please install Python 3."
     exit 1
 fi
 
 # 2. Setup Python virtual environment
-echo "[1/3] Setting up Python virtual environment..."
+echo "[1/3] Setting up Python virtual environment & AI Dependencies..."
 cd "$PROJECT_DIR/python-service"
 if [ ! -d "venv" ]; then
     $PY_CMD -m venv venv
@@ -28,7 +28,7 @@ fi
 source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
-pip install fastapi uvicorn pydantic python-multipart requests
+python -m spacy download en_core_web_sm
 deactivate
 cd "$PROJECT_DIR"
 
@@ -46,5 +46,5 @@ echo ""
 echo "===================================================================="
 echo "  SUCCESS! System setup complete."
 echo "  To start the application, run: ./run.sh  or  npm run start:full"
+echo "  Or via Docker: npm run docker:up"
 echo "===================================================================="
-

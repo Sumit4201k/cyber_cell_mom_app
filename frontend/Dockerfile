@@ -9,4 +9,6 @@ COPY . .
 
 EXPOSE 5173
 
+ENV VITE_API_BASE_URL=http://localhost:5000/api
+
 CMD ["npm", "run", "dev"]

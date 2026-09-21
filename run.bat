@@ -19,18 +19,18 @@ if exist "%PORTABLE_PY%" (
 )
 
 echo [*] Target Microservices Configuration:
-echo     - Python ML Service : Port 8000 (FastAPI / Whisper / Presidio)
-echo     - Node.js API Server: Port 5000 (Express / SHA-256 Ledger)
-echo     - React Frontend UI : Port 5173 (Vite / Dashboard)
+echo     - Python AI Engine  : Port 8000 (FastAPI / INT8 Whisper / Presidio / ITN)
+echo     - Node.js API Server: Port 5000 (Express / SHA-256 Ledger / RBAC)
+echo     - React Frontend UI : Port 5173 (Vite / Cyber Dashboard)
 echo.
 
-rem Check for port conflicts and clear orphan processes if requested
-echo [*] Checking port availability...
+rem Check for port conflicts and clear orphan processes
+echo [*] Auditing port availability (5000, 8000, 5173)...
 powershell -Command "$conns = Get-NetTCPConnection -LocalPort 5000, 8000, 5173 -State Listen -ErrorAction SilentlyContinue; if ($conns) { Write-Host 'Detected existing processes on ports:' ($conns.LocalPort | Select-Object -Unique) -ForegroundColor Yellow; foreach ($c in $conns) { try { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue } catch {} } Write-Host 'Ports cleared successfully.' -ForegroundColor Green } else { Write-Host 'All ports are clear and ready.' -ForegroundColor Green }"
 
 echo.
 echo [*] Booting all 3 microservices concurrently...
-echo     Opening http://localhost:5173 in browser...
+echo     Opening http://localhost:5173 in default browser...
 echo.
 
 rem Launch default browser after 3 seconds in background

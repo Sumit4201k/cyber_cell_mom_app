@@ -33,6 +33,14 @@ if %errorlevel% equ 0 (
     goto :PYTHON_READY
 )
 
+rem Check system PATH for python3
+python3 --version >nul 2>&1
+if %errorlevel% equ 0 (
+    set PY_CMD=python3
+    echo [OK] Found system Python3 in PATH
+    goto :PYTHON_READY
+)
+
 echo [NOTICE] Python not detected. Downloading portable Python 3.11 runtime...
 mkdir "%PROJECT_ROOT%python-service\python_env" 2>nul
 curl.exe -o "%PROJECT_ROOT%python-service\python_env\python.zip" "https://www.python.org/ftp/python/3.11.9/python-3.11.9-embed-amd64.zip"
@@ -44,20 +52,22 @@ set PY_CMD="%PORTABLE_PY%"
 
 :PYTHON_READY
 echo.
-echo [2/5] Installing Python ML Service Dependencies...
+echo [2/5] Installing Python AI Engine Dependencies (Whisper / ITN / Presidio)...
 cd /d "%PROJECT_ROOT%python-service"
-!PY_CMD! -m pip install fastapi uvicorn pydantic python-multipart requests >nul 2>&1
-echo [OK] Python dependencies verified.
+!PY_CMD! -m pip install --upgrade pip >nul 2>&1
+!PY_CMD! -m pip install -r requirements.txt
+!PY_CMD! -m spacy download en_core_web_sm >nul 2>&1
+echo [OK] Python dependencies and NLP models verified.
 cd /d "%PROJECT_ROOT%"
 
 echo.
-echo [3/5] Installing Node Backend & Frontend Dependencies...
+echo [3/5] Installing Node.js Backend & Frontend Dependencies...
 cd /d "%PROJECT_ROOT%backend"
-call npm install --silent
+call npm install
 cd /d "%PROJECT_ROOT%frontend"
-call npm install --silent
+call npm install
 cd /d "%PROJECT_ROOT%"
-call npm install --silent
+call npm install
 echo [OK] Node.js dependencies installed.
 
 echo.
@@ -66,7 +76,7 @@ node "%PROJECT_ROOT%backend\test_qa_suite.js"
 
 echo.
 echo [5/5] Port Conflict Audit (8000, 5000, 5173)...
-powershell -Command "$p = Get-NetTCPConnection -LocalPort 5000, 8000, 5173 -State Listen -ErrorAction SilentlyContinue; if ($p) { Write-Host 'Active listeners on ports:' ($p | ForEach-Object { $_.LocalPort }) -ForegroundColor Yellow } else { Write-Host 'All ports (5000, 8000, 5173) are clear!' -ForegroundColor Green }"
+powershell -Command "$p = Get-NetTCPConnection -LocalPort 5000, 8000, 5173 -State Listen -ErrorAction SilentlyContinue; if ($p) { Write-Host 'Active listeners on ports:' ($p | ForEach-Object { $_.LocalPort } | Select-Object -Unique) -ForegroundColor Yellow } else { Write-Host 'All ports (5000, 8000, 5173) are clear!' -ForegroundColor Green }"
 
 echo.
 echo ====================================================================

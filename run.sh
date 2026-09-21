@@ -12,7 +12,7 @@ if [ -d "$PROJECT_DIR/python-service/venv" ]; then
   source "$PROJECT_DIR/python-service/venv/bin/activate"
 fi
 cd "$PROJECT_DIR/python-service"
-python -m uvicorn main:app --host 0.0.0.0 --port 8000 &
+python3 -m uvicorn main:app --host 0.0.0.0 --port 8000 &
 PYTHON_PID=$!
 cd "$PROJECT_DIR"
 
@@ -30,7 +30,7 @@ npm run dev &
 FRONTEND_PID=$!
 cd "$PROJECT_DIR"
 
-trap "echo 'Shutting down services...'; kill $PYTHON_PID $NODE_PID $FRONTEND_PID 2>/dev/null; exit 0" SIGINT SIGTERM EXIT
+trap "echo 'Shutting down all services...'; kill $PYTHON_PID $NODE_PID $FRONTEND_PID 2>/dev/null; exit 0" SIGINT SIGTERM EXIT
 
 echo ""
 echo "===================================================================="
@@ -41,4 +41,3 @@ echo "===================================================================="
 echo ""
 
 wait
-
