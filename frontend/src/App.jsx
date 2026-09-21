@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Navbar from './components/Navbar';
 import AudioPlayer from './components/AudioPlayer';
 import TranscriptViewer from './components/TranscriptViewer';
@@ -30,6 +30,29 @@ export default function App() {
   // Editing sidebar case title inline state
   const [editingCardId, setEditingCardId] = useState(null);
   const [editingCardTitle, setEditingCardTitle] = useState('');
+
+  // Sidebar List Filter & Search
+  const [caseSearchTerm, setCaseSearchTerm] = useState('');
+  const [caseStatusFilter, setCaseStatusFilter] = useState('ALL'); // 'ALL' | 'DRAFT' | 'APPROVED'
+
+  const filteredMeetings = useMemo(() => {
+    return meetings.filter((m) => {
+      const q = caseSearchTerm.toLowerCase().trim();
+      const matchesSearch =
+        !q ||
+        (m.id && m.id.toLowerCase().includes(q)) ||
+        (m.title && m.title.toLowerCase().includes(q)) ||
+        (m.createdBy && m.createdBy.toLowerCase().includes(q)) ||
+        (m.case_reference && m.case_reference.toLowerCase().includes(q));
+
+      const matchesStatus =
+        caseStatusFilter === 'ALL' ||
+        (caseStatusFilter === 'APPROVED' && m.status === 'OFFICIALLY_APPROVED') ||
+        (caseStatusFilter === 'DRAFT' && m.status !== 'OFFICIALLY_APPROVED');
+
+      return matchesSearch && matchesStatus;
+    });
+  }, [meetings, caseSearchTerm, caseStatusFilter]);
 
   const isMobile = windowWidth <= 868;
 
@@ -340,88 +363,219 @@ export default function App() {
               <div className={!isMobile ? "dashboard-grid" : ""}>
                 
                 {/* Left Panel: Incident Master Record List */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  backgroundColor: 'var(--surface-1)',
+                  border: '1.5px solid var(--border-dark)',
+                  height: !isMobile ? 'calc(100vh - 170px)' : 'auto',
+                  maxHeight: !isMobile ? 'calc(100vh - 170px)' : 'none',
+                  position: !isMobile ? 'sticky' : 'static',
+                  top: '16px'
+                }}>
+                  {/* List Header, Filter Tabs & Search Bar */}
                   <div style={{
-                    fontSize: '11px',
-                    fontWeight: '800',
-                    color: 'var(--text-muted)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em',
-                    paddingBottom: '4px',
-                    fontFamily: 'var(--font-mono)'
+                    padding: '10px 12px',
+                    borderBottom: '1.5px solid var(--border-dark)',
+                    backgroundColor: 'var(--surface-3)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px'
                   }}>
-                    Case Incident Files ({meetings.length})
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: '800',
+                        color: 'var(--text-main)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        fontFamily: 'var(--font-mono)'
+                      }}>
+                        Cases ({filteredMeetings.length}/{meetings.length})
+                      </div>
+
+                      {/* Status Filter Buttons */}
+                      <div style={{ display: 'flex', gap: '3px' }}>
+                        {['ALL', 'DRAFT', 'APPROVED'].map((st) => (
+                          <button
+                            key={st}
+                            onClick={() => setCaseStatusFilter(st)}
+                            style={{
+                              fontSize: '9px',
+                              fontWeight: '700',
+                              padding: '2px 6px',
+                              fontFamily: 'var(--font-mono)',
+                              border: caseStatusFilter === st ? '1px solid var(--text-main)' : '1px solid var(--border-dark)',
+                              backgroundColor: caseStatusFilter === st ? 'var(--text-main)' : 'var(--surface-1)',
+                              color: caseStatusFilter === st ? '#ffffff' : 'var(--text-muted)',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            {st}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Quick Search Bar */}
+                    <div style={{ position: 'relative' }}>
+                      <input
+                        type="text"
+                        placeholder="Search ID, title, officer..."
+                        value={caseSearchTerm}
+                        onChange={(e) => setCaseSearchTerm(e.target.value)}
+                        className="cyber-input"
+                        style={{
+                          width: '100%',
+                          fontSize: '11px',
+                          padding: '5px 8px',
+                          backgroundColor: 'var(--surface-1)',
+                          border: '1px solid var(--border-dark)',
+                          boxSizing: 'border-box'
+                        }}
+                      />
+                      {caseSearchTerm && (
+                        <button
+                          onClick={() => setCaseSearchTerm('')}
+                          style={{
+                            position: 'absolute',
+                            right: '6px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--text-muted)',
+                            cursor: 'pointer',
+                            fontSize: '10px',
+                            fontWeight: '700'
+                          }}
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
                   </div>
 
-                  {meetings.map((m) => {
-                    const isSelected = selectedMeeting?.id === m.id;
-                    const isEditingThis = editingCardId === m.id;
-
-                    return (
-                      <div
-                        key={m.id}
-                        onClick={() => {
-                          setSelectedMeeting(m);
-                          if (isMobile) setMobileScreen('case_detail');
-                        }}
-                        className="cyber-card"
-                        style={{
-                          cursor: 'pointer',
-                          marginBottom: 0,
-                          backgroundColor: isSelected ? 'var(--surface-1)' : 'var(--surface-1)',
-                          borderLeft: isSelected ? '5px solid var(--text-main)' : '1.5px solid var(--border-dark)'
-                        }}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
-                          <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', fontWeight: '700', color: 'var(--text-muted)' }}>
-                            {m.id}
-                          </span>
-                          <span className={m.status === 'OFFICIALLY_APPROVED' ? 'status-pill-approved' : 'status-pill-draft'} style={{ fontSize: '8px' }}>
-                            {m.status === 'OFFICIALLY_APPROVED' ? 'APPROVED' : 'DRAFT'}
-                          </span>
-                        </div>
-
-                        {/* Inline Title Editor vs Static Title Display */}
-                        {isEditingThis ? (
-                          <div style={{ display: 'flex', gap: '6px', margin: '6px 0' }} onClick={(e) => e.stopPropagation()}>
-                            <input
-                              type="text"
-                              value={editingCardTitle}
-                              onChange={(e) => setEditingCardTitle(e.target.value)}
-                              className="cyber-input"
-                              style={{ fontSize: '11px', fontWeight: '700', padding: '3px 6px' }}
-                            />
-                            <button onClick={(e) => saveCardTitleEdit(e, m.id)} className="btn-outline btn-outline-active" style={{ fontSize: '10px', padding: '2px 6px' }}>
-                              Save
-                            </button>
-                            <button onClick={(e) => { e.stopPropagation(); setEditingCardId(null); }} className="btn-outline" style={{ fontSize: '10px', padding: '2px 6px' }}>
-                              Cancel
-                            </button>
-                          </div>
-                        ) : (
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '6px' }}>
-                            <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)', lineHeight: 1.3, flex: 1 }}>
-                              {m.title}
-                            </div>
-                            {(activeRole === 'ADMIN' || activeRole === 'INVESTIGATOR') && m.status !== 'OFFICIALLY_APPROVED' && (
-                              <button
-                                onClick={(e) => startEditCardTitle(e, m)}
-                                style={{ background: 'none', border: '1px solid var(--border-color)', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '10px', padding: '1px 5px' }}
-                                title="Edit Title"
-                              >
-                                Edit
-                              </button>
-                            )}
-                          </div>
-                        )}
-
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)', marginTop: '8px', fontFamily: 'var(--font-mono)' }}>
-                          <span>DATE: {m.date}</span>
-                          <span>OFFICER: {m.createdBy}</span>
-                        </div>
+                  {/* Scrollable List Items Container */}
+                  <div style={{
+                    overflowY: 'auto',
+                    flex: 1,
+                    padding: '6px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px'
+                  }}>
+                    {filteredMeetings.length === 0 ? (
+                      <div style={{
+                        padding: '24px 12px',
+                        textAlign: 'center',
+                        color: 'var(--text-muted)',
+                        fontSize: '11px',
+                        fontFamily: 'var(--font-mono)'
+                      }}>
+                        No matching incident files found.
                       </div>
-                    );
-                  })}
+                    ) : (
+                      filteredMeetings.map((m) => {
+                        const isSelected = selectedMeeting?.id === m.id;
+                        const isEditingThis = editingCardId === m.id;
+
+                        return (
+                          <div
+                            key={m.id}
+                            onClick={() => {
+                              setSelectedMeeting(m);
+                              if (isMobile) setMobileScreen('case_detail');
+                            }}
+                            style={{
+                              cursor: 'pointer',
+                              padding: '8px 10px',
+                              backgroundColor: isSelected ? 'var(--surface-3)' : 'var(--surface-1)',
+                              border: '1px solid var(--border-dark)',
+                              borderLeft: isSelected ? '4px solid var(--text-main)' : '1px solid var(--border-dark)',
+                              transition: 'background-color 0.15s ease',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '4px'
+                            }}
+                          >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ fontSize: '10.5px', fontFamily: 'var(--font-mono)', fontWeight: '800', color: isSelected ? 'var(--text-main)' : 'var(--text-muted)' }}>
+                                {m.id}
+                              </span>
+                              <span
+                                className={m.status === 'OFFICIALLY_APPROVED' ? 'status-pill-approved' : 'status-pill-draft'}
+                                style={{ fontSize: '7.5px', padding: '1px 5px' }}
+                              >
+                                {m.status === 'OFFICIALLY_APPROVED' ? 'APPROVED' : 'DRAFT'}
+                              </span>
+                            </div>
+
+                            {/* Inline Title Editor vs Compact Title */}
+                            {isEditingThis ? (
+                              <div style={{ display: 'flex', gap: '4px', margin: '3px 0' }} onClick={(e) => e.stopPropagation()}>
+                                <input
+                                  type="text"
+                                  value={editingCardTitle}
+                                  onChange={(e) => setEditingCardTitle(e.target.value)}
+                                  className="cyber-input"
+                                  style={{ fontSize: '10.5px', fontWeight: '700', padding: '2px 4px', flex: 1 }}
+                                />
+                                <button onClick={(e) => saveCardTitleEdit(e, m.id)} className="btn-outline btn-outline-active" style={{ fontSize: '9px', padding: '1px 5px' }}>
+                                  Save
+                                </button>
+                                <button onClick={(e) => { e.stopPropagation(); setEditingCardId(null); }} className="btn-outline" style={{ fontSize: '9px', padding: '1px 5px' }}>
+                                  ✕
+                                </button>
+                              </div>
+                            ) : (
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '4px' }}>
+                                <div style={{
+                                  fontSize: '11.5px',
+                                  fontWeight: '700',
+                                  color: 'var(--text-main)',
+                                  lineHeight: 1.25,
+                                  flex: 1,
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 2,
+                                  WebkitBoxOrient: 'vertical',
+                                  overflow: 'hidden'
+                                }}>
+                                  {m.title}
+                                </div>
+                                {(activeRole === 'ADMIN' || activeRole === 'INVESTIGATOR') && m.status !== 'OFFICIALLY_APPROVED' && (
+                                  <button
+                                    onClick={(e) => startEditCardTitle(e, m)}
+                                    style={{
+                                      background: 'none',
+                                      border: '1px solid var(--border-color)',
+                                      color: 'var(--text-muted)',
+                                      cursor: 'pointer',
+                                      fontSize: '9px',
+                                      padding: '1px 4px',
+                                      flexShrink: 0
+                                    }}
+                                    title="Edit Title"
+                                  >
+                                    Edit
+                                  </button>
+                                )}
+                              </div>
+                            )}
+
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9.5px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                              <span>{m.date}</span>
+                              <span>OFFICER: {m.createdBy}</span>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
 
                 {/* Right Panel Desktop Document Workbench */}

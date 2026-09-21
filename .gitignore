@@ -1,43 +1,125 @@
-# Dependencies
+# ==============================================================================
+# CYBER CELL AI MOM SYSTEM - GITIGNORE
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Dependencies
+# ------------------------------------------------------------------------------
 node_modules/
 **/node_modules/
+package-lock.json.bak
 
-# Local Environment Variables (Must never be committed)
+# ------------------------------------------------------------------------------
+# 2. Environment Variables & Secrets (NEVER COMMIT)
+# ------------------------------------------------------------------------------
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 .env.*.local
+*.pem
+*.key
+*.cert
+*.crt
 
-# Python Virtual Environments & Caches
+# ------------------------------------------------------------------------------
+# 3. Python Virtual Environments, Caches & Model Cache
+# ------------------------------------------------------------------------------
 venv/
 .venv/
 env/
 .env/
 python-service/venv/
 python-service/python_env/
+**/python_env/
+**/.venv/
+**/.env/
 **/__pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
 .ipynb_checkpoints/
 
-# Production Builds & Outputs
-dist/
-build/
-out/
-frontend/dist/
+# Hugging Face / Whisper offline cached models
+.cache/
+**/.cache/
+huggingface/
+.huggingface/
+hf_cache/
+models/
+whisper_models/
+*.bin
+*.onnx
+*.safetensors
 
-# Logs and databases
+# ------------------------------------------------------------------------------
+# 4. Logs & Diagnostic Traces
+# ------------------------------------------------------------------------------
 *.log
+*.log.*
 logs/
+**/logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 backend/data/*.log
+test_results.json
+*.trace
 
-# Operating System files
+# ------------------------------------------------------------------------------
+# 5. Production Builds & Compiled Outputs
+# ------------------------------------------------------------------------------
+dist/
+build/
+out/
+frontend/dist/
+frontend/build/
+.vercel/
+.next/
+
+# ------------------------------------------------------------------------------
+# 6. Audio Storage, Uploads & Temporary Scratch Files
+# ------------------------------------------------------------------------------
+data/
+**/data/temp_*
+backend/data/temp_*
+python-service/data/
+storage/
+backend/storage/
+uploads/
+**/uploads/
+temp/
+**/temp/
+tmp/
+**/tmp/
+
+# Keep sample audio files in samples/ but ignore ad-hoc audio recordings elsewhere
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.ogg
+!samples/*.wav
+!samples/*.mp3
+!samples/*.m4a
+!samples/*.aac
+!samples/*.flac
+!samples/*.ogg
+
+# ------------------------------------------------------------------------------
+# 7. Operating System & Editor Metadata
+# ------------------------------------------------------------------------------
 .DS_Store
 .DS_Store?
 ._*
@@ -45,8 +127,8 @@ backend/data/*.log
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
-# IDEs and Editors
 .vscode/
 !.vscode/extensions.json
 .idea/
@@ -55,6 +137,5 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
-
-# Hosting and Deployments
-.vercel/
+*.bak
+*.orig
