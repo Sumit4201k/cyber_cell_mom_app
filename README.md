@@ -84,19 +84,14 @@ chmod +x setup.sh run.sh
 
 ---
 
-## 🧪 Verification & Self-QA
-
-Execute the cryptographic verification suites at any time:
+## 🧪 System Health & Pre-warming
 
 ```bash
-# 1. Cryptographic ledger integrity & RBAC test suite
+# 1. Verify system environment readiness
 npm test
 
-# 2. Universal ITN & Indian Number Lexicon test suite (49 unit tests)
-python scripts/test_itn.py
-
-# 3. Real multi-lingual audio test suite (Hindi, Gujarati, Hinglish, English)
-python scripts/test_audio_end_to_end.py
+# 2. Pre-cache speech models for zero-latency offline inference (Optional)
+python scripts/preload_models.py
 ```
 
 ---

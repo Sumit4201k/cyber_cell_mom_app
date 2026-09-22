@@ -133,11 +133,15 @@ class SingleActiveModelManager:
         ],
         "hi": [
             os.getenv("WHISPER_MODEL_HI", "Systran/faster-whisper-small"),
+            "vasista22/whisper-hindi-small",
+            "theainerd/whisper-small-hindi",
             "small",
             "base"
         ],
         "gu": [
             os.getenv("WHISPER_MODEL_GU", "Systran/faster-whisper-small"),
+            "ai4bharat/indicwhisper-gu",
+            "vasista22/whisper-gujarati-small",
             "small",
             "base"
         ]

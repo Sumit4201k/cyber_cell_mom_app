@@ -88,28 +88,40 @@ frontend/build/
 .next/
 
 # ------------------------------------------------------------------------------
-# 6. Audio Storage, Uploads & Temporary Scratch Files
+# 6. Audio Storage, Uploads & Temporary Scratch Files (Preserve Storage Directories)
 # ------------------------------------------------------------------------------
-data/
 **/data/temp_*
 backend/data/temp_*
-python-service/data/
-storage/
-backend/storage/
-uploads/
-**/uploads/
+python-service/data/temp_*
 temp/
 **/temp/
 tmp/
 **/tmp/
 
-# Keep sample audio files in samples/ but ignore ad-hoc audio recordings elsewhere
-*.wav
-*.mp3
-*.m4a
-*.aac
-*.flac
-*.ogg
+# Preserve .gitkeep and storage directories
+!storage/
+!storage/**
+!backend/storage/
+!backend/storage/**
+!data/
+!data/**
+!python-service/data/
+!python-service/data/**
+!backend/data/
+!backend/data/*.json
+!**/.gitkeep
+
+# Ignore dynamic audio uploads but keep samples/ and .gitkeep
+storage/audio/*.mp3
+storage/audio/*.wav
+storage/audio/*.m4a
+storage/audio/*.webm
+backend/storage/audio/*.mp3
+backend/storage/audio/*.wav
+backend/storage/audio/*.m4a
+backend/storage/audio/*.webm
+!storage/audio/.gitkeep
+!backend/storage/audio/.gitkeep
 !samples/*.wav
 !samples/*.mp3
 !samples/*.m4a

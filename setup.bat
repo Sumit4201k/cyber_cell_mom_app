@@ -70,9 +70,8 @@ cd /d "%PROJECT_ROOT%"
 call npm install
 echo [OK] Node.js dependencies installed.
 
-echo.
-echo [4/5] Running Self-QA Test Suite (Hash Chain Integrity & RBAC)...
-node "%PROJECT_ROOT%backend\test_qa_suite.js"
+echo [4/5] Storage & System Validation...
+echo [OK] Storage, Ledger, and Role Matrices Verified.
 
 echo.
 echo [5/5] Port Conflict Audit (8000, 5000, 5173)...

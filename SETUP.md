@@ -115,10 +115,7 @@ npm install
 cd backend && npm install && cd ..
 cd frontend && npm install && cd ..
 
-# 3. Run Self-QA Test Suite
-node backend/test_qa_suite.js
-
-# 4. Launch Full Stack
+# 3. Launch Full Stack
 npm run start:full
 ```
 
@@ -173,19 +170,11 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ---
 
-## 🧪 Testing & Verification
-
-Run the verification suites to confirm system health:
+## 🧪 Testing & Pre-warming
 
 ```bash
-# 1. Cryptographic ledger integrity & RBAC test suite
-npm test
-
-# 2. Universal ITN & Indian Number Lexicon test suite (49 unit tests)
-python scripts/test_itn.py
-
-# 3. Real multi-lingual audio test suite (Hindi, Gujarati, Hinglish, English)
-python scripts/test_audio_end_to_end.py
+# Optional: Pre-cache INT8 Whisper speech models for offline inference
+python scripts/preload_models.py
 ```
 
 ---

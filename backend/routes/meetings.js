@@ -218,10 +218,12 @@ function listMatches(text, regex, type) {
   return { entities };
 }
 
-// Get all meeting records (Role-gated data masking & entity clearance evaluation)
+// Get all meeting records (Role-gated data masking, clearance gating & entity clearance evaluation)
 router.get("/", authenticateToken, async (req, res) => {
   const role = req.user?.role || "INVESTIGATOR";
   const userLevel = ROLE_LEVELS[role] ? ROLE_LEVELS[role].level : 2;
+  const username = req.user?.username || "";
+  const userId = req.user?.id || "";
 
   let currentMeetings = meetings;
   if (isMongoConnected()) {
@@ -229,13 +231,29 @@ router.get("/", authenticateToken, async (req, res) => {
       const dbMeetings = await Meeting.find({}).sort({ createdAt: -1 }).lean();
       if (dbMeetings && dbMeetings.length > 0) {
         currentMeetings = dbMeetings;
+        // Keep in-memory cache synchronized with MongoDB
+        meetings.length = 0;
+        dbMeetings.forEach(m => meetings.push(m));
       }
     } catch (dbErr) {
       console.warn("MongoDB meetings fetch note:", dbErr.message);
     }
   }
 
-  const sanitizedMeetings = currentMeetings.map((m) => {
+  // Clearance Policy: Lower-level officers (Level < 4: ANALYST, FIELD_OFFICER, TRAINEE, AUDITOR)
+  // are only permitted to view officially approved case meeting records (unless they created the draft).
+  const visibleMeetings = currentMeetings.filter((m) => {
+    // Senior Case Leads (ADMIN Level 5, INVESTIGATOR Level 4) have full case lifecycle visibility
+    if (userLevel >= 4) {
+      return true;
+    }
+    // Lower-level officers can only see officially approved and signed cases
+    const isApproved = m.status === "OFFICIALLY_APPROVED" || m.status === "APPROVED";
+    const isAuthor = (m.createdBy && m.createdBy.toLowerCase() === username.toLowerCase()) || (m.userId && m.userId === userId);
+    return isApproved || isAuthor;
+  });
+
+  const sanitizedMeetings = visibleMeetings.map((m) => {
     if (role === "AUDITOR") {
       return {
         ...m,
@@ -270,7 +288,87 @@ router.get("/", authenticateToken, async (req, res) => {
     };
   });
 
-  res.json({ status: "success", count: sanitizedMeetings.length, meetings: sanitizedMeetings });
+  res.json({
+    status: "success",
+    count: sanitizedMeetings.length,
+    meetings: sanitizedMeetings,
+    role,
+    userLevel,
+    policy: userLevel < 4 ? "APPROVED_ONLY_FILTER_ACTIVE" : "UNRESTRICTED_LIFECYCLE_ACCESS"
+  });
+});
+
+// Get a single meeting record by ID with role-based clearance checks
+router.get("/:id", authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const role = req.user?.role || "INVESTIGATOR";
+  const userLevel = ROLE_LEVELS[role] ? ROLE_LEVELS[role].level : 2;
+  const username = req.user?.username || "";
+  const userId = req.user?.id || "";
+
+  let meeting = meetings.find((m) => m.id === id);
+  if (!meeting && isMongoConnected()) {
+    try {
+      meeting = await Meeting.findOne({ id }).lean();
+    } catch (e) {}
+  }
+
+  if (!meeting) {
+    return res.status(404).json({ status: "error", message: "Meeting record not found." });
+  }
+
+  // Check approved meeting visibility for lower-level officers
+  if (userLevel < 4) {
+    const isApproved = meeting.status === "OFFICIALLY_APPROVED" || meeting.status === "APPROVED";
+    const isAuthor = (meeting.createdBy && meeting.createdBy.toLowerCase() === username.toLowerCase()) || (meeting.userId && meeting.userId === userId);
+    if (!isApproved && !isAuthor) {
+      return res.status(403).json({
+        status: "error",
+        error: "Access Denied: Unapproved draft meetings are restricted to Senior Case Leads (INVESTIGATOR / ADMIN). Only OFFICIALLY APPROVED meetings are accessible at your clearance level.",
+        requiredClearance: "Level 4 (INVESTIGATOR+)",
+        currentRole: role
+      });
+    }
+  }
+
+  // Redact for Auditor
+  if (role === "AUDITOR") {
+    return res.json({
+      status: "success",
+      meeting: {
+        ...meeting,
+        rawTranscript: "[RESTRICTED - AUDITOR CLEARANCE LEVEL 0]",
+        entitiesFound: (meeting.entitiesFound || []).map(ent => ({
+          ...ent,
+          value: "[RESTRICTED]",
+          canUnmask: false,
+          requiredClearance: ENTITY_PERMISSIONS[ent.entity_type]?.clearance || "Level 4 (INVESTIGATOR+)",
+          riskLevel: ENTITY_PERMISSIONS[ent.entity_type]?.risk || "HIGH"
+        }))
+      }
+    });
+  }
+
+  const annotatedEntities = (meeting.entitiesFound || []).map(ent => {
+    const perm = ENTITY_PERMISSIONS[ent.entity_type];
+    const allowed = perm ? perm.allowedRoles.includes(role) || userLevel >= perm.minLevel : userLevel >= 4;
+    return {
+      ...ent,
+      canUnmask: allowed,
+      requiredClearance: perm?.clearance || "Level 4 (INVESTIGATOR+)",
+      riskLevel: perm?.risk || "MEDIUM",
+      minLevel: perm?.minLevel || 4
+    };
+  });
+
+  res.json({
+    status: "success",
+    meeting: {
+      ...meeting,
+      audioUrl: meeting.audioUrl || (meeting.audioStorage ? `/api/meetings/${meeting.id}/audio` : undefined),
+      entitiesFound: annotatedEntities
+    }
+  });
 });
 
 // Upload & Process Audio Recording (Proxies directly to Python faster-whisper / Presidio ML microservice)
@@ -460,48 +558,6 @@ router.post("/upload", authenticateToken, authorizeRoles("ADMIN", "INVESTIGATOR"
     meeting: newMeeting,
     engine: pythonResponse ? "faster-whisper-python-ml" : "node-regex-nlp"
   });
-});
-
-// Stream Meeting Audio Recording (With HTTP 206 Range support for audio player)
-router.get("/:id/audio", (req, res) => {
-  const { id } = req.params;
-  const meeting = meetings.find((m) => m.id === id);
-
-  if (!meeting || !meeting.audioStorage) {
-    return res.status(404).json({ status: "error", message: "No audio recording file is associated with this meeting record." });
-  }
-
-  const audioPath = getAudioFilePath(meeting.audioStorage.storagePath || meeting.audioStorage.fileName);
-  if (!audioPath || !fs.existsSync(audioPath)) {
-    return res.status(404).json({ status: "error", message: "Audio file missing from local storage directory." });
-  }
-
-  const stat = fs.statSync(audioPath);
-  const fileSize = stat.size;
-  const range = req.headers.range;
-
-  if (range) {
-    const parts = range.replace(/bytes=/, "").split("-");
-    const start = parseInt(parts[0], 10);
-    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-    const chunkSize = end - start + 1;
-    const file = fs.createReadStream(audioPath, { start, end });
-    const head = {
-      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-      "Accept-Ranges": "bytes",
-      "Content-Length": chunkSize,
-      "Content-Type": meeting.audioStorage.mimeType || "audio/wav"
-    };
-    res.writeHead(206, head);
-    file.pipe(res);
-  } else {
-    const head = {
-      "Content-Length": fileSize,
-      "Content-Type": meeting.audioStorage.mimeType || "audio/wav"
-    };
-    res.writeHead(200, head);
-    fs.createReadStream(audioPath).pipe(res);
-  }
 });
 
 // Update Case Title (Allowed: ADMIN, INVESTIGATOR)

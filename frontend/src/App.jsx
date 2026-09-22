@@ -316,6 +316,11 @@ export default function App() {
                 </h2>
                 <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0 }}>
                   Active Clearance Level: <strong>{activeRole}</strong>
+                  {['AUDITOR', 'TRAINEE', 'FIELD_OFFICER', 'ANALYST'].includes(activeRole) && (
+                    <span style={{ marginLeft: '8px', color: 'var(--state-green)', fontSize: '11px', fontWeight: '700' }}>
+                      • [APPROVED CASES ONLY]
+                    </span>
+                  )}
                 </p>
               </div>
 

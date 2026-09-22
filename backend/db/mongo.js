@@ -24,7 +24,7 @@ async function connectMongoDB() {
     const User = require('../models/User');
     const Meeting = require('../models/Meeting');
     const AuditLog = require('../models/AuditLog');
-    const { meetings, auditLogs, users: defaultUsers } = require('./store');
+    const { meetings, auditLogs, users: defaultUsers, saveMeetingsToFile, saveAuditLogsToFile, saveUsersToFile } = require('./store');
 
     // 1. Sync & Seed Users Collection
     try {
@@ -44,6 +44,7 @@ async function connectMongoDB() {
         const { users } = require('./store');
         users.length = 0;
         dbUsers.forEach(u => users.push(u));
+        saveUsersToFile();
         console.log(`Synced ${dbUsers.length} officer profiles from MongoDB.`);
       }
     } catch (seedErr) {
@@ -63,6 +64,7 @@ async function connectMongoDB() {
         const dbMeetings = await Meeting.find({}).sort({ createdAt: -1 }).lean();
         meetings.length = 0;
         dbMeetings.forEach(m => meetings.push(m));
+        saveMeetingsToFile();
         console.log(`Synced ${dbMeetings.length} meeting records from MongoDB.`);
       }
     } catch (meetingSyncErr) {
@@ -93,6 +95,7 @@ async function connectMongoDB() {
             hash: l.hash
           });
         });
+        saveAuditLogsToFile();
         console.log(`Synced ${dbLogs.length} audit entries from MongoDB.`);
       }
     } catch (logSyncErr) {
